@@ -1,0 +1,12 @@
+{
+ "key": "15e7f08c67c2d1761ebd5a4d6f402a4a48a60446e3022a985633a095000babf3",
+ "response": "{\"assignments\": [{\"index\": 0, \"canonical\": \"economic growth rate\"}, {\"index\": 1, \"canonical\": \"growth\"}, {\"index\": 2, \"canonical\": \"inventory overhang\"}, {\"index\": 3, \"canonical\": \"level\"}, {\"index\": 4, \"canonical\": \"export growth\"}, {\"index\": 5, \"canonical\": \"outlay\"}, {\"index\": 6, \"canonical\": \"market size\"}, {\"index\": 7, \"canonical\": \"cagr\"}, {\"index\": 8, \"canonical\": \"net outflow\"}]}",
+ "created_at": 1788878836.373916,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 3083,
+  "output": 120
+ }
+}

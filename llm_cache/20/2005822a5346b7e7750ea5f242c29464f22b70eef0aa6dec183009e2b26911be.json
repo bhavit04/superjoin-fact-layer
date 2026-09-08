@@ -1,0 +1,12 @@
+{
+ "key": "2005822a5346b7e7750ea5f242c29464f22b70eef0aa6dec183009e2b26911be",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the growth rate for the current period (April–November 2024), while Fact B reports the growth rate for the 'corresponding period of the previous year' (April–November 2023). They are describing different time periods, not conflicting data points.\",\n  \"reconciling_evidence\": \"Fact A: 'April – November 2024'; Fact B: 'corresponding period of the previous year'\"\n}",
+ "created_at": 1788878914.594743,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 963,
+  "output": 132
+ }
+}

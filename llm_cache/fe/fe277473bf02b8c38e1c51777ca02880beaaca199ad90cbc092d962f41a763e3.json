@@ -1,0 +1,12 @@
+{
+ "key": "fe277473bf02b8c38e1c51777ca02880beaaca199ad90cbc092d962f41a763e3",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts describe the same individual, Ms. Madhulika Rawat, being appointed to the same role (Company Secretary and Compliance Officer) effective May 17, 2024. The slight difference in punctuation ('and' vs '&') is immaterial.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878565.787827,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 954,
+  "output": 101
+ }
+}

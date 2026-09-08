@@ -1,0 +1,12 @@
+{
+ "key": "d9f2bc76726d209c759bb59c206129097a8dc0b9880d1d4aa99dd66dd13cf9f8",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts report distinct allotment events occurring on different dates within the same year. They are not contradictory because they describe separate transactions rather than the same aggregate figure.\",\n  \"reconciling_evidence\": \"Fact A: 'May 06, 2023'; Fact B: 'August 08, 2023'\"\n}",
+ "created_at": 1788878605.813938,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 107
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "564b025d18f2c67d32c77e67171849e7b83ecb25dd67eceb9aab5f534bf60e3e",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Both facts are extracted from the same sequence of numbers ('73 47 37') in the same document. Fact A identifies '47' as the metric, while Fact B identifies '40' as the metric. Since '40' does not appear in the source text at all, Fact B is an erroneous extraction or hallucination, contradicting the actual data present.\",\n  \"reconciling_evidence\": \"Source evidence: '73 47 37'\"\n}",
+ "created_at": 1788878443.5188649,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 933,
+  "output": 141
+ }
+}

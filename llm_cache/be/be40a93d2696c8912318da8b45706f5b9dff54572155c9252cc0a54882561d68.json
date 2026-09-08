@@ -1,0 +1,12 @@
+{
+ "key": "be40a93d2696c8912318da8b45706f5b9dff54572155c9252cc0a54882561d68",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"basis\",\n  \"explanation\": \"The facts describe different growth metrics for the same period: Fact A reports year-over-year (YoY) growth, while Fact B reports quarter-over-quarter (QoQ) growth. The difference in values is explained by these distinct calculation bases.\",\n  \"reconciling_evidence\": \"YoY: (2.2%) / QoQ: (12.8%)\"\n}",
+ "created_at": 1788878413.210459,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1024,
+  "output": 121
+ }
+}

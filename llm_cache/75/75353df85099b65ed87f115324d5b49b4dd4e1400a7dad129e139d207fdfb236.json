@@ -1,0 +1,12 @@
+{
+ "key": "75353df85099b65ed87f115324d5b49b4dd4e1400a7dad129e139d207fdfb236",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts refer to different financial metrics: Fact A reports 'Adjusted EBITDA' while Fact B reports 'EBITDA'. These are distinct accounting measures, and it is standard for them to differ in value. They are not contradictory, but rather related metrics for the same business segment and period.\",\n  \"reconciling_evidence\": \"Fact A: 'Adjusted EBITDA'; Fact B: 'EBITDA'\"\n}",
+ "created_at": 1788876510.0779321,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1004,
+  "output": 121
+ }
+}

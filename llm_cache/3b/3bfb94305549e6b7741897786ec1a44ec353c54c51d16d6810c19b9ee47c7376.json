@@ -1,0 +1,12 @@
+{
+ "key": "3bfb94305549e6b7741897786ec1a44ec353c54c51d16d6810c19b9ee47c7376",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts report different metrics: Fact A reports 'Adjusted EBITDA' while Fact B reports 'EBITDA'. The difference in values is attributable to the adjustments made to arrive at the adjusted figure, rather than a contradiction in the underlying financial performance.\",\n  \"reconciling_evidence\": \"Fact A: 'Adjusted EBITDA'; Fact B: 'EBITDA'\"\n}",
+ "created_at": 1788876523.048424,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1007,
+  "output": 115
+ }
+}

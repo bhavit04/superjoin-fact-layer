@@ -1,0 +1,12 @@
+{
+ "key": "870c1a3e4050e2cbca404a51537107c27af34ac69b5aebbfc92282011782c14c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"While both facts pertain to the same fiscal year (FY2025), they refer to different quarters. Fact A reports growth for Q3, while Fact B reports growth for Q2. They are not contradictory because they describe performance in distinct time periods.\",\n  \"reconciling_evidence\": \"Fact A: \\\"grow by 6.2 per cent in Q3\\\"; Fact B: \\\"growth softened to 5.6 per cent in Q2\\\"\"\n}",
+ "created_at": 1788877927.114984,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 991,
+  "output": 135
+ }
+}

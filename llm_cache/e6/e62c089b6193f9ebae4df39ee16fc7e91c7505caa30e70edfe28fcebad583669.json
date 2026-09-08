@@ -1,0 +1,12 @@
+{
+ "key": "e62c089b6193f9ebae4df39ee16fc7e91c7505caa30e70edfe28fcebad583669",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they represent distinct, non-overlapping events of equity share allotment occurring on different dates within the same year. Fact A refers to an allotment on July 10, 2023, while Fact B refers to a separate allotment on October 09, 2023.\",\n  \"reconciling_evidence\": \"Fact A: \\\"July 10, 2023\\\"; Fact B: \\\"October 09, 2023\\\"\"\n}",
+ "created_at": 1788878650.076973,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 142
+ }
+}

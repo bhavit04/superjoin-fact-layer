@@ -1,0 +1,12 @@
+{
+ "key": "6537d2e55e02dc8d1de57f4400cd4147946b89be2cdd841e5ecfe4a5b4835cc2",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A describes the value of aluminium exports, while Fact B describes the value of cement exports. These are distinct commodities, so the difference in their values does not constitute a contradiction or a reconciliation; they are simply different metrics.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877246.608791,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 969,
+  "output": 89
+ }
+}

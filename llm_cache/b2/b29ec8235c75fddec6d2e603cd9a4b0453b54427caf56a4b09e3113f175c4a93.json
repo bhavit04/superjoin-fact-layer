@@ -1,0 +1,12 @@
+{
+ "key": "b29ec8235c75fddec6d2e603cd9a4b0453b54427caf56a4b09e3113f175c4a93",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (CAD) but for different timeframes and different units. Fact A provides a cumulative dollar amount and percentage for the nine-month period of April-December 2024, while Fact B provides a percentage for the specific quarter Q2 of FY25. They are not conflicting, but rather distinct data points.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788879037.470575,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 965,
+  "output": 117
+ }
+}

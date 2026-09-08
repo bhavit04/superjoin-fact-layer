@@ -1,0 +1,12 @@
+{
+ "key": "3915e47a9884dbc21c9d02d24d9e88fa1bb9dd8f8f8235aaf177f4c849f122f4",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a 12-month period, while Fact B explicitly refers to a 9-month period. The discrepancy in the period definition explains why the figures are presented differently, despite the document potentially containing conflicting or confusing labels for the same line item.\",\n  \"reconciling_evidence\": \"Fact A: 'period ended December 31, 2021'; Fact B: 'nine months period ended December 31, 2021'\"\n}",
+ "created_at": 1788876993.4580119,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1166,
+  "output": 139
+ }
+}

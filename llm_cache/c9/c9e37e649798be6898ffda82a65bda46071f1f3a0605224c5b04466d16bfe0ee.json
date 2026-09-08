@@ -1,0 +1,12 @@
+{
+ "key": "c9e37e649798be6898ffda82a65bda46071f1f3a0605224c5b04466d16bfe0ee",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A represents the loss for the fourth quarter (Q4 FY23), while Fact B represents the total loss for the full fiscal year (FY23). The full-year loss is significantly larger than the single-quarter loss, which is consistent for a company reporting losses across multiple quarters.\",\n  \"reconciling_evidence\": \"Profit / (Loss) after tax (159) 12 (69) (1,008)\"\n}",
+ "created_at": 1788880287.706858,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1134,
+  "output": 135
+ }
+}

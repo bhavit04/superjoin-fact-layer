@@ -1,0 +1,12 @@
+{
+ "key": "05ecf3c31bd27e1a8331db2a545f4328c46398605d94151295d100088bb5d069",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A describes a historical current account deficit (US$ 30.7 billion, or 1.1% of GDP), while Fact B provides a projection for a future fiscal year (FY2025/26). They describe the same metric but for different time periods, making them a time series rather than conflicting or corroborating data.\",\n  \"reconciling_evidence\": \"Fact A: 'a year ago'; Fact B: 'projected to increase to about 1.0 percent of GDP in FY2025/26'\"\n}",
+ "created_at": 1788878290.4313269,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 990,
+  "output": 153
+ }
+}

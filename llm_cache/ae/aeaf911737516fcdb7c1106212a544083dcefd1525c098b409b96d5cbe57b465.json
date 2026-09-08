@@ -1,0 +1,12 @@
+{
+ "key": "aeaf911737516fcdb7c1106212a544083dcefd1525c098b409b96d5cbe57b465",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory; they report two distinct financial metrics for the same period. Fact A reports 'EBITDA' while Fact B reports 'Adj. EBITDA'. These are different accounting measures, explaining why the values differ.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA'; Fact B: 'Adj. EBITDA'\"\n}",
+ "created_at": 1788876488.697379,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1005,
+  "output": 108
+ }
+}

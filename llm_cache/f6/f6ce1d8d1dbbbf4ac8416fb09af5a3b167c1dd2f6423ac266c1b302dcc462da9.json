@@ -1,0 +1,12 @@
+{
+ "key": "f6ce1d8d1dbbbf4ac8416fb09af5a3b167c1dd2f6423ac266c1b302dcc462da9",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"basis\",\n  \"explanation\": \"The two figures represent the same metric for the same period but use different comparison bases: Fact A is a Quarter-on-Quarter (QoQ) decline, while Fact B is a Year-on-Year (YoY) increase.\",\n  \"reconciling_evidence\": \"YoY: 11.6% / QoQ: (5.4%)\"\n}",
+ "created_at": 1788880328.178748,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1030,
+  "output": 117
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "d254351bca29d9e992306ccda188e847b5360136579108fc7ed4e204eacd61f1",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts refer to different economic indicators: Fact A reports 'retail inflation' (typically CPI), while Fact B reports the 'GDP deflator'. These are distinct measures of price changes in an economy, explaining why the figures differ.\",\n  \"reconciling_evidence\": \"Fact A: 'retail inflation'; Fact B: 'Inflation (GDP deflator)'\"\n}",
+ "created_at": 1788878304.297131,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1031,
+  "output": 115
+ }
+}

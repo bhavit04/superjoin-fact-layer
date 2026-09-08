@@ -1,0 +1,12 @@
+{
+ "key": "c5b2734565d057c3c2c1e119bbff70bc8497daf17a3ee0149579ff1b2510724f",
+ "response": "{\n  \"facts\": [\n    {\n      \"subject\": \"Consolidated Financial Statements\",\n      \"metric\": \"reporting period\",\n      \"value\": \"year ended March 31, 2024\",\n      \"unit_hint\": \"\",\n      \"fact_type\": \"temporal\",\n      \"qualifiers\": {},\n      \"polarity\": \"affirmed\",\n      \"evidence\": \"Notes To the Consolidated Financial Statements for the year ended March 31, 2024\",\n      \"page\": 75,\n      \"confidence\": 1.0\n    },\n    {\n      \"subject\": \"the Group\",\n      \"metric\": \"CIN\",\n      \"value\": \"L63090DL2011PLC221234\",\n      \"unit_hint\": \"\",\n      \"fact_type\": \"textual\",\n      \"qualifiers\": {},\n      \"polarity\": \"affirmed\",\n      \"evidence\": \"CIN: L63090DL2011PLC221234\",\n      \"page\": 75,\n      \"confidence\": 1.0\n    },\n    {\n      \"subject\": \"The Group\",\n      \"metric\": \"leave encashment plan\",\n      \"value\": \"operates\",\n      \"unit_hint\": \"\",\n      \"fact_type\": \"categorical\",\n      \"qualifiers\": {},\n      \"polarity\": \"affirmed\",\n      \"evidence\": \"The Group also operates a leave encashment plan.\",\n      \"page\": 75,\n      \"confidence\": 1.0\n    }\n  ]\n}",
+ "created_at": 1788876658.663321,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "extract_facts",
+ "usage": {
+  "input": 3878,
+  "output": 369
+ }
+}

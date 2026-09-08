@@ -1,0 +1,12 @@
+{
+ "key": "7642235bf9feb9573edb80a1dd9c7dbc77e1f3ca3c8db6f6353cd4c2ef0d6c9c",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (current account deficit) but refer to different time periods. Fact A provides a projection for the full fiscal year 2025/26, while Fact B reports actual data for the nine-month period of April-December 2024. They are not conflicting or corroborating, but rather represent different data points in a time series.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878285.682143,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1055,
+  "output": 124
+ }
+}

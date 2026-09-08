@@ -1,0 +1,12 @@
+{
+ "key": "0e1b99fffe1e6cbdcb1e5d5c17a916f80385ed30c17f52b093bdd8384e34f9b1",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the current account deficit for the 'previous year' (likely full-year 2024), while Fact B provides a specific figure for the 'April-December 2024' period. Because they cover different timeframes, they are not directly comparable, though both describe the same economic metric.\",\n  \"reconciling_evidence\": \"Fact A: '0.7 percent of GDP in the previous year'; Fact B: 'US$ 37.1 billion (1.3 per cent of GDP) in April-December 2024'\"\n}",
+ "created_at": 1788878275.881001,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 950,
+  "output": 159
+ }
+}

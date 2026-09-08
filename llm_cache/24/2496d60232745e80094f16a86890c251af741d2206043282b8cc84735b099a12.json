@@ -1,0 +1,12 @@
+{
+ "key": "2496d60232745e80094f16a86890c251af741d2206043282b8cc84735b099a12",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"The terms 'Chairperson' and 'Chairman' are gender-neutral and gender-specific variations of the same corporate title. The slight difference in wording does not constitute a factual disagreement regarding the individual's role.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878684.796988,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 855,
+  "output": 90
+ }
+}

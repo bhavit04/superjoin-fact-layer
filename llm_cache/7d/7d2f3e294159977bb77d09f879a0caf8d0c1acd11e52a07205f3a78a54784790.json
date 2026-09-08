@@ -1,0 +1,12 @@
+{
+ "key": "7d2f3e294159977bb77d09f879a0caf8d0c1acd11e52a07205f3a78a54784790",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the current account balance for the calendar year 2023, while Fact B reports the current account deficit as a percentage of GDP for the second quarter of the fiscal year 2025. These are distinct metrics covering non-overlapping time periods.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878317.3195698,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 977,
+  "output": 101
+ }
+}

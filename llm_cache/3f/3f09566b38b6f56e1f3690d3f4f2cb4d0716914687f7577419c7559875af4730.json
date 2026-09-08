@@ -1,0 +1,12 @@
+{
+ "key": "3f09566b38b6f56e1f3690d3f4f2cb4d0716914687f7577419c7559875af4730",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence shows two columns of data (199 and 126) listed under the same metric label. In financial reporting, these typically represent different periods (e.g., current year vs. previous year). Since the document lists both values side-by-side for the same metric, they represent different time periods rather than a contradiction.\",\n  \"reconciling_evidence\": \"Debt (excludes CCPS) (A) 199 126\"\n}",
+ "created_at": 1788878462.565063,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 954,
+  "output": 139
+ }
+}

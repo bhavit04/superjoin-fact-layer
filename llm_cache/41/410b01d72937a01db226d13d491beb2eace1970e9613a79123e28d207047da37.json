@@ -1,0 +1,12 @@
+{
+ "key": "410b01d72937a01db226d13d491beb2eace1970e9613a79123e28d207047da37",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe two distinct events of equity share allotment occurring on different dates within the same year. They are not contradictory; they are separate transactions reported as part of a list of allotments.\",\n  \"reconciling_evidence\": \"Fact A: \\\"July 10, 2023\\\"; Fact B: \\\"September 11, 2023\\\"\"\n}",
+ "created_at": 1788878645.651714,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 114
+ }
+}

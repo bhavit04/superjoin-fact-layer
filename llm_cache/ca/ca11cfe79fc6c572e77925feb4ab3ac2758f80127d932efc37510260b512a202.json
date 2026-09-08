@@ -1,0 +1,12 @@
+{
+ "key": "ca11cfe79fc6c572e77925feb4ab3ac2758f80127d932efc37510260b512a202",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts report two distinct financial metrics: 'EBITDA margin' and 'Adjusted EBITDA margin'. Because these are different accounting measures, the difference in values does not constitute a contradiction or a reconciliation, but rather a comparison of two different performance indicators for the same business segment.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA margin'; Fact B: 'Adjusted EBITDA margin'\"\n}",
+ "created_at": 1788876429.6458082,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 991,
+  "output": 120
+ }
+}

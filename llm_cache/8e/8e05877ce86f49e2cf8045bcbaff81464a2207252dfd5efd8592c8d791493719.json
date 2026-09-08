@@ -1,0 +1,12 @@
+{
+ "key": "8e05877ce86f49e2cf8045bcbaff81464a2207252dfd5efd8592c8d791493719",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the profit/loss for the full fiscal year (FY23), while Fact B reports the profit/loss for the fourth quarter (Q4 FY23) of that same year. The figures are not contradictory because they represent different time periods.\",\n  \"reconciling_evidence\": \"Fact A: 'FY23'; Fact B: 'Q4 FY23'\"\n}",
+ "created_at": 1788876368.7119381,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1058,
+  "output": 120
+ }
+}

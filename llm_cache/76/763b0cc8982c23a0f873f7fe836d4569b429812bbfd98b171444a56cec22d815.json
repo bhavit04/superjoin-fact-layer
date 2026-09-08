@@ -1,0 +1,12 @@
+{
+ "key": "763b0cc8982c23a0f873f7fe836d4569b429812bbfd98b171444a56cec22d815",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 1.0,\n  \"dimension\": \"value\",\n  \"explanation\": \"Both facts refer to the exact same metric (weight of 'Oils and Fats' in CPI-food and beverages) for the same period (FY2025) within the same document. The values (3.6% vs 7.8%) are materially different and cannot be reconciled by any stated difference in scope or definition.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877935.766161,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1000,
+  "output": 118
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "3980711f0659fba2b32b4e18cca714e3209d953d47047f3358608b91f71a55d6",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts are not contradictory; they describe distinct subsets of the company's wellness program. Fact A reports sessions held at 'operational locations,' while Fact B reports sessions held at 'corporate offices.' These are separate categories of locations, so the figures are additive rather than conflicting.\",\n  \"reconciling_evidence\": \"Fact A: '106 sessions at 32 operational locations'; Fact B: '82 sessions across six offices'\"\n}",
+ "created_at": 1788878520.952119,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 986,
+  "output": 130
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "643ba204fe633cd9c11d10de903a1db4f9275ad7c05d7c5fbfd037422681468c",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period, metric\",\n  \"explanation\": \"The facts are not contradictory because they refer to different metrics (EBITDA vs. Adj. EBITDA) and different time periods (a single quarter vs. the full fiscal year). A quarterly figure for one metric cannot be directly compared to an annual figure for a different metric.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876485.568704,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1009,
+  "output": 103
+ }
+}

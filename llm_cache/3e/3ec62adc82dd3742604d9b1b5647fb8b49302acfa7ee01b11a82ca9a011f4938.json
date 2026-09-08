@@ -1,0 +1,12 @@
+{
+ "key": "3ec62adc82dd3742604d9b1b5647fb8b49302acfa7ee01b11a82ca9a011f4938",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"vintage\",\n  \"explanation\": \"The two figures represent inflation projections for the same period (FY26) but are issued by different institutions (RBI vs. IMF), which naturally leads to differing estimates based on their respective models and data cut-off dates.\",\n  \"reconciling_evidence\": \"the RBI expects headline inflation to be 4.2 per cent in FY26... IMF has projected an inflation rate of 4.4 per cent in FY25 and 4.1 per cent in FY26 for India.\"\n}",
+ "created_at": 1788877299.596041,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 993,
+  "output": 143
+ }
+}

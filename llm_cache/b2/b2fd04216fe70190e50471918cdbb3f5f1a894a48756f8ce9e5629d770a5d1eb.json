@@ -1,0 +1,12 @@
+{
+ "key": "b2fd04216fe70190e50471918cdbb3f5f1a894a48756f8ce9e5629d770a5d1eb",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts identify Sahil Barua as the Managing Director and Chief Executive Officer. The slight difference in the organization qualifier is immaterial as the context of both documents clearly pertains to the same entity.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876931.5437498,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 856,
+  "output": 85
+ }
+}

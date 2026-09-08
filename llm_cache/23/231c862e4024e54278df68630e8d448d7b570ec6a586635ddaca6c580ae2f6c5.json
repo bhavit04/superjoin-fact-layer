@@ -1,0 +1,12 @@
+{
+ "key": "231c862e4024e54278df68630e8d448d7b570ec6a586635ddaca6c580ae2f6c5",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory; they describe different metrics (monetary value vs. project count) derived from the same source sentence. Fact A reports the financial value of the projects, while Fact B reports the quantity of projects.\",\n  \"reconciling_evidence\": \"As of 2024, 168 research projects (worth ₹509 crore) were approved under the NTTM mission.\"\n}",
+ "created_at": 1788877198.491127,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1020,
+  "output": 121
+ }
+}

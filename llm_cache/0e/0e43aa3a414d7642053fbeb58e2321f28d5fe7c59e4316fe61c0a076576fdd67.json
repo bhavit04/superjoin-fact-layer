@@ -1,0 +1,12 @@
+{
+ "key": "0e43aa3a414d7642053fbeb58e2321f28d5fe7c59e4316fe61c0a076576fdd67",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A states that Spoton is a 'wholly-owned subsidiary,' which is semantically equivalent to the '100.00%' ownership stake reported in Fact B. The two sources describe the same ownership relationship using different terminology.\",\n  \"reconciling_evidence\": \"Fact A: 'wholly-owned subsidiary'; Fact B: '100.00%'\"\n}",
+ "created_at": 1788876955.202668,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 905,
+  "output": 118
+ }
+}

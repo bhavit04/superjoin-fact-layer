@@ -1,0 +1,12 @@
+{
+ "key": "dc742ce367e2beecb904657f1f708dc24ab11594650fd532c32ac06668cb854e",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts do not contradict because they refer to different time periods within the same fiscal year. Fact A reports the issuance for Q1, while Fact B reports the issuance for Q2.\",\n  \"reconciling_evidence\": \"Fact A: \\\"from ₹2.5 lakh crore in Q1\\\"; Fact B: \\\"fresh issuance of CDs increased to ₹2.8 lakh crore in Q2:2024-25\\\"\"\n}",
+ "created_at": 1788877960.43517,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1024,
+  "output": 130
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "ff5ca5e5508d22dc29e11ceee0786f8934df2e80caa68988a5196ffb3563469a",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe different time periods: Fact A refers to the calendar year 2024, while Fact B refers to the first half of the fiscal year 2025 (H1 FY25). Because the periods are distinct and non-identical, they are not conflicting claims but rather separate data points.\",\n  \"reconciling_evidence\": \"Fact A: 'in 2024'; Fact B: 'In H1 of FY25'\"\n}",
+ "created_at": 1788878852.2483032,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 958,
+  "output": 134
+ }
+}

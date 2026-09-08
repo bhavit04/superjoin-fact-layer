@@ -1,0 +1,12 @@
+{
+ "key": "d4d299f118b1e0386b732380ea999f25f156cbc8c63a2bfcf5c3cfdeec04a97e",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts are consistent. Fact A describes Deepak Kapoor's specific role within the Nomination and Remuneration Committee, while Fact B describes his general role within the organization (Delhivery Limited). They are complementary descriptions of his board positions.\",\n  \"reconciling_evidence\": \"Fact A: 'Nomination and Remuneration Committee'; Fact B: 'Delhivery Limited'\"\n}",
+ "created_at": 1788878714.9799948,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 910,
+  "output": 116
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "dc299aee7c6e4965dd8f4bdbb55d7a31ec8d2453f73867294d8903e69f1d5c63",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A refers to 'Net tax revenues' while Fact B refers to 'Non-tax revenues'. These are distinct fiscal metrics representing different sources of government income, not conflicting reports of the same metric.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878220.949922,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1091,
+  "output": 84
+ }
+}

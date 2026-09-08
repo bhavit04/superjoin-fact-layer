@@ -1,0 +1,12 @@
+{
+ "key": "f97f150dff71ee0950d17e3940ea210dcbded177ff22756faae033e43d40023c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the full fiscal year 2024-25, while Fact B reports only the April-December period of FY25. The difference in the time period covered explains why the inflation figures do not match.\",\n  \"reconciling_evidence\": \"Fact B: '8.4 per cent in FY25 (April-December)'\"\n}",
+ "created_at": 1788879029.305089,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1020,
+  "output": 115
+ }
+}

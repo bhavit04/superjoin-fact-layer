@@ -1,0 +1,12 @@
+{
+ "key": "16f41fc751fc843a12cce78743c426422797c889103995a60c21776b7f746af0",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are consistent because they refer to different time periods. Fact A reports the Adj. EBITDA for the fourth quarter (Q4 FY24), while Fact B reports the cumulative Adj. EBITDA for the full fiscal year (FY24). The quarterly figure is a subset of the annual figure.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Q4 FY24\\\"; Fact B: \\\"FY24\\\"\"\n}",
+ "created_at": 1788876369.120338,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1006,
+  "output": 128
+ }
+}

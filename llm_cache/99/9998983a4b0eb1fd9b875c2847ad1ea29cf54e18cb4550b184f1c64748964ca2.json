@@ -1,0 +1,12 @@
+{
+ "key": "9998983a4b0eb1fd9b875c2847ad1ea29cf54e18cb4550b184f1c64748964ca2",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Both facts report the same 6.5% growth figure, but they refer to different timeframes: Fact A refers to the calendar year 2024, while Fact B refers to the fiscal year FY2024/25. The values are identical despite the different periods.\",\n  \"reconciling_evidence\": \"Fact A: 'Real GDP (at market prices) ... 6.5'; Fact B: 'India’s real GDP grew by 6.5 percent in FY2024/25.'\"\n}",
+ "created_at": 1788878340.1010308,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1037,
+  "output": 152
+ }
+}

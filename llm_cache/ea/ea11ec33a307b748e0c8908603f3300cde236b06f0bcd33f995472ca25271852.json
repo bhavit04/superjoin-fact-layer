@@ -1,0 +1,12 @@
+{
+ "key": "ea11ec33a307b748e0c8908603f3300cde236b06f0bcd33f995472ca25271852",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"While the periods are nested (FY24 contains Q4 FY24), the reported tonnage for the single quarter (384,000 tonnes) is mathematically impossible to reconcile with the total reported for the full fiscal year (1,517 tonnes). Freight tonnage cannot be negative, so the Q4 figure cannot exceed the annual total.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878389.457793,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1093,
+  "output": 121
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "3959dd792acddd0e0c9ab221458c1ee50435a727aa8aaecf640bf529778d1bf3",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different reporting periods. Fact A refers to the nine-month period ended December 31, 2021, while Fact B refers to the nine-month period ended December 31, 2020. They are distinct data points in a time series.\",\n  \"reconciling_evidence\": \"the nine months periods ended December 31, 2020 and December 31, 2021\"\n}",
+ "created_at": 1788878767.545151,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1213,
+  "output": 134
+ }
+}

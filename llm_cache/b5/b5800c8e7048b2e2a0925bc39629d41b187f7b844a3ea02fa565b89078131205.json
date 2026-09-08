@@ -1,0 +1,12 @@
+{
+ "key": "b5800c8e7048b2e2a0925bc39629d41b187f7b844a3ea02fa565b89078131205",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports 6.6% as the inflation rate for the prior year (2023), while Fact B correctly identifies 5.7% as the inflation rate for the current year (2024). The extraction for Fact A misattributed the prior-year figure to the current period.\",\n  \"reconciling_evidence\": \"Fact A: \\\"6.6 per cent a year ago\\\"; Fact B: \\\"5.7 per cent in 2024\\\"\"\n}",
+ "created_at": 1788878938.259562,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 993,
+  "output": 142
+ }
+}

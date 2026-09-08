@@ -1,0 +1,12 @@
+{
+ "key": "9d1aea053fcdcf5540e71b471342968512a04d974efc07b0d9fb4e30c6f0148f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"Fact A reports on the growth of 'subsidies and committed liabilities,' while Fact B reports on the growth of 'revenue expenditure.' These are distinct financial metrics within the state budget, not conflicting reports on the same figure.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877238.33602,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1009,
+  "output": 91
+ }
+}

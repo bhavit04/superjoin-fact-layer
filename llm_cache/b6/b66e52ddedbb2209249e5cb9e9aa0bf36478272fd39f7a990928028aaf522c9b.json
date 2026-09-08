@@ -1,0 +1,12 @@
+{
+ "key": "b66e52ddedbb2209249e5cb9e9aa0bf36478272fd39f7a990928028aaf522c9b",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory because they refer to different metrics: Fact A reports 'EBITDA margin' while Fact B reports 'Adj. EBITDA margin'. These are distinct financial measures, explaining why the values differ.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA margin' ... Fact B: 'Adj. EBITDA margin'\"\n}",
+ "created_at": 1788876397.8418849,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 985,
+  "output": 111
+ }
+}

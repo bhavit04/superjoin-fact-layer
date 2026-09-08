@@ -1,0 +1,12 @@
+{
+ "key": "69f726c0b6eab34e54ed0caebef171bfcbfd4d802cb24401aab6e2b1c380f83f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A reports revenue for a specific sub-segment ('Cross Border Services'), while Fact B reports total 'Revenue for services' for the Express Parcel segment. Because these represent different metrics and cover different time periods (full year vs. quarter), they are not comparable and do not contradict one another.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876446.411065,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1052,
+  "output": 105
+ }
+}

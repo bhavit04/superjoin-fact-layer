@@ -1,0 +1,12 @@
+{
+ "key": "076637cfa25c976df6c97404d321bd997d9eab58399f12dc0a1480b5e2438294",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory; they describe different segments of the population (the poorest 20 percent versus the richest 10 percent). They are related as they both describe income distribution in India for the same year, but they measure distinct, non-overlapping groups.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878221.936307,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1064,
+  "output": 100
+ }
+}

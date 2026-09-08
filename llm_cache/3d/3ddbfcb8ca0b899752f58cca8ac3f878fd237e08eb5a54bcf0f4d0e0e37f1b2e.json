@@ -1,0 +1,12 @@
+{
+ "key": "3ddbfcb8ca0b899752f58cca8ac3f878fd237e08eb5a54bcf0f4d0e0e37f1b2e",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts describe different economic indicators: Fact A reports the GDP deflator, while Fact B reports retail inflation (CPI). These are distinct measures of price changes, explaining why the values differ.\",\n  \"reconciling_evidence\": \"Fact A: 'Inflation (GDP deflator; percent) 3.1'; Fact B: 'In India, retail inflation moderated... to 4.9 per cent'\"\n}",
+ "created_at": 1788878310.435233,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1031,
+  "output": 125
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "0b58be00bb6d77257c025abca07a58469c0b2b7668ccba94b61fea755d6b82b7",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.95,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Both facts report the current account deficit for the same prior-year period. Fact A states it was 0.7 percent of GDP, while Fact B explicitly states it was 1.1 per cent of GDP. This is a material discrepancy in the percentage of GDP reported for the same metric and period.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788879202.496788,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 919,
+  "output": 112
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "b901972e26755e69e018c282f9b5e8649a487a9ba1c73854561e1b6331dbe245",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"The facts are consistent. Fact A explicitly states a loss of ₹8,911.39 million. Fact B presents the same figure, (8,911.39), where the parentheses denote a negative value (a loss) in financial reporting. The values are identical in magnitude and meaning.\",\n  \"reconciling_evidence\": \"Fact A: '₹8,911.39 million'; Fact B: '(8,911.39)'\"\n}",
+ "created_at": 1788878704.3538702,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1111,
+  "output": 142
+ }
+}

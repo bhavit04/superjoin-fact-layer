@@ -1,0 +1,12 @@
+{
+ "key": "5f2d4aa28f73f5fb0c066e37649a960d48e400a4ef82721eeb3fe69f5d7604d0",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts do not contradict each other; they describe the same metric at two different points in time within the same fiscal year. Fact A reports the issuance in Q1, while Fact B reports the issuance in Q4.\",\n  \"reconciling_evidence\": \"Fact A: 'in Q1'; Fact B: 'in Q4'\"\n}",
+ "created_at": 1788877972.476614,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1013,
+  "output": 109
+ }
+}

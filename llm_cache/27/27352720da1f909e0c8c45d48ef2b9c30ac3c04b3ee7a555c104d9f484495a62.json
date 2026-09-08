@@ -1,0 +1,12 @@
+{
+ "key": "27352720da1f909e0c8c45d48ef2b9c30ac3c04b3ee7a555c104d9f484495a62",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe the same metric (fresh issuance of CDs) for two different, sequential time periods within the same fiscal year. Fact A refers to Q2:2024-25, while Fact B refers to Q3:2024-25.\",\n  \"reconciling_evidence\": \"Fact A: 'Q2:2024-25'; Fact B: 'Q3'\"\n}",
+ "created_at": 1788878978.849637,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1013,
+  "output": 129
+ }
+}

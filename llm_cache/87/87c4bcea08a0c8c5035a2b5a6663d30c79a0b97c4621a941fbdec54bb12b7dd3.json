@@ -1,0 +1,12 @@
+{
+ "key": "87c4bcea08a0c8c5035a2b5a6663d30c79a0b97c4621a941fbdec54bb12b7dd3",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts refer to different allocation statuses for the same metric. Fact A represents the 'Original allocation' of IPO proceeds, while Fact B represents the 'Modified allocation' as reported in the same document, explaining the variance in the figures.\",\n  \"reconciling_evidence\": \"3 General Corporate purposes 8,703.00 8,863.032\"\n}",
+ "created_at": 1788878543.6023,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1091,
+  "output": 120
+ }
+}

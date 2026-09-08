@@ -1,0 +1,12 @@
+{
+ "key": "39cab93f9dba43f741875b7ff50d43a246f4610e954d181688674d57b90e7099",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A provides the absolute value of India's external debt, while Fact B provides a ratio describing the coverage of that debt by forex reserves. They discuss the same subject (external debt) but describe different metrics, making them related rather than conflicting or corroborating.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878299.723937,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 941,
+  "output": 97
+ }
+}

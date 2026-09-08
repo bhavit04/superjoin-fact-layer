@@ -1,0 +1,12 @@
+{
+ "key": "1b981481d4ba9226481cc4e7ab3ed5a40e29f500e27992445aad72bf4867be98",
+ "response": "```json\n{\"facts\": [\n  {\n    \"subject\": \"the Group\",\n    \"metric\": \"chief operating decision maker\",\n    \"value\": \"Chief Executive Officer of the Company\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"categorical\",\n    \"qualifiers\": {\n      \"period\": \"the year ended March 31, 2024\"\n    },\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"The Group’s chief operating decision maker (CODM) is the Chief Executive Officer of the Company.\",\n    \"page\": 76,\n    \"confidence\": 1.0\n  },\n  {\n    \"subject\": \"Delhivery Limited\",\n    \"metric\": \"CIN\",\n    \"value\": \"L63090DL2011PLC221234\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"textual\",\n    \"qualifiers\": {},\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"CIN: L63090DL2011PLC221234\",\n    \"page\": 76,\n    \"confidence\": 1.0\n  }\n]}\n```",
+ "created_at": 1788876669.153215,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "extract_facts",
+ "usage": {
+  "input": 3872,
+  "output": 281
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "64def2789bb42df29d3e0a413c4a12851682017f0638e3b77777dcb68ccb4467",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods within the same fiscal year. Fact A reports issuance for Q3, while Fact B reports issuance for Q2.\",\n  \"reconciling_evidence\": \"Fact A: 'in Q3'; Fact B: 'in Q2:2024-25'\"\n}",
+ "created_at": 1788877958.726075,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1023,
+  "output": 105
+ }
+}

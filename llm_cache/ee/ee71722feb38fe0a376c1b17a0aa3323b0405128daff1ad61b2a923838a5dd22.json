@@ -1,0 +1,12 @@
+{
+ "key": "ee71722feb38fe0a376c1b17a0aa3323b0405128daff1ad61b2a923838a5dd22",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe different metrics (EBITDA vs. Adj. EBITDA) for different time periods (Full Year FY24 vs. Q3 FY24). A quarterly figure is not expected to equal a full-year figure, and the metrics themselves are distinct.\",\n  \"reconciling_evidence\": \"Fact A: 'FY24 / ₹127Cr / EBITDA'; Fact B: 'Q3 FY24: ₹92 Cr / Adj. EBITDA'\"\n}",
+ "created_at": 1788876472.2143822,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1001,
+  "output": 140
+ }
+}

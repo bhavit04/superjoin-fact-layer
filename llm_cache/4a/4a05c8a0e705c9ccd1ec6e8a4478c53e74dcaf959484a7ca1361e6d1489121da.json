@@ -1,0 +1,12 @@
+{
+ "key": "4a05c8a0e705c9ccd1ec6e8a4478c53e74dcaf959484a7ca1361e6d1489121da",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports net capital inflows for Q2 FY25, while Fact B reports the figure for the same quarter in the previous fiscal year (Q2 FY24). Because they describe the same metric across different time periods, they form a time series rather than a contradiction.\",\n  \"reconciling_evidence\": \"Fact A: 'In Q2 of FY25'; Fact B: 'same period in the previous year'\"\n}",
+ "created_at": 1788878871.7487319,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 937,
+  "output": 125
+ }
+}

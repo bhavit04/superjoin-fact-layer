@@ -1,0 +1,12 @@
+{
+ "key": "34544189594d589add45cbecb159f2c3e451d54f13b66b718bce862f172e0a17",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (CAD) but for different timeframes: Fact A covers the nine-month period of April-December 2024, while Fact B covers the full fiscal year 2024/25. Because they report on different, non-overlapping time scopes, they are not directly comparable and do not conflict.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878267.6950688,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1009,
+  "output": 118
+ }
+}

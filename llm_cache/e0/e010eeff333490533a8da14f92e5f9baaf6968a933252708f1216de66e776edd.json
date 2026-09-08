@@ -1,0 +1,12 @@
+{
+ "key": "e010eeff333490533a8da14f92e5f9baaf6968a933252708f1216de66e776edd",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports a quarterly growth",
+ "created_at": 1788878947.909597,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1018,
+  "output": 40
+ }
+}

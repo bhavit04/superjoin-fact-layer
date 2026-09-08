@@ -1,0 +1,12 @@
+{
+ "key": "f16b0b7940c9c436920d247e3284a0978c5a2fedc13ba1c67772e817328332d5",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory; they describe different metrics for the same category. Fact A refers to the count of issues (505), while Fact B refers to the total monetary amount of those issues (218,120.1). They are distinct data points presented side-by-side in the source table.\",\n  \"reconciling_evidence\": \"1. Private Sector (a+b) 383 97,284.2 505 218,120.1\"\n}",
+ "created_at": 1788878040.123491,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1088,
+  "output": 150
+ }
+}

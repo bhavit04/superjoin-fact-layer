@@ -1,0 +1,12 @@
+{
+ "key": "6da3b0693993e58bde72f93205b7aa6dec6972e03303bb36dbd9e90027857c73",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric but for different, non-overlapping time periods. Fact A refers to Fiscal 2019, while Fact B refers to the nine-month period ended December 31, 2020. They are part of a time series provided in the same sentence.\",\n  \"reconciling_evidence\": \"Our fair value loss on financial liabilities at fair value through profit or loss as a percentage of revenue from contract with customers was 89.53%, nil, 0.25%, nil, and 6.23% in Fiscal 2019, Fiscal 2020, Fiscal 2021 and the nine months periods ended December 31, 2020 and December 31, 2021, respectively.\"\n}",
+ "created_at": 1788877044.993006,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1177,
+  "output": 207
+ }
+}

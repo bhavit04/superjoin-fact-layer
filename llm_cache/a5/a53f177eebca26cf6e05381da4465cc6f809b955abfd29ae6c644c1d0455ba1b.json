@@ -1,0 +1,12 @@
+{
+ "key": "a53f177eebca26cf6e05381da4465cc6f809b955abfd29ae6c644c1d0455ba1b",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are reconciled by the difference in the specific reporting dates within the year 2020. Fact A reports the figure as of March 31, 2020, while Fact B reports the figure as of December 31, 2020.\",\n  \"reconciling_evidence\": \"Fact A: 'March 31, 2020'; Fact B: 'December 31, 2020'\"\n}",
+ "created_at": 1788876970.957067,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1051,
+  "output": 137
+ }
+}

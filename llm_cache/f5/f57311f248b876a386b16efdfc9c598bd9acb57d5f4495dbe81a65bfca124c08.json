@@ -1,0 +1,12 @@
+{
+ "key": "f57311f248b876a386b16efdfc9c598bd9acb57d5f4495dbe81a65bfca124c08",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the share-based payment for the period ended December 31, 2021. Fact B reports the figure for the period ended March 31, 2021. These are distinct reporting periods, not conflicting values for the same period.\",\n  \"reconciling_evidence\": \"Fact A: 'Share based payment amounting to ₹597.58 million (December 31, 2020: ₹131.87 million, March 31, 2021: ₹268.30 million...)' Fact B: 'March 31, 2021: ₹268.30 million'\"\n}",
+ "created_at": 1788878703.021615,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1167,
+  "output": 189
+ }
+}

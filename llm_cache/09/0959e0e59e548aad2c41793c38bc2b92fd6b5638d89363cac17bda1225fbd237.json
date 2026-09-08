@@ -1,0 +1,12 @@
+{
+ "key": "0959e0e59e548aad2c41793c38bc2b92fd6b5638d89363cac17bda1225fbd237",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory; they describe two distinct economic metrics for the same period. Fact A refers to 'nominal GDP growth' (which includes inflation), while Fact B refers to 'real GDP growth' (which is inflation-adjusted).\",\n  \"reconciling_evidence\": \"Fact A: 'nominal GDP growth'; Fact B: 'real GDP grew by 6.5 percent'\"\n}",
+ "created_at": 1788878239.3573918,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1059,
+  "output": 117
+ }
+}

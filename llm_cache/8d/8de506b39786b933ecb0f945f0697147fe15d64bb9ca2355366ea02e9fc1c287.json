@@ -1,0 +1,12 @@
+{
+ "key": "8de506b39786b933ecb0f945f0697147fe15d64bb9ca2355366ea02e9fc1c287",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric for different, non-overlapping fiscal periods (2023 vs. 2019). This constitutes a time series rather than a contradiction.\",\n  \"reconciling_evidence\": \"Fact A: '2023'; Fact B: 'Fiscal 2019'\"\n}",
+ "created_at": 1788876918.5538251,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1019,
+  "output": 103
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "f89de2d2680f5830b591a0636225f9175a29dd2b7ab7e77bd219b0662ed64dfc",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts describe the exact same board nomination right for SVF Doorbell (Cayman) Ltd. Fact B provides additional context regarding the effective date and status, but the core entitlement (one director) and the condition (10% shareholding) are identical in both excerpts.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876982.4674299,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1299,
+  "output": 103
+ }
+}

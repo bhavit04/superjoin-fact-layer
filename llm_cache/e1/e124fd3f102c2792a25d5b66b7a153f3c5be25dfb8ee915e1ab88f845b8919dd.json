@@ -1,0 +1,12 @@
+{
+ "key": "e124fd3f102c2792a25d5b66b7a153f3c5be25dfb8ee915e1ab88f845b8919dd",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.9,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"The difference between 5,541 and 5,533 is negligible (0.14%), likely representing minor variations in reporting methodology or rounding within the same document. Given the proximity, these figures are effectively consistent and corroborate the same underlying metric.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878723.890914,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1040,
+  "output": 103
+ }
+}

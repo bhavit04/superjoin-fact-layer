@@ -1,0 +1,12 @@
+{
+ "key": "f726f88747ee8c35bc7b45c4478fce14bc5d163e770f5e6cd3559dec293f087e",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"The figures are essentially identical. Fact A reports 4,516 million INR, which is 451.6 crore INR. Fact B reports 452 crore INR. The difference is merely a result of rounding to the nearest crore in Fact B.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA (₹ million) ... FY23 ... (4,516)'; Fact B: 'FY23: ₹(452) Cr'\"\n}",
+ "created_at": 1788878499.870847,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1037,
+  "output": 144
+ }
+}

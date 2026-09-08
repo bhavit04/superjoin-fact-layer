@@ -1,0 +1,12 @@
+{
+ "key": "cdcc9cc4424d0062db87480bc3a5bca24efb17d613b7b4df5425119a338c6cdd",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric for different fiscal years (2021 vs 2020). They are distinct data points in a time series and do not conflict.\",\n  \"reconciling_evidence\": \"89.53%, nil, 0.25%, nil and 6.23% in Fiscal 2019, Fiscal 2020, Fiscal 2021\"\n}",
+ "created_at": 1788878788.726111,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1135,
+  "output": 126
+ }
+}

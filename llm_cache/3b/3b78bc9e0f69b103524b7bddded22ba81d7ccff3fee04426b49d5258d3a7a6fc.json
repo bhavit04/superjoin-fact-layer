@@ -1,0 +1,12 @@
+{
+ "key": "3b78bc9e0f69b103524b7bddded22ba81d7ccff3fee04426b49d5258d3a7a6fc",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence lists a sequence of three values (73, 47, 37) for 'Net Working Capital Days'. Fact A and Fact B represent two distinct data points from this time series rather than conflicting reports of the same period's metric.\",\n  \"reconciling_evidence\": \"73 47 37\"\n}",
+ "created_at": 1788878435.129211,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 935,
+  "output": 109
+ }
+}

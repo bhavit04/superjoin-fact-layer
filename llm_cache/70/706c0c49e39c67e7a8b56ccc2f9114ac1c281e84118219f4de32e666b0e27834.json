@@ -1,0 +1,12 @@
+{
+ "key": "706c0c49e39c67e7a8b56ccc2f9114ac1c281e84118219f4de32e666b0e27834",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not in conflict; they describe different timeframes. Fact A reports net inflows for the single month of December 2024, while Fact B reports the cumulative inflows for the nine-month period from April to December 2024.\",\n  \"reconciling_evidence\": \"Fact A: 'in December 2024'; Fact B: 'from April to December 2024'\"\n}",
+ "created_at": 1788877196.9931881,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1002,
+  "output": 128
+ }
+}

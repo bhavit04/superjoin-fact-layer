@@ -1,0 +1,12 @@
+{
+ "key": "abc8aff5eff1654713fffdee254fa08caf870890a406f47c8e93228b8a1c9b85",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts report the same figure (8,911.39 million) for the same period. The mechanical observation of a 200% difference is a false positive caused by interpreting the parentheses in the source text as a negative sign in one instance and failing to recognize them as standard accounting notation for a loss in both instances. They are identical.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878710.2560399,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1182,
+  "output": 120
+ }
+}

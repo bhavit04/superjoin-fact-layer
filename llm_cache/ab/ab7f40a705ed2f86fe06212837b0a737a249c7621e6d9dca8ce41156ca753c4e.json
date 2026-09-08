@@ -1,0 +1,12 @@
+{
+ "key": "ab7f40a705ed2f86fe06212837b0a737a249c7621e6d9dca8ce41156ca753c4e",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A and Fact B describe two distinct components of the External Balance Assessment (EBA) framework: the 'current account norm' (the estimated equilibrium level) and the 'current account gap' (the difference between the actual current account and the norm). They are related metrics, not conflicting measurements of the same thing.\",\n  \"reconciling_evidence\": \"Fact A: 'The EBA CA model estimates a norm of −2.0 percent of GDP'; Fact B: 'IMF staff thus assesses the CA gap to be 1.6 percent of GDP'\"\n}",
+ "created_at": 1788878206.229286,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1062,
+  "output": 152
+ }
+}

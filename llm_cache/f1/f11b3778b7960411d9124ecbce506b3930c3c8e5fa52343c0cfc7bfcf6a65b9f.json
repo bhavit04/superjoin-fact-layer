@@ -1,0 +1,12 @@
+{
+ "key": "f11b3778b7960411d9124ecbce506b3930c3c8e5fa52343c0cfc7bfcf6a65b9f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A provides a historical, realized figure for a specific nine-month period (April-December 2024). Fact B provides a forward-looking projection for the 'medium term.' Because they describe different timeframes—one historical and one prospective—they are related data points rather than conflicting or corroborating claims.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878293.929288,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 994,
+  "output": 111
+ }
+}

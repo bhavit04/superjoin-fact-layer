@@ -1,0 +1,12 @@
+{
+ "key": "e97ba98f02c0dcec46128d524dcdde7dbaae7eb764ca666bfbe4d74d1da25672",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports an actual current account deficit for the first nine months of FY2024/25 (April-December 2024), while Fact B provides a projection for the following fiscal year (FY2025/26). They represent different points in a time series.\",\n  \"reconciling_evidence\": \"India’s CAD was contained at US$ 37.1 billion (1.3 per cent of GDP) in April-December 2024 vs The CA deficit is projected to increase to about 1.0 percent of GDP in FY2025/26\"\n}",
+ "created_at": 1788879207.3326771,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1054,
+  "output": 169
+ }
+}

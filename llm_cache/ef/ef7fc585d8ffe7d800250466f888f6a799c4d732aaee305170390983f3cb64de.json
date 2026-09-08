@@ -1,0 +1,12 @@
+{
+ "key": "ef7fc585d8ffe7d800250466f888f6a799c4d732aaee305170390983f3cb64de",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"The titles 'Chairperson' and 'Chairman' are functionally identical in this context, representing the same board role. The slight variation in terminology does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878687.002038,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 858,
+  "output": 81
+ }
+}

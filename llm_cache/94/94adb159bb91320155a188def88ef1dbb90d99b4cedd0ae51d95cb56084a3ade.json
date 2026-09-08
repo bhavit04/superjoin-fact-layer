@@ -1,0 +1,12 @@
+{
+ "key": "94adb159bb91320155a188def88ef1dbb90d99b4cedd0ae51d95cb56084a3ade",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"Fact A reports on 'total expenditure' growth, while Fact B reports on 'subsidies expenditure' growth. These are distinct components of government spending, not conflicting reports on the same metric.\",\n  \"reconciling_evidence\": \"Fact A: \\\"total expenditure grew by 9.5 per cent.\\\" Fact B: \\\"subsidies and committed liabilities30 registering a growth of 25.7 per cent\\\"\"\n}",
+ "created_at": 1788877234.132478,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 992,
+  "output": 125
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "a90091347337237c196a5896f1da28d8ce955fce06dbaf0f4c4bb1c46cce3b2f",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory because they represent different concepts: Fact A reports the actual funds utilized, while Fact B reports the modified allocation amount for the same purpose. The source evidence clearly distinguishes these as separate columns in the same table.\",\n  \"reconciling_evidence\": \"Fact A: 'Funds utilised... 6,464.02'; Fact B: 'Modified allocation... 8,863.03'\"\n}",
+ "created_at": 1788878551.1322932,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1112,
+  "output": 129
+ }
+}

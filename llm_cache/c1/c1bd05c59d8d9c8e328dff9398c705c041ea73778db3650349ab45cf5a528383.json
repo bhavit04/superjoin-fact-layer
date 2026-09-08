@@ -1,0 +1,12 @@
+{
+ "key": "c1bd05c59d8d9c8e328dff9398c705c041ea73778db3650349ab45cf5a528383",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods within the same fiscal year. Fact A reports the primary market issuance for Q1, while Fact B reports the figure for Q4. They are distinct data points in a time series.\",\n  \"reconciling_evidence\": \"Fact A: 'in Q1'; Fact B: 'in Q4'\"\n}",
+ "created_at": 1788877988.256325,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1019,
+  "output": 111
+ }
+}

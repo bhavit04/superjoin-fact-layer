@@ -1,0 +1,12 @@
+{
+ "key": "faef8519c42f8536f9157769b8aa99eaa39169be74f5e2a13c44f6ed9f2a8eaf",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the merchandise trade deficit for Q2 of FY25, while Fact B reports the figure for the 'corresponding quarter of the previous year' (Q2 of FY24). They are describing the same metric at different points in time, forming a time-series comparison rather than a conflict.\",\n  \"reconciling_evidence\": \"Fact A: 'Q2 of FY25'; Fact B: 'corresponding quarter of the previous year'\"\n}",
+ "created_at": 1788878866.016507,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 947,
+  "output": 130
+ }
+}

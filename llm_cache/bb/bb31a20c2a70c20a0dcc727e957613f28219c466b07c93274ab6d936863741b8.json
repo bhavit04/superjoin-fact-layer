@@ -1,0 +1,12 @@
+{
+ "key": "bb31a20c2a70c20a0dcc727e957613f28219c466b07c93274ab6d936863741b8",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe fresh issuance of CDs for different, non-overlapping quarters within the same fiscal year (Q3 vs Q4). They represent a time series rather than conflicting data points for the same period.\",\n  \"reconciling_evidence\": \"Fact A: '₹2.9 lakh crore in Q3'; Fact B: '₹3.7 lakh crore in Q4'\"\n}",
+ "created_at": 1788877974.176616,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1015,
+  "output": 120
+ }
+}

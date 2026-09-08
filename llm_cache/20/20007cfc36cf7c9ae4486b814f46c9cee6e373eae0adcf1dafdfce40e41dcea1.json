@@ -1,0 +1,12 @@
+{
+ "key": "20007cfc36cf7c9ae4486b814f46c9cee6e373eae0adcf1dafdfce40e41dcea1",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts describe the same board nomination right but focus on different aspects of the agreement. Fact A outlines the long-term condition for the right (holding 10% share capital), while Fact B clarifies the immediate limitation on the number of directors (only one, not two) and the duration of that specific restriction.\",\n  \"reconciling_evidence\": \"Fact A: 'SVF Doorbell (Cayman) Ltd shall be entitled to nominate one director... for as long as SVF Doorbell (Cayman) Ltd and/or its affiliates continue to hold at least 10%'. Fact B: 'SVF Doorbell (Cayman) Ltd shall exercise its right to appoint only one non-executive, non-independent director, and shall not exercise its right to appoint a second nominee director'\"\n}",
+ "created_at": 1788876977.077424,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1284,
+  "output": 205
+ }
+}

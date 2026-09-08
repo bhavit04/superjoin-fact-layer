@@ -1,0 +1,12 @@
+{
+ "key": "fd8bc3637ae68b488d7483ea9281c8c64196d0b9c7a252ed1a074d56c565546a",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"basis\",\n  \"explanation\": \"The facts represent the same metric for the same period but measured against different baselines: Fact A is Year-over-Year growth, while Fact B is Quarter-over-Quarter growth. They are complementary data points in a time series.\",\n  \"reconciling_evidence\": \"YoY: 20.8% / QoQ: 8.6%\"\n}",
+ "created_at": 1788880330.0963871,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1022,
+  "output": 112
+ }
+}

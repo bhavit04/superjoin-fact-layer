@@ -1,0 +1,12 @@
+{
+ "key": "11c51321f27464b68b1fc81f0662552b7979ef3beb5015614d1f0461644de760",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A and Fact B describe two distinct categories of government expenditure (fertilizer subsidy vs. food subsidy). They are not the same metric, so the difference in their values does not constitute a contradiction or a reconciliation; they are simply related components of the same fiscal report.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878223.8963451,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1096,
+  "output": 98
+ }
+}

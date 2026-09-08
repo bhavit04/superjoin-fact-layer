@@ -1,0 +1,12 @@
+{
+ "key": "6780870d2588d2834b4f3d6f21729f31d531e49bbaff838e0efd88ac6163b004",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports on 'financing activities' while Fact B reports on 'investing activities'. These are distinct line items within a cash flow statement and are not comparable metrics, despite sharing the same period and document.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876416.485675,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1039,
+  "output": 86
+ }
+}

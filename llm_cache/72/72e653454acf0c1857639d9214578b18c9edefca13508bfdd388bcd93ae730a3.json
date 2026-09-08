@@ -1,0 +1,12 @@
+{
+ "key": "72e653454acf0c1857639d9214578b18c9edefca13508bfdd388bcd93ae730a3",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts are not contradictory because they refer to distinct subsets of the employee population. Fact A reports participation at 'operational locations,' while Fact B reports participation at 'corporate offices.' These are complementary figures rather than conflicting ones.\",\n  \"reconciling_evidence\": \"Fact A: 'operational locations'; Fact B: 'corporate offices'\"\n}",
+ "created_at": 1788878521.657388,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 993,
+  "output": 107
+ }
+}

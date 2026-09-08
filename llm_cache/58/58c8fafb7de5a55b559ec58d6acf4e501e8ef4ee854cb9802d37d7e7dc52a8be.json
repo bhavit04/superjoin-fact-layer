@@ -1,0 +1,12 @@
+{
+ "key": "58c8fafb7de5a55b559ec58d6acf4e501e8ef4ee854cb9802d37d7e7dc52a8be",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts report equity shares allotted on different dates (May 06, 2023, versus April 06, 2023). They are distinct events within the same year, not conflicting reports of the same event.\",\n  \"reconciling_evidence\": \"Fact A: \\\"May 06, 2023\\\"; Fact B: \\\"April 06, 2023\\\"\"\n}",
+ "created_at": 1788878571.422563,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 127
+ }
+}

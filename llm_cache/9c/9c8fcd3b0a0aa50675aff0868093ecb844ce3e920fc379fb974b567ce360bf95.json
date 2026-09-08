@@ -1,0 +1,12 @@
+{
+ "key": "9c8fcd3b0a0aa50675aff0868093ecb844ce3e920fc379fb974b567ce360bf95",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe primary market issuances for different, non-overlapping quarters within the same fiscal year. Fact A refers to Q1, while Fact B refers to Q2.\",\n  \"reconciling_evidence\": \"Fact A: '₹3.8 lakh crore in Q1'; Fact B: '₹3.7 lakh crore in Q2:2024-25'\"\n}",
+ "created_at": 1788877979.551744,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1035,
+  "output": 122
+ }
+}

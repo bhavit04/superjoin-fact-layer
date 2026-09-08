@@ -1,0 +1,12 @@
+{
+ "key": "fa2de5285f5cdae2cd4085f0f8e75e271af47218775afad82d159544bc75b819",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"Fact A reports 'real GDP growth' while Fact B reports 'nominal GDP growth'. These are distinct economic metrics that measure different aspects of economic performance (inflation-adjusted vs. current prices), so the difference in values is expected and does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878237.599115,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1056,
+  "output": 98
+ }
+}

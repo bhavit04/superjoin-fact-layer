@@ -1,0 +1,12 @@
+{
+ "key": "92839636a71b99bdf5a6635ee55ee29aad57802043ec11404d8cafe1b7140974",
+ "response": "```json\n{\"facts\": [\n  {\"subject\": \"India\", \"metric\": \"labor market indicators status\", \"value\": \"broadly stable\", \"unit_hint\": \"\", \"fact_type\": \"categorical\", \"qualifiers\": {\"period\": \"2024\"}, \"polarity\": \"affirmed\", \"evidence\": \"Headline labor market indicators remained broadly \\nstable in 2024\", \"page\": 36, \"confidence\": 0.9},\n  {\"subject\": \"India\", \"metric\": \"employment in agriculture\", \"value\": \"declined\", \"unit_hint\": \"\", \"fact_type\": \"categorical\", \"qualifiers\": {\"period\": \"2024\"}, \"polarity\": \"affirmed\", \"evidence\": \"Employment in agriculture declined in 2024.\", \"page\": 36, \"confidence\": 0.9},\n  {\"subject\": \"India\", \"metric\": \"liquidity status\", \"value\": \"surplus\", \"unit_hint\": \"\", \"fact_type\": \"categorical\", \"qualifiers\": {\"period\": \"since late March 2025\"}, \"polarity\": \"affirmed\", \"evidence\": \"Liquidity has been in surplus since late March 2025.\", \"page\": 39, \"confidence\": 0.9},\n  {\"subject\": \"India\", \"metric\": \"central interest payments\", \"value\": \"over 5 percent\", \"unit_hint\": \"in percent of GDP\", \"fact_type\": \"numeric\", \"qualifiers\": {\"period\": \"recent\"}, \"polarity\": \"affirmed\", \"evidence\": \"Interest payments remain elevated at over 5 percent of \\nGDP.\", \"page\": 40, \"confidence\": 0.9}\n]}\n```",
+ "created_at": 1788878079.6467562,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "extract_facts",
+ "usage": {
+  "input": 6118,
+  "output": 381
+ }
+}

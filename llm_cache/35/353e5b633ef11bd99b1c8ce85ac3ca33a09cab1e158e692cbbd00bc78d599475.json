@@ -1,0 +1,12 @@
+{
+ "key": "353e5b633ef11bd99b1c8ce85ac3ca33a09cab1e158e692cbbd00bc78d599475",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a prior year's period, while Fact B refers to the period from April to October 2025. Because they describe net inflows for different timeframes, the figures are not comparable and do not conflict.\",\n  \"reconciling_evidence\": \"Fact A: 'corresponding period of the previous year'; Fact B: 'from April to October 2025'\"\n}",
+ "created_at": 1788878885.716813,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 930,
+  "output": 119
+ }
+}

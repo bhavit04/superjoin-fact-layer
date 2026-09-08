@@ -1,0 +1,12 @@
+{
+ "key": "08f201f6bd82db8b99ce5054f70dc3849c8924ec5911e795aaecb24cc87b929f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory because they report on two distinct financial metrics: 'EBITDA' and 'Adj. EBITDA'. It is standard financial reporting to present both the raw EBITDA figure and an adjusted version, which accounts for different items, explaining why the values differ.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA'; Fact B: 'Adj. EBITDA'\"\n}",
+ "created_at": 1788876486.576745,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1000,
+  "output": 116
+ }
+}

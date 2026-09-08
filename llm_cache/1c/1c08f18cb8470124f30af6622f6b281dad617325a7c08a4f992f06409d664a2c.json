@@ -1,0 +1,12 @@
+{
+ "key": "1c08f18cb8470124f30af6622f6b281dad617325a7c08a4f992f06409d664a2c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are reconciled because they measure growth against different baselines. Fact A compares production to the average of the past five years, while Fact B compares it to the previous year (2023-24). These are distinct metrics, not conflicting reports of the same figure.\",\n  \"reconciling_evidence\": \"Fact A: \\\"8.2 per cent higher than the average food grain production in the past five years.\\\" Fact B: \\\"higher by 5.7 per cent compared to 2023-24\\\"\"\n}",
+ "created_at": 1788878841.546147,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1028,
+  "output": 152
+ }
+}

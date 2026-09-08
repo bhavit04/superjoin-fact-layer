@@ -1,0 +1,12 @@
+{
+ "key": "4d319fd094b3ce1e27577b5966fd09bfbf2dfad547ce9f9c05b16c6aa6e74740",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the CAD for a full year ('a year ago'), while Fact B refers specifically to the second quarter (Q2) of FY24. They describe the same metric for different time horizons.\",\n  \"reconciling_evidence\": \"Fact A: \\\"a year ago\\\" vs Fact B: \\\"recorded in Q2 of FY24\\\"\"\n}",
+ "created_at": 1788879071.3841338,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 897,
+  "output": 112
+ }
+}

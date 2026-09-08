@@ -1,0 +1,12 @@
+{
+ "key": "95207c74a9fd51165b13ff257884cb1430f11afa381fb5331d8b0bbb1904d521",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the Indian Fiscal Year 2024/25 (April to March), while Fact B refers to the calendar year 2025 (January to December) or a different fiscal period in a time series table. The slight difference in growth rates is expected due to the different time windows.\",\n  \"reconciling_evidence\": \"Following economic growth of 6.5 percent in FY2024/25 ... Real GDP (at market prices) 9.7 7.6 9.2 6.5 6.6 6.2\"\n}",
+ "created_at": 1788879209.794859,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1041,
+  "output": 166
+ }
+}

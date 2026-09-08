@@ -1,0 +1,12 @@
+{
+ "key": "51eaa7309aeee8ece9bf5960760d7863ebfeb07b47a02ad74e129bdc8bcd1813",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"basis\",\n  \"explanation\": \"Fact A and Fact B describe the same metric (PTL freight tonnage growth) for the same period (Q4 FY24), but they report different growth bases: Fact A reports quarter-over-quarter (QoQ) growth, while Fact B reports year-over-year (YoY) growth. These are distinct metrics, explaining the difference in values.\",\n  \"reconciling_evidence\": \"YoY: 20.8% / QoQ: 8.6%\"\n}",
+ "created_at": 1788878394.277718,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1024,
+  "output": 142
+ }
+}

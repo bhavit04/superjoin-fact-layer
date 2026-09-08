@@ -1,0 +1,12 @@
+{
+ "key": "f4248b44072f655d0c050aba787711acdcad4c15581283731df43df048a5cac5",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A provides an absolute dollar figure for the calendar year 2023, while Fact B provides a percentage of GDP for a specific quarter (Q2) of the fiscal year 2024. These are different metrics (absolute vs. ratio) covering different timeframes, making them related data points rather than conflicting or corroborating figures.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878319.996232,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 942,
+  "output": 117
+ }
+}

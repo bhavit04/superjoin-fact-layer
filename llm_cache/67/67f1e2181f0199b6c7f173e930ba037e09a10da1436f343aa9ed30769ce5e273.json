@@ -1,0 +1,12 @@
+{
+ "key": "67f1e2181f0199b6c7f173e930ba037e09a10da1436f343aa9ed30769ce5e273",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts describe different export baskets. Fact A excludes both petroleum and gems/jewellery, while Fact B only excludes petroleum. Additionally, Fact B covers the cumulative period 'April-December 2024', whereas Fact A refers to the specific year-on-year growth for December 2024.\",\n  \"reconciling_evidence\": \"Fact A: 'non- petroleum and non-gems and jewellery exports' vs Fact B: 'During April-December 2024, non-petroleum exports'\"\n}",
+ "created_at": 1788877282.6433501,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1007,
+  "output": 150
+ }
+}

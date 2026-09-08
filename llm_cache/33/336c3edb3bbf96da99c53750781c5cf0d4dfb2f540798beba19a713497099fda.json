@@ -1,0 +1,12 @@
+{
+ "key": "336c3edb3bbf96da99c53750781c5cf0d4dfb2f540798beba19a713497099fda",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports revenue for 'Express Parcel' services, while Fact B reports revenue for 'Cross Border Services'. These are distinct service categories within the company's portfolio, not the same metric, so the difference in values does not constitute a contradiction or a reconciliation.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876446.3641422,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1055,
+  "output": 97
+ }
+}

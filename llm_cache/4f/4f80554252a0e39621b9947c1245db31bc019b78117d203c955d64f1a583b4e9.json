@@ -1,0 +1,12 @@
+{
+ "key": "4f80554252a0e39621b9947c1245db31bc019b78117d203c955d64f1a583b4e9",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence shows two distinct values (2,036 and 2,308) side-by-side in a table row, representing different reporting periods (likely current year vs. previous year). Because these values correspond to different time periods, they are not conflicting claims about the same metric for the same period.\",\n  \"reconciling_evidence\": \"Total liabilities 2,036 2,308\"\n}",
+ "created_at": 1788878458.616492,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 950,
+  "output": 128
+ }
+}

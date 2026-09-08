@@ -1,0 +1,12 @@
+{
+ "key": "9af7a419de12a04e300ad33e154e73db9a463fde29a163e7d649f03d2609b42b",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts do not contradict each other; they refer to different time periods within the same fiscal year. Fact A reports the figure for Q2:2024-25, while Fact B reports the figure for Q1:2024-25.\",\n  \"reconciling_evidence\": \"Fact A: '₹3.7 lakh crore in Q2:2024-25'; Fact B: '₹3.8 lakh crore in Q1'\"\n}",
+ "created_at": 1788879001.545279,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1025,
+  "output": 140
+ }
+}

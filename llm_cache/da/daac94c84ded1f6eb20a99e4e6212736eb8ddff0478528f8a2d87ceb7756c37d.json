@@ -1,0 +1,12 @@
+{
+ "key": "daac94c84ded1f6eb20a99e4e6212736eb8ddff0478528f8a2d87ceb7756c37d",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory because they describe different economic metrics. Fact A refers specifically to 'food inflation' (excluding TOP), while Fact B refers to 'headline inflation' (excluding TOP). These are distinct components of the CPI basket.\",\n  \"reconciling_evidence\": \"Fact A: 'average food inflation rate'; Fact B: 'average headline inflation'\"\n}",
+ "created_at": 1788877227.976994,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 991,
+  "output": 110
+ }
+}

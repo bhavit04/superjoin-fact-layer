@@ -1,0 +1,12 @@
+{
+ "key": "58fd832c3fef6440505044fd54c525ad19a9479401a607879a460f6691411c4f",
+ "response": "```json\n{\n  \"assignments\": [\n    {\n      \"index\": 0,\n      \"canonical\": \"ebitda\"\n    },\n    {\n      \"index\": 1,\n      \"canonical\": \"ebitda margin\"\n    },\n    {\n      \"index\": 2,\n      \"canonical\": \"adjusted ebitda\"\n    },\n    {\n      \"index\": 3,\n      \"canonical\": \"pat profitability\"\n    },\n    {\n      \"index\": 4,\n      \"canonical\": \"sponsorship\"\n    },\n    {\n      \"index\": 5,\n      \"canonical\": \"loss reduction\"\n    },\n    {\n      \"index\": 6,\n      \"canonical\": \"acquisition cost\"\n    },\n    {\n      \"index\": 7,\n      \"canonical\": \"board role\"\n    },\n    {\n      \"index\": 8,\n      \"canonical\": \"role\"\n    },\n    {\n      \"index\": 9,\n      \"canonical\": \"applicability\"\n    },\n    {\n      \"index\": 10,\n      \"canonical\": \"economic growth\"\n    },\n    {\n      \"index\": 11,\n      \"canonical\": \"gdp growth projection\"\n    },\n    {\n      \"index\": 12,\n      \"canonical\": \"gdp growth rate\"\n    },\n    {\n      \"index\": 13,\n      \"canonical\": \"gdp\"\n    },\n    {\n      \"index\": 14,\n      \"canonical\": \"market size\"\n    },\n    {\n      \"index\": 15,\n      \"canonical\": \"cagr\"\n    },\n    {\n      \"index\": 16,\n      \"canonical\": \"adjusted ebitda margin\"\n    },\n    {\n      \"index\": 17,\n      \"canonical\": \"current ratio\"\n    },\n    {\n      \"index\": 18,\n      \"canonical\": \"cash\"\n    },\n    {\n      \"index\": 19,\n      \"canonical\": \"board size\"\n    },\n    {\n      \"index\": 20,\n      \"canonical\": \"agm date\"\n    },\n    {\n      \"index\": 21,\n      \"canonical\": \"cin\"\n    },\n    {\n      \"index\": 22,\n      \"canonical\": \"net worth\"\n    },\n    {\n      \"index\": 23,\n      \"canonical\": \"chairperson\"\n    },\n    {\n      \"index\": 24,\n      \"canonical\": \"goodwill\"\n    },\n    {\n      \"index\": 25,\n      \"canonical\": \"auditor role\"\n    },\n    {\n      \"index\": 26,\n      \"canonical\": \"report type\"\n    },\n    {\n      \"index\": 27,\n      \"canonical\": \"discount rate\"\n    },\n    {\n      \"index\": 28,\n      \"canonical\": \"contingent liability\"\n    }\n  ]\n}\n```",
+ "created_at": 1788878484.0760288,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 3293,
+  "output": 715
+ }
+}

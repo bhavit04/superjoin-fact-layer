@@ -1,0 +1,12 @@
+{
+ "key": "3242dcfa96665d866505379ded957555780502d79067c2ca9b7144911beeb645",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are related but not contradictory because they measure different metrics. Fact A reports food inflation excluding only 'TOP' (tomato, onion, potato), while Fact B reports food inflation excluding a broader category of 'vegetables and pulses'. The difference in the basket of goods explains the different inflation figures.\",\n  \"reconciling_evidence\": \"Fact A: 'exclude the three most price-sensitive vegetables (tomato, onion and potato (TOP))'; Fact B: 'When these items are excluded, the average food inflation rate for FY25 (April-December) was 4.3 per cent'\"\n}",
+ "created_at": 1788877236.298831,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1006,
+  "output": 160
+ }
+}

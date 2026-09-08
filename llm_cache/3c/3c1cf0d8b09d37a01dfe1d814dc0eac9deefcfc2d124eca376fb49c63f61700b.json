@@ -1,0 +1,12 @@
+{
+ "key": "3c1cf0d8b09d37a01dfe1d814dc0eac9deefcfc2d124eca376fb49c63f61700b",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"The facts describe entirely different segments of the Indian economy (all establishments vs. manufacturing establishments) and different size thresholds (more than 100 workers vs. fewer than five workers). They are not the same claim, nor do they conflict; they are simply two distinct statistics about different parts of the business landscape.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878201.629452,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 965,
+  "output": 107
+ }
+}

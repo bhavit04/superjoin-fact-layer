@@ -1,0 +1,12 @@
+{
+ "key": "de5e5004591a17c66d87e1200cae40f190a148f9511ffb79b78a60a1e02f202f",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are reconciled because they describe different stages of the IPO proceeds lifecycle: Fact A represents the 'Original allocation' of funds, while Fact B represents the actual 'Funds utilised' as of the same date. They are not contradictory figures, but rather a planned amount versus an actual expenditure.\",\n  \"reconciling_evidence\": \"Expanding network infrastructure of your Company 13,600.00 No change 12,013.37\"\n}",
+ "created_at": 1788878537.0026429,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1110,
+  "output": 136
+ }
+}

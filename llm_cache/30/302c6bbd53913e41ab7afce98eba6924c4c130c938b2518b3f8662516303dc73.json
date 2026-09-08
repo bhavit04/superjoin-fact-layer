@@ -1,0 +1,12 @@
+{
+ "key": "302c6bbd53913e41ab7afce98eba6924c4c130c938b2518b3f8662516303dc73",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory because they report on two distinct financial metrics: 'EBITDA margin' and 'Adj. EBITDA margin'. It is standard for these figures to differ due to the exclusion of specific non-recurring or non-operational items in the adjusted calculation.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA margin' ... Fact B: 'Adj. EBITDA margin'\"\n}",
+ "created_at": 1788876386.276631,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 976,
+  "output": 119
+ }
+}

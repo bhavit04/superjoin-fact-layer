@@ -1,0 +1,12 @@
+{
+ "key": "de0eade51df97d2bfae26cab55a14704256adf3383aecdca5421e3b59ea03f44",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts are related but distinct because they measure different scopes of exports. Fact A excludes both petroleum and gems/jewellery, while Fact B excludes only petroleum. The difference in the growth figures is explained by the inclusion of the gems and jewellery category in Fact B's scope.\",\n  \"reconciling_evidence\": \"Fact A: \\\"non- petroleum and non-gems and jewellery exports\\\"; Fact B: \\\"non-petroleum exports\\\"\"\n}",
+ "created_at": 1788877203.516665,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1006,
+  "output": 128
+ }
+}

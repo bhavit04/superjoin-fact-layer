@@ -1,0 +1,12 @@
+{
+ "key": "b3ab28c2a566751541fb000325ca5ee6ae7b900b184676afb5d0838d92d06758",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are reconciled because they refer to different allocation types for the same category. Fact A represents the amount of funds actually utilized, while Fact B represents the original allocation amount, explaining the difference in figures.\",\n  \"reconciling_evidence\": \"Fact A: 'Funds utilised'; Fact B: 'Original allocation'\"\n}",
+ "created_at": 1788878544.6894069,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1102,
+  "output": 104
+ }
+}

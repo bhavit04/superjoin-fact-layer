@@ -1,0 +1,12 @@
+{
+ "key": "cec1227a168e42c6e799a2d5ec96bfb6044859d25796727aa985f6a49087b7f2",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the full-year growth for the prior year (2023-24), not 2024-25. Fact B refers specifically to the growth rate for the third quarter (Q3) of 2024-25, not the full-year growth. They are describing different time periods.\",\n  \"reconciling_evidence\": \"Fact A: '9.2 per cent a year ago'; Fact B: 'picked up momentum in Q3 to grow by 6.2 per cent'\"\n}",
+ "created_at": 1788877919.996762,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1025,
+  "output": 154
+ }
+}

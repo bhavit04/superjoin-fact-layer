@@ -1,0 +1,12 @@
+{
+ "key": "1fc47c51c153531c9f3d244d641dd76efb00b399c9fce59861f1fc840e38d1ec",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts do not contradict because they refer to different quarters within the same fiscal year. Fact A reports growth for Q3:2024-25, while Fact B reports growth for Q1:2024-25.\",\n  \"reconciling_evidence\": \"Fact A: 'grow by 6.2 per cent' in 'Q3'; Fact B: '6.5 per cent in Q1:2024-25'\"\n}",
+ "created_at": 1788877927.050833,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1008,
+  "output": 138
+ }
+}

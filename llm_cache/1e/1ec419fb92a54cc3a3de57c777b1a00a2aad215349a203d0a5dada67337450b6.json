@@ -1,0 +1,12 @@
+{
+ "key": "1ec419fb92a54cc3a3de57c777b1a00a2aad215349a203d0a5dada67337450b6",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"vintage\",\n  \"explanation\": \"The figures represent inflation projections for the same period (FY25) but from different institutions (IMF vs. RBI) issued at different times. Fact B specifically notes a revision by the RBI in December 2024, explaining why its figure differs from the IMF's projection.\",\n  \"reconciling_evidence\": \"IMF has projected an inflation rate of 4.4 per cent... RBI’s Monetary Policy Committee report revised its inflation projection from 4.5 per cent to 4.8 per cent\"\n}",
+ "created_at": 1788877320.0736141,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1059,
+  "output": 147
+ }
+}

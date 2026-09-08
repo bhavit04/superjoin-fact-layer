@@ -1,0 +1,12 @@
+{
+ "key": "53f0669d47cdad1de96da25fdc2e7e849d3c72b9a8dcd2e2c035a6e90eb0d0cb",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts describe two distinct economic metrics: Fact A refers to 'headline inflation' (excluding specific items), while Fact B refers to 'food inflation' (excluding specific items). Because they measure different components of the economy, the difference in values does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"Fact A: 'average headline inflation'; Fact B: 'average food inflation rate'\"\n}",
+ "created_at": 1788877212.556046,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 986,
+  "output": 117
+ }
+}

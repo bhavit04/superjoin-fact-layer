@@ -1,0 +1,12 @@
+{
+ "key": "e8103de3fb82f7c48e02b3c9e870920c0076c931835db6ea76d50329b1b4707b",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"The two facts describe the exact same role for Sahil Barua at Delhivery Limited. The difference between 'and' and '&' is a stylistic variation, not a substantive disagreement.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876927.798344,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 853,
+  "output": 84
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "068bcfe9ce7c011e4b543d7612e2a928b98336b4573ab153af4805e8ea08e180",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different timeframes within the same fiscal year. Fact A refers to the closing rate for a specific quarter (likely Q3 or Q4 given the higher value), while Fact B explicitly refers to the closing rate for Q2. They are not contradictory; they are distinct data points.\",\n  \"reconciling_evidence\": \"Fact A: 'closed the quarter'; Fact B: 'closed the Q2'\"\n}",
+ "created_at": 1788878027.372885,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1005,
+  "output": 126
+ }
+}

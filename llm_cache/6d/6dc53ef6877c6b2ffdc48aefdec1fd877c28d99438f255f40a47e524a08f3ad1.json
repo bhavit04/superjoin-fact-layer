@@ -1,0 +1,12 @@
+{
+ "key": "6dc53ef6877c6b2ffdc48aefdec1fd877c28d99438f255f40a47e524a08f3ad1",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they represent two distinct allotment events occurring on different dates within the same year (June 08, 2023, and December 07, 2023). They are related as components of the total equity shares allotted during 2023, rather than conflicting reports of the same event.\",\n  \"reconciling_evidence\": \"Fact A: \\\"June 08, 2023\\\"; Fact B: \\\"December 07, 2023\\\"\"\n}",
+ "created_at": 1788878644.836535,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1094,
+  "output": 148
+ }
+}

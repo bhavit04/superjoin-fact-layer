@@ -1,0 +1,12 @@
+{
+ "key": "32620748cdc6f4e7ea3b9795b0c525b6e9b07955029fcc0803a077363177fa70",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence shows two distinct columns of data (5,508 and 5,444) listed under the same line item, likely representing different reporting periods (e.g., current vs. previous year). Because the document does not explicitly label the columns, these are two distinct data points rather than a contradiction of the same metric for the same period.\",\n  \"reconciling_evidence\": \"Cash and cash equivalents(1) (B) 5,508 5,444\"\n}",
+ "created_at": 1788878465.543013,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 985,
+  "output": 144
+ }
+}

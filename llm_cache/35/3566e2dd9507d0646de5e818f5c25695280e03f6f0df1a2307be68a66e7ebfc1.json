@@ -1,0 +1,12 @@
+{
+ "key": "3566e2dd9507d0646de5e818f5c25695280e03f6f0df1a2307be68a66e7ebfc1",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports on aluminium exports, while Fact B reports on fertiliser exports. These are distinct commodities, so the difference in their values does not constitute a contradiction or a reconciliation; they are simply different metrics.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877256.447644,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 975,
+  "output": 85
+ }
+}

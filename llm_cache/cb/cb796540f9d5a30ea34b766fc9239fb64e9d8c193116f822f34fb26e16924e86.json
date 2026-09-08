@@ -1,0 +1,12 @@
+{
+ "key": "cb796540f9d5a30ea34b766fc9239fb64e9d8c193116f822f34fb26e16924e86",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the 9.2% growth rate as occurring 'a year ago' (FY2023-24), while Fact B refers to the 6.5% growth rate specifically for 'Q1:2024-25'. The initial extraction misattributed the 9.2% figure to the current year.\",\n  \"reconciling_evidence\": \"Fact A: '9.2 per cent a year ago'; Fact B: '6.5 per cent in Q1:2024-25'\"\n}",
+ "created_at": 1788877911.4312372,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1033,
+  "output": 156
+ }
+}

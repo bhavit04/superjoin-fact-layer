@@ -1,0 +1,12 @@
+{
+ "key": "a1d9ad6f701a03a35bb19c5ec1e0a1e2b127e61b438a36d8d9f0e05d35d5ae0c",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"The facts are identical. Fact A explicitly states the unit is 'million', while Fact B presents the figure in parentheses, which is standard accounting notation for a negative number (a loss). The mechanical observation of a 200% difference is a false positive caused by misinterpreting the sign and unit presentation.\",\n  \"reconciling_evidence\": \"Fact A: '₹ 2,491.86 million'; Fact B: '(2,491.86)'\"\n}",
+ "created_at": 1788878534.076447,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1060,
+  "output": 142
+ }
+}

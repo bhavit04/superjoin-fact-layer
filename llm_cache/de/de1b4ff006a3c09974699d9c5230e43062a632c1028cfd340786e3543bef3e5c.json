@@ -1,0 +1,12 @@
+{
+ "key": "de1b4ff006a3c09974699d9c5230e43062a632c1028cfd340786e3543bef3e5c",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A refers to India's overall GDP growth rate, while Fact B refers to the growth rate of India's merchandise exports. These are distinct economic metrics measuring different aspects of the economy.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877881.944989,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 998,
+  "output": 83
+ }
+}

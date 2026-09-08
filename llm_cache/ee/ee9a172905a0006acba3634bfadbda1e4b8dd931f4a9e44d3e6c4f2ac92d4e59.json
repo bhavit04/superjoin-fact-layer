@@ -1,0 +1,12 @@
+{
+ "key": "ee9a172905a0006acba3634bfadbda1e4b8dd931f4a9e44d3e6c4f2ac92d4e59",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports profit for a single quarter (Q3 FY2024), while Fact B reports the cumulative profit for the full fiscal year (FY2024). A positive quarterly result is mathematically consistent with a negative annual result if other quarters in the fiscal year incurred significant losses.\",\n  \"reconciling_evidence\": \"Profit / (Loss) after tax (159) 12 (69) (1,008) (249) EB\"\n}",
+ "created_at": 1788878412.158394,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1123,
+  "output": 141
+ }
+}

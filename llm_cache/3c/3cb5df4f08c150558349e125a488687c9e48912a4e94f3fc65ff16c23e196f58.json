@@ -1,0 +1,12 @@
+{
+ "key": "3cb5df4f08c150558349e125a488687c9e48912a4e94f3fc65ff16c23e196f58",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports a partial-year figure ('current year, up to November'), while Fact B reports full-year figures for FY23 and FY24. Because the periods are distinct and non-overlapping, the figures are not comparable and do not contradict each other.\",\n  \"reconciling_evidence\": \"Fact A: 'In the current year, up to November'; Fact B: 'in FY23 and FY24'\"\n}",
+ "created_at": 1788878878.973284,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 943,
+  "output": 127
+ }
+}

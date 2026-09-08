@@ -1,0 +1,12 @@
+{
+ "key": "30d36f6ebfddb9666ac795f5f0804ca50c908325eed7ecb5921da1aa5613c9a9",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A reports 'EBITDA' while Fact B reports 'Adj. EBITDA'. These are distinct financial metrics, not conflicting reports of the same figure. It is common for companies to report both standard and adjusted figures for the same period.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA'; Fact B: 'Adj. EBITDA'\"\n}",
+ "created_at": 1788876484.321712,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 994,
+  "output": 110
+ }
+}

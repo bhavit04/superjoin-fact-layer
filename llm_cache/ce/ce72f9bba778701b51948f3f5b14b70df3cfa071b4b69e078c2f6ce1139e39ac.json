@@ -1,0 +1,12 @@
+{
+ "key": "ce72f9bba778701b51948f3f5b14b70df3cfa071b4b69e078c2f6ce1139e39ac",
+ "response": "```json\n{\n  \"assignments\": [\n    {\"index\": 0, \"canonical\": \"cin\"},\n    {\"index\": 1, \"canonical\": \"capital equity issued paid share subscribed up\"},\n    {\"index\": 2, \"canonical\": \"busines registr\"},\n    {\"index\": 3, \"canonical\": \"document number\"},\n    {\"index\": 4, \"canonical\": \"file number\"},\n    {\"index\": 5, \"canonical\": \"unique entity number\"},\n    {\"index\": 6, \"canonical\": \"capital issued share\"},\n    {\"index\": 7, \"canonical\": \"board limit size\"},\n    {\"index\": 8, \"canonical\": \"board size\"},\n    {\"index\": 9, \"canonical\": \"designation\"},\n    {\"index\": 10, \"canonical\": \"birth date\"},\n    {\"index\": 11, \"canonical\": \"aggregate compens\"},\n    {\"index\": 12, \"canonical\": \"annual fixed remuner\"},\n    {\"index\": 13, \"canonical\": \"sitting fee\"},\n    {\"index\": 14, \"canonical\": \"compens paid\"},\n    {\"index\": 15, \"canonical\": \"loan amount\"},\n    {\"index\": 16, \"canonical\": \"borrow outstand\"},\n    {\"index\": 17, \"canonical\": \"number of executive directors\"},\n    {\"index\": 18, \"canonical\": \"number of non-executive nominee directors\"},\n    {\"index\": 19, \"canonical\": \"number of non-executive independent directors\"},\n    {\"index\": 20, \"canonical\": \"chairperson\"},\n    {\"index\": 21, \"canonical\": \"member\"},\n    {\"index\": 22, \"canonical\": \"reconstitution date\"},\n    {\"index\": 23, \"canonical\": \"constitution date\"},\n    {\"index\": 24, \"canonical\": \"accrued pay variable\"},\n    {\"index\": 25, \"canonical\": \"bonu deferred\"},\n    {\"index\": 26, \"canonical\": \"attrition key managerial personnel\"},\n    {\"index\": 27, \"canonical\": \"benefit termin\"},\n    {\"index\": 28, \"canonical\": \"equity shareholding\"},\n    {\"index\": 29, \"canonical\": \"granted options\"},\n    {\"index\": 30, \"canonical\": \"capital equity offer percentage pre share\"},\n    {\"index\": 31, \"canonical\": \"vested options\"},\n    {\"index\": 32, \"canonical\": \"payment received\"}\n  ]\n}\n```",
+ "created_at": 1788876905.1253362,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 3137,
+  "output": 570
+ }
+}

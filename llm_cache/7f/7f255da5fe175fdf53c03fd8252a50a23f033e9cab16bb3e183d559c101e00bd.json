@@ -1,0 +1,12 @@
+{
+ "key": "7f255da5fe175fdf53c03fd8252a50a23f033e9cab16bb3e183d559c101e00bd",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the profit/loss for the full fiscal year (FY2023), while Fact B reports the figure for the fourth quarter (Q4 FY2023) of that same year. Because these represent different time periods, the figures are not expected to match.\",\n  \"reconciling_evidence\": \"Fact A: \\\"FY23\\\"; Fact B: \\\"Q4 FY23\\\"\"\n}",
+ "created_at": 1788878406.718034,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1128,
+  "output": 126
+ }
+}

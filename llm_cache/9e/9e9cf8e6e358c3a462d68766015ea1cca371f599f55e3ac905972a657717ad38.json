@@ -1,0 +1,12 @@
+{
+ "key": "9e9cf8e6e358c3a462d68766015ea1cca371f599f55e3ac905972a657717ad38",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"date\",\n  \"explanation\": \"The facts describe two distinct events of equity share allotment occurring on different dates (August 08, 2023, versus April 06, 2023). They are not the same claim, but rather separate entries in a list of allotments.\",\n  \"reconciling_evidence\": \"Fact A: \\\"August 08, 2023 197,846\\\"; Fact B: \\\"April 06, 2023 158,855\\\"\"\n}",
+ "created_at": 1788878579.995109,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 148
+ }
+}

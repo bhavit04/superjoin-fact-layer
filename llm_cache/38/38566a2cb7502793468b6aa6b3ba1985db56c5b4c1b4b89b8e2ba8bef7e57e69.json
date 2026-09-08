@@ -1,0 +1,12 @@
+{
+ "key": "38566a2cb7502793468b6aa6b3ba1985db56c5b4c1b4b89b8e2ba8bef7e57e69",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"These facts are not contradictory; they describe two distinct components of the company's total CSR expenditure for the same period. Fact A details a contribution to the Olympic Gold Quest, while Fact B details a separate contribution to IIT Delhi.\",\n  \"reconciling_evidence\": \"Fact A: 'We contributed ₹10.00 million towards India’s Olympic Gold Quest...'; Fact B: 'with an additional ₹0.35 million for IIT Delhi's efforts...'\"\n}",
+ "created_at": 1788878525.9203389,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1084,
+  "output": 135
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "27f8c405a1a19df2ba33987f2587957c79fe8132fbd745587d8c332742b69618",
+ "response": "{\n  \"assignments\": [\n    {\n      \"index\": 0,\n      \"canonical\": \"value\"\n    },\n    {\n      \"index\": 1,\n      \"canonical\": \"accretion\"\n    },\n    {\n      \"index\": 2,\n      \"canonical\": \"net outflows\"\n    },\n    {\n      \"index\": 3,\n      \"canonical\": \"depletion\"\n    },\n    {\n      \"index\": 4,\n      \"canonical\": \"value growth\"\n    },\n    {\n      \"index\": 5,\n      \"canonical\": \"rate\"\n    },\n    {\n      \"index\": 6,\n      \"canonical\": \"gfd\"\n    },\n    {\n      \"index\": 7,\n      \"canonical\": \"consolidated gfd\"\n    },\n    {\n      \"index\": 8,\n      \"canonical\": \"gdp growth\"\n    },\n    {\n      \"index\": 9,\n      \"canonical\": \"production\"\n    },\n    {\n      \"index\": 10,\n      \"canonical\": \"rice stock\"\n    },\n    {\n      \"index\": 11,\n      \"canonical\": \"capacity\"\n    },\n    {\n      \"index\": 12,\n      \"canonical\": \"expansion\"\n    },\n    {\n      \"index\": 13,\n      \"canonical\": \"ratio\"\n    },\n    {\n      \"index\": 14,\n      \"canonical\": \"volatility\"\n    },\n    {\n      \"index\": 15,\n      \"canonical\": \"yield\"\n    },\n    {\n      \"index\": 16,\n      \"canonical\": \"gain\"\n    },\n    {\n      \"index\": 17,\n      \"canonical\": \"quarterly rise\"\n    },\n    {\n      \"index\": 18,\n      \"canonical\": \"expected growth\"\n    },\n    {\n      \"index\": 19,\n      \"canonical\": \"budgeted growth\"\n    },\n    {\n      \"index\": 20,\n      \"canonical\": \"buoyancy\"\n    },\n    {\n      \"index\": 21,\n      \"canonical\": \"export growth\"\n    },\n    {\n      \"index\": 22,\n      \"canonical\": \"cost\"\n    },\n    {\n      \"index\": 23,\n      \"canonical\": \"net outgo\"\n    },\n    {\n      \"index\": 24,\n      \"canonical\": \"interest rate\"\n    }\n  ]\n}",
+ "created_at": 1788878925.853387,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 3077,
+  "output": 600
+ }
+}

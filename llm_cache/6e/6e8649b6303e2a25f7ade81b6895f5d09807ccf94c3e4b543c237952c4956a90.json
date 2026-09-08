@@ -1,0 +1,12 @@
+{
+ "key": "6e8649b6303e2a25f7ade81b6895f5d09807ccf94c3e4b543c237952c4956a90",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory; they describe two different metrics for the same category. Fact A reports the count of issues (383), while Fact B reports the total monetary value of those issues (97,284.2 crore). They are complementary data points from the same source line.\",\n  \"reconciling_evidence\": \"1. Private Sector (a+b) 383 97,284.2\"\n}",
+ "created_at": 1788878037.3689659,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1057,
+  "output": 130
+ }
+}

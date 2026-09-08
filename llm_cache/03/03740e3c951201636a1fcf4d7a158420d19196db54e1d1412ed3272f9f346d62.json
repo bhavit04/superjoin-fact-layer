@@ -1,0 +1,12 @@
+{
+ "key": "03740e3c951201636a1fcf4d7a158420d19196db54e1d1412ed3272f9f346d62",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"Fact A provides the percentage coverage of external debt by forex reserves, while Fact B provides the absolute value of that debt and confirms the same 90 percent coverage figure. They are describing the same financial situation from different angles.\",\n  \"reconciling_evidence\": \"cover approximately 90 per cent of India’s external debt of USD 711.8 billion\"\n}",
+ "created_at": 1788877321.19629,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 906,
+  "output": 117
+ }
+}

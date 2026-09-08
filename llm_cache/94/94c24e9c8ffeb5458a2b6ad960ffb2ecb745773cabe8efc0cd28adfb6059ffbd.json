@@ -1,0 +1,12 @@
+{
+ "key": "94c24e9c8ffeb5458a2b6ad960ffb2ecb745773cabe8efc0cd28adfb6059ffbd",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the 'year' (12 months), while Fact B explicitly specifies the 'nine months period' ended December 31, 2021. Although the normalized values appear identical in magnitude, the underlying periods differ, and Fact A's negative sign indicates a loss, whereas Fact B describes the same figure as a loss without the negative sign.\",\n  \"reconciling_evidence\": \"Fact A: 'Restated loss for the period/ year'; Fact B: 'nine months period ended December 31, 2021'\"\n}",
+ "created_at": 1788876963.304209,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1111,
+  "output": 157
+ }
+}

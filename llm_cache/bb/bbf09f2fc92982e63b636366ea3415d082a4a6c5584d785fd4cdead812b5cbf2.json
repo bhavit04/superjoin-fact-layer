@@ -1,0 +1,12 @@
+{
+ "key": "bbf09f2fc92982e63b636366ea3415d082a4a6c5584d785fd4cdead812b5cbf2",
+ "response": "{\"facts\": [\n  {\n    \"subject\": \"SpotOn Logistics Private Limited\",\n    \"metric\": \"acquisition status\",\n    \"value\": \"acquisition\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"categorical\",\n    \"qualifiers\": {\n      \"effective_date\": \"1st April 2021\",\n      \"context\": \"pro forma consolidated P&L and adjusted EBITDA\"\n    },\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"The pro forma consolidated P&L and adjusted EBITDA compiled by our Company to illustrate the impact of the acquisition of SpotOn Logistics Private Limited on our consolidated financial \\nstatements for the year ended March 31, 2022 as if the acquisition occurred on 1st April 2021.\",\n    \"page\": 26,\n    \"confidence\": 0.9\n  },\n  {\n    \"subject\": \"RedSeer report\",\n    \"metric\": \"report title\",\n    \"value\": \"Logistics Market in India\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"textual\",\n    \"qualifiers\": {\n      \"date\": \"April 21, 2022\"\n    },\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"Report titled “Logistics Market in India” dated April 21, 2022 prepared by RedSeer in connection with the public offer by the Company\",\n    \"page\": 26,\n    \"confidence\": 1.0\n  },\n  {\n    \"subject\": \"Delhivery\",\n    \"metric\": \"investor relations email address\",\n    \"value\": \"ir@delhivery.com\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"textual\",\n    \"qualifiers\": {},\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"For any queries, please write to us at ir@delhivery.com\",\n    \"page\": 27,\n    \"confidence\": 1.0\n  }\n]}",
+ "created_at": 1788876329.920449,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "extract_facts",
+ "usage": {
+  "input": 1785,
+  "output": 468
+ }
+}

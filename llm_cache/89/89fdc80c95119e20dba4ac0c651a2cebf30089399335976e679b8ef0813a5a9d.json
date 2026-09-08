@@ -1,0 +1,12 @@
+{
+ "key": "89fdc80c95119e20dba4ac0c651a2cebf30089399335976e679b8ef0813a5a9d",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"Fact A provides a historical absolute dollar figure for the current account deficit, while Fact B provides a future projection expressed as a percentage of GDP. These are different metrics describing different timeframes and cannot be directly compared or reconciled as the same data point.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878297.200512,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 963,
+  "output": 95
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "78039e1827ff0282c510ba2428f01a104e11771f10f3e8c39f31c649bf0597c1",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 1.0,\n  \"dimension\": \"value\",\n  \"explanation\": \"Both facts refer to the same metric (10-year generic G-sec yield) for the same period (FY2025) and appear in the same document. However, they provide different closing values for the quarter (6.75% vs 7.01%), which constitutes a direct contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878005.886623,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1019,
+  "output": 114
+ }
+}

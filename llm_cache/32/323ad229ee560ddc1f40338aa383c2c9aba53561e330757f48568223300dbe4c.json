@@ -1,0 +1,12 @@
+{
+ "key": "323ad229ee560ddc1f40338aa383c2c9aba53561e330757f48568223300dbe4c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"vintage\",\n  \"explanation\": \"Fact A clarifies that the 3.5 per cent figure refers to an estimate made 'a year ago,' whereas the 3.3 per cent figure represents the current estimate for 2024. The discrepancy is explained by the difference in the vintage of the forecast.\",\n  \"reconciling_evidence\": \"Fact A: \\\"global growth at 3.3 per cent in 2024 (3.5 per cent a year ago)\\\"\"\n}",
+ "created_at": 1788877896.318961,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 985,
+  "output": 135
+ }
+}

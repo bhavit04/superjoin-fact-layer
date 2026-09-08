@@ -1,0 +1,12 @@
+{
+ "key": "85a3b67f3230df4b9a895455ca5b6fc1492d2cfde822d97b41c340e9e32a831a",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe India's current account deficit for two different time periods: Fact A refers to a period 'a year ago,' while Fact B refers to 'Q2 FY25.' They are not the same claim, but rather data points for different timeframes.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788879046.161487,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 947,
+  "output": 100
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "575b8bf209eeb974bf3ce0fb3c73efafee3798464865f88e3330c05ccb14b0e3",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence lists a sequence of three numbers (73, 47, 37) for 'Net Working Capital Days', likely representing different time periods (e.g., different fiscal years or quarters). Fact A and Fact B are simply selecting different data points from this time series, not conflicting claims about the same period.\",\n  \"reconciling_evidence\": \"Net Working Capital Days (Receivable days – Payable days) 73 47 37\"\n}",
+ "created_at": 1788878427.5515468,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 935,
+  "output": 136
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "f722eab59ec2f3bfdc86a32d49268c5975f120ea10172657cbf16972c868d5a2",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts describe the exact same board nomination right for SVF Doorbell (Cayman) Ltd, supported by identical source evidence. The minor difference in descriptive wording (Fact B adding 'non-executive') and the inclusion of metadata qualifiers in Fact A do not constitute a conflict.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878709.7668412,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1299,
+  "output": 103
+ }
+}

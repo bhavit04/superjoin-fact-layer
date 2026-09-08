@@ -1,0 +1,12 @@
+{
+ "key": "b52ebd26c2fd30d7e7a9e734cb767be9fc9187c312c7ed329a1651bda91a2080",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods within the same fiscal year. Fact A reports on Q4, while Fact B reports on Q2. They are distinct data points in a time series rather than conflicting reports on the same period.\",\n  \"reconciling_evidence\": \"Fact A: 'stood at ₹4.4 lakh crore in Q4.' Fact B: 'moderated to ₹3.7 lakh crore in Q2:2024-25'\"\n}",
+ "created_at": 1788877985.5373068,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1039,
+  "output": 138
+ }
+}

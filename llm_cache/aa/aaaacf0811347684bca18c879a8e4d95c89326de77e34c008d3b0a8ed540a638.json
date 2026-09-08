@@ -1,0 +1,12 @@
+{
+ "key": "aaaacf0811347684bca18c879a8e4d95c89326de77e34c008d3b0a8ed540a638",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts report two distinct financial metrics—'Service EBITDA margin' and 'Adj. EBITDA margin'—for the same period. These are different profitability measures, likely capturing different cost structures or accounting adjustments, rather than conflicting reports of the same metric.\",\n  \"reconciling_evidence\": \"Fact A: 'Service EBITDA margin'; Fact B: 'Adj. EBITDA margin'\"\n}",
+ "created_at": 1788876494.788749,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1007,
+  "output": 113
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "72448e87dd5792cca28fd75b280f15136c81d0e000a4374689696098e5b6bb11",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports Adj. EBITDA for the third quarter (Q3 FY24), while Fact B reports the figure for the full fiscal year (FY24). Because EBITDA can fluctuate or be negative in other quarters, a quarterly figure exceeding the annual total is mathematically possible and does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Q3 FY24: ₹92 Cr\\\"; Fact B: \\\"FY24 ... ₹76Cr\\\"\"\n}",
+ "created_at": 1788878389.7775638,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1076,
+  "output": 139
+ }
+}

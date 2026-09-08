@@ -1,0 +1,12 @@
+{
+ "key": "e74142e98d917262dad616029ea31b46a5c244cd64f8541d5be0a688a4bcf65e",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are reconciled by the difference in time scope. Fact A reports the current account deficit specifically for the second quarter (Q2) of FY25, while Fact B reports the deficit for the entire fiscal year (FY2024/25).\",\n  \"reconciling_evidence\": \"Fact A: 'Q2 of FY25'; Fact B: 'FY2024/25'\"\n}",
+ "created_at": 1788878186.962929,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1010,
+  "output": 127
+ }
+}

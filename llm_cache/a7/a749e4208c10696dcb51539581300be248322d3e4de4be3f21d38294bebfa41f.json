@@ -1,0 +1,12 @@
+{
+ "key": "a749e4208c10696dcb51539581300be248322d3e4de4be3f21d38294bebfa41f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe the same metric (primary market issuances of CPs) for two different time periods within the same fiscal year. Fact A refers to Q1, while Fact B refers to Q4.\",\n  \"reconciling_evidence\": \"Fact A: 'from ₹3.8 lakh crore in Q1'; Fact B: 'and stood at ₹4.4 lakh crore in Q4.'\"\n}",
+ "created_at": 1788879008.905486,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1008,
+  "output": 124
+ }
+}

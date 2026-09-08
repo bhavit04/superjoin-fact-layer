@@ -1,0 +1,12 @@
+{
+ "key": "39692abd3cfc9c7f5488caf83f6b69c0bf9e50618119b5279871ad20fa1c353e",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"Fact A describes Deepak Kapoor's general board role, while Fact B specifies his role within a specific committee (Nomination and Remuneration Committee). The additional detail in Fact B does not contradict the general title provided in Fact A.\",\n  \"reconciling_evidence\": \"Fact A: 'Deepak Kapoor Chairman and Non-Executive Independent Director'; Fact B: 'Deepak Kapoor, Chairman, Non-Executive Independent Director (Member); ... Nomination and Remuneration Committee'\"\n}",
+ "created_at": 1788876990.7831721,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 910,
+  "output": 137
+ }
+}

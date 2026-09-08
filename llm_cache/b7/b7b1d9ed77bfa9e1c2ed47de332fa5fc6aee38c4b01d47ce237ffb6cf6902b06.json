@@ -1,0 +1,12 @@
+{
+ "key": "b7b1d9ed77bfa9e1c2ed47de332fa5fc6aee38c4b01d47ce237ffb6cf6902b06",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods within the same fiscal year. Fact A reports growth for Q2, while Fact B reports growth for Q3. They are related as part of a time series of quarterly economic performance.\",\n  \"reconciling_evidence\": \"Fact A: 'growth softened to 5.6 per cent in Q2'; Fact B: 'picked up momentum in Q3 to grow by 6.2 per cent'\"\n}",
+ "created_at": 1788878955.065314,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 992,
+  "output": 132
+ }
+}

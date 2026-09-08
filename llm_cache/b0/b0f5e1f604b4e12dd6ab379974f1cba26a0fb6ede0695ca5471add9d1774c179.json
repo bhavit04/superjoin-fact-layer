@@ -1,0 +1,12 @@
+{
+ "key": "b0f5e1f604b4e12dd6ab379974f1cba26a0fb6ede0695ca5471add9d1774c179",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (revenue from sale of traded goods) for two distinct, non-overlapping time periods. Fact A refers to the nine-month period ended December 31, 2021, while Fact B refers to Fiscal 2019. They are part of the same time series.\",\n  \"reconciling_evidence\": \"Our revenue from sale of traded goods was nil... for Fiscal 2019... and the nine months period ended December 31, 2021 respectively\"\n}",
+ "created_at": 1788878729.461965,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1172,
+  "output": 148
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "9c91e2da8252777b52b98194efc177aac751331f75cf23eec88cd99a05ff000c",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"unit\",\n  \"explanation\": \"While the mechanical observation suggests a scale mismatch, the values (1.4 million vs 1,517) are too far apart to be a simple unit conversion error (e.g., tons vs kg). Fact A claims 1.4 million tons, while Fact B claims 1,517 tons for the same metric and period in the same document, representing a material, unexplained discrepancy.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878382.188205,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1028,
+  "output": 132
+ }
+}

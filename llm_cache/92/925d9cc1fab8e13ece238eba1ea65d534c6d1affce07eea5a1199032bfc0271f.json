@@ -1,0 +1,12 @@
+{
+ "key": "925d9cc1fab8e13ece238eba1ea65d534c6d1affce07eea5a1199032bfc0271f",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A discusses the projected size of India's B2C e-commerce market, while Fact B discusses the global ranking of India's stock market. These are distinct economic metrics describing entirely different sectors.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878195.356506,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 931,
+  "output": 86
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "443f731fe828588a4ae4069ca436f0a1803bcb66424d0c4089e078e643f18157",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the 2024 growth projection. Fact B clarifies that the 3.5 per cent figure refers to the growth rate from 'a year ago' (2023), not 2024. The document is consistent; the extraction for Fact B misattributed the prior-year figure to the current year.\",\n  \"reconciling_evidence\": \"3.5 per cent a year ago\"\n}",
+ "created_at": 1788877890.747452,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 989,
+  "output": 129
+ }
+}

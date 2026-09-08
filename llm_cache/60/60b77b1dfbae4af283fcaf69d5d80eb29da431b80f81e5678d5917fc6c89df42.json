@@ -1,0 +1,12 @@
+{
+ "key": "60b77b1dfbae4af283fcaf69d5d80eb29da431b80f81e5678d5917fc6c89df42",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"The terms 'Chairman' and 'Chairperson' are gender-neutral variations of the same board role. Both sources identify Deepak Kapoor as holding the same position at Delhivery Limited, making this a corroboration rather than a contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876928.239209,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 858,
+  "output": 93
+ }
+}

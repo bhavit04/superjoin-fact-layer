@@ -1,0 +1,12 @@
+{
+ "key": "4b6e4936d6019faf0a86061cad87d6df2f02cda9a0e66dd021be53172877df2f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe two distinct events of equity share allotment occurring on different dates (October 09, 2023, versus August 08, 2023). They are not conflicting reports of the same event, but rather a time series of separate allotments.\",\n  \"reconciling_evidence\": \"Fact A: \\\"October 09, 2023\\\"; Fact B: \\\"August 08, 2023\\\"\"\n}",
+ "created_at": 1788878665.115036,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 134
+ }
+}

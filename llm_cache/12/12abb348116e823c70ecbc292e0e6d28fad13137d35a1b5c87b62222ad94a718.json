@@ -1,0 +1,12 @@
+{
+ "key": "12abb348116e823c70ecbc292e0e6d28fad13137d35a1b5c87b62222ad94a718",
+ "response": "{\"i\": 1}",
+ "created_at": 1788875431.4376209,
+ "provider": "gemini",
+ "model": "gemini-3.6-flash",
+ "task": "conc_probe_1",
+ "usage": {
+  "input": 15,
+  "output": 6
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "534553aed03bf3b10701aef8d74c77d817c33cb2db1c528433d82b5ba7092817",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"Both facts refer to the same metric (EBITDA) for the same period (FY23) and report the same value. The parentheses in financial reporting denote a negative value; Fact A explicitly labels this as Rs. (452 Cr), while Fact B presents the same figure in a table format. They are consistent.\",\n  \"reconciling_evidence\": \"Fact A: 'Rs. (452 Cr)'; Fact B: '(452)'\"\n}",
+ "created_at": 1788876505.569577,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1000,
+  "output": 137
+ }
+}

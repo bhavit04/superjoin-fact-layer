@@ -1,0 +1,12 @@
+{
+ "key": "429fb8eaf9ff6b2dccce19210dfa93b329504c2ab7dfe2405fe81410dec14b67",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are reconciled by the difference in reporting periods. Fact A reports the profit/loss for the fourth quarter (Q4 FY24), while Fact B reports the cumulative profit/loss for the full fiscal year (FY24). The values are not contradictory as they represent different timeframes.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Q4 FY24\\\"; Fact B: \\\"FY24\\\"\"\n}",
+ "created_at": 1788876385.279467,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1051,
+  "output": 128
+ }
+}

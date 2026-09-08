@@ -1,0 +1,12 @@
+{
+ "key": "99a9dd16d8daf4d573d3e2f5c59546ace3a983daf5433c7335cd8cb8b49d3cc0",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a partial year period ('current year, up to November'), while Fact B refers to the full fiscal year ('FY24'). The difference in values is explained by the different timeframes covered.\",\n  \"reconciling_evidence\": \"Fact A: 'In the current year, up to November'; Fact B: 'in FY23 and FY24'\"\n}",
+ "created_at": 1788878886.97045,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 944,
+  "output": 118
+ }
+}

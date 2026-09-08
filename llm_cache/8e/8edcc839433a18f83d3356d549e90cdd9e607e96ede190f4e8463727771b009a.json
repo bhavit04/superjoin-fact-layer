@@ -1,0 +1,12 @@
+{
+ "key": "8edcc839433a18f83d3356d549e90cdd9e607e96ede190f4e8463727771b009a",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the current account deficit for the full fiscal year (FY2024/25), while Fact B specifically reports the deficit for the second quarter (Q2) of that same fiscal year.\",\n  \"reconciling_evidence\": \"Fact A: \\\"The CA deficit declined to 0.6 percent of GDP in FY2024/25\\\" vs Fact B: \\\"current account deficit (CAD) moderated slightly to 1.2 per cent of GDP in Q2 of FY25\\\"\"\n}",
+ "created_at": 1788879193.748287,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1012,
+  "output": 150
+ }
+}

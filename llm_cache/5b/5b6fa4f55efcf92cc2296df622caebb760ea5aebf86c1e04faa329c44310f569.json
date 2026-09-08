@@ -1,0 +1,12 @@
+{
+ "key": "5b6fa4f55efcf92cc2296df622caebb760ea5aebf86c1e04faa329c44310f569",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the average growth for the first half (H1) of the fiscal year, while Fact B provides the specific quarterly growth rates for Q1 and Q2. The H1 figure (6.0%) is the average of the two quarterly figures (6.7% and 5.4%).\",\n  \"reconciling_evidence\": \"Fact A: '6.0 per cent in the first half'; Fact B: '6.7 per cent and 5.4 per cent in Q1 and Q2 FY25'\"\n}",
+ "created_at": 1788878853.706611,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1019,
+  "output": 153
+ }
+}

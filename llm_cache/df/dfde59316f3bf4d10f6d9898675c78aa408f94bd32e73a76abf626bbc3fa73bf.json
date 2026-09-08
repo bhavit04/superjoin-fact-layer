@@ -1,0 +1,12 @@
+{
+ "key": "dfde59316f3bf4d10f6d9898675c78aa408f94bd32e73a76abf626bbc3fa73bf",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A refers to the export value of fertilisers, while Fact B refers to the export value of aluminium. These are distinct commodities, so the difference in their values does not constitute a contradiction or a reconciliation; they are simply different metrics.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877259.811321,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 969,
+  "output": 91
+ }
+}

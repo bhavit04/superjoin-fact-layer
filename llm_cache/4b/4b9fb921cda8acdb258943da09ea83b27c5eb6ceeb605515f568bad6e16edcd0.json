@@ -1,0 +1,12 @@
+{
+ "key": "4b9fb921cda8acdb258943da09ea83b27c5eb6ceeb605515f568bad6e16edcd0",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"The facts are identical. The parentheses in financial reporting denote a negative number (a loss). Fact A reports '(452)' and Fact B reports '₹(452) Cr'; both represent a loss of 452 crore. The mechanical observation incorrectly interpreted the parentheses as a positive value in Fact B.\",\n  \"reconciling_evidence\": \"Fact A: '(452)'; Fact B: '₹(452) Cr'\"\n}",
+ "created_at": 1788876501.239588,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1003,
+  "output": 134
+ }
+}

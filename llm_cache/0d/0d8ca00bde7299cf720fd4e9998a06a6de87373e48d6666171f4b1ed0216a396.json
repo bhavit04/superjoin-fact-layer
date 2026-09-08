@@ -1,0 +1,12 @@
+{
+ "key": "0d8ca00bde7299cf720fd4e9998a06a6de87373e48d6666171f4b1ed0216a396",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts are not contradictory because they refer to different scopes. Fact A reports on the aggregate Wholesale Price Index (WPI), while Fact B reports specifically on the 'manufactured products' sub-component of that index.\",\n  \"reconciling_evidence\": \"Fact A: 'Inflation measured by the wholesale price index (WPI)'; Fact B: 'Inflation in manufactured products'\"\n}",
+ "created_at": 1788877943.646036,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1019,
+  "output": 117
+ }
+}

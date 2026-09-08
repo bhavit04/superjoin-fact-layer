@@ -1,0 +1,12 @@
+{
+ "key": "bbbf75551279be0a58bf5feb8d3920c51ef7910125c729196124457fcd4d726c",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports merchandise imports, while Fact B reports merchandise exports. These are distinct economic metrics representing different flows of goods, not conflicting measurements of the same metric.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878262.160674,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1079,
+  "output": 76
+ }
+}

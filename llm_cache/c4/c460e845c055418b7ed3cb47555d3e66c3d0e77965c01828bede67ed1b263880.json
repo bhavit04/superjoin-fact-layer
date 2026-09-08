@@ -1,0 +1,12 @@
+{
+ "key": "c460e845c055418b7ed3cb47555d3e66c3d0e77965c01828bede67ed1b263880",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory because they report on two distinct financial metrics: 'EBITDA margin' and 'Adj. EBITDA margin'. These are different measures of profitability, and it is expected that they would yield different values for the same period.\",\n  \"reconciling_evidence\": \"Fact A: '1.6% EBITDA / EBITDA margin'; Fact B: '0.9% Adj. EBITDA / Adj. EBITDA margin'\"\n}",
+ "created_at": 1788876383.801135,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 977,
+  "output": 125
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "c1f56dc4de3f5c3ae781db8b3c75675ee09b64fcdff924594a0c04e812d07ec8",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe different metrics (merchandise trade deficit vs. overall trade deficit) for different timeframes (Q2 FY25 vs. December 2024). Because the metrics and periods do not align, they are not comparable, and the higher value in the shorter period does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877247.473408,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1003,
+  "output": 109
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "16412aa1767d5c6238f3439e875452e1e34a6893406844b98d181dbce3798674",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods. Fact A reports the profit for a single quarter (Q3 FY24), while Fact B reports the cumulative loss for the entire fiscal year (FY24). A quarterly profit can coexist with an annual loss.\",\n  \"reconciling_evidence\": \"Fact A: 'Q3 FY24'; Fact B: 'FY24'\"\n}",
+ "created_at": 1788876374.344457,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1052,
+  "output": 123
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "3ed040ebedb36fcca57cebc596965d64eead004765640caad08c9afd0b364e86",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Both facts refer to the same metric (India's current account deficit as a percentage of GDP) for the same relative time period ('a year ago' vs 'previous year'). Fact A states this was 1.1% of GDP, while Fact B states it was 0.7% of GDP. This is a material disagreement regarding the same historical data point.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878282.029129,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 919,
+  "output": 124
+ }
+}

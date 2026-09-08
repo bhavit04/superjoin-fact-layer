@@ -1,0 +1,12 @@
+{
+ "key": "077005ec2a0efa5bf6eb4a9989a1ada97dad63a107f2ab7a68e3606cdafe1778",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe two distinct allotment events occurring on different dates within the same year (2023). They are related as separate line items in a list of stock option allotments.\",\n  \"reconciling_evidence\": \"Fact A: 'June 08, 2023'; Fact B: 'November 07, 2023'\"\n}",
+ "created_at": 1788878638.288317,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 117
+ }
+}

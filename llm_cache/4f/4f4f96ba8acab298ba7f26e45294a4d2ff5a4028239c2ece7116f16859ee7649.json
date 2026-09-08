@@ -1,0 +1,12 @@
+{
+ "key": "4f4f96ba8acab298ba7f26e45294a4d2ff5a4028239c2ece7116f16859ee7649",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"Fact A and Fact B describe two distinct economic metrics—gross foreign assets and gross foreign liabilities—rather than the same metric. Because they refer to different components of India's international investment position, the difference in their values is expected and does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878245.01222,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1051,
+  "output": 99
+ }
+}

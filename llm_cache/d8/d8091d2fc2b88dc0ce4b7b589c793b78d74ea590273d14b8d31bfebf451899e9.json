@@ -1,0 +1,12 @@
+{
+ "key": "d8091d2fc2b88dc0ce4b7b589c793b78d74ea590273d14b8d31bfebf451899e9",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the 2024 inflation rate. Fact B reports the 2024 rate alongside the 2023 rate ('a year ago'). The 6.6 per cent figure in Fact B refers to 2023, not 2024, so there is no contradiction.\",\n  \"reconciling_evidence\": \"from 6.6 per cent a year ago\"\n}",
+ "created_at": 1788877912.607289,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 994,
+  "output": 127
+ }
+}

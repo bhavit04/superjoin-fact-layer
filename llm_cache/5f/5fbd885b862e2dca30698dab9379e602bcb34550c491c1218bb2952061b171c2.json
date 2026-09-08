@@ -1,0 +1,12 @@
+{
+ "key": "5fbd885b862e2dca30698dab9379e602bcb34550c491c1218bb2952061b171c2",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different timeframes and metrics. Fact A reports net ECB inflows for the full fiscal year 2024-25, while Fact B reports net capital inflows specifically for Q2 of FY25. They are not the same metric or period.\",\n  \"reconciling_evidence\": \"Fact A: 'During 2024-25'; Fact B: 'In Q2 of FY25'\"\n}",
+ "created_at": 1788877887.839948,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1010,
+  "output": 130
+ }
+}

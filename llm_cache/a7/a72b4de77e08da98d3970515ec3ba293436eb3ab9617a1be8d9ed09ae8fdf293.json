@@ -1,0 +1,12 @@
+{
+ "key": "a72b4de77e08da98d3970515ec3ba293436eb3ab9617a1be8d9ed09ae8fdf293",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Both facts report Adjusted EBITDA for Delhivery Limited for FY2021, but provide materially different figures (-2,532 million vs -2,258 million). As both appear in the same document, this represents an internal inconsistency in the reporting rather than a difference in scope or period.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878507.710042,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1064,
+  "output": 111
+ }
+}

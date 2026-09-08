@@ -1,0 +1,12 @@
+{
+ "key": "c77d9c3fd85ff4982495f7bf1a574f3eeb5b09c11ca1ec5dbf3e04c64f1b9434",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the merchandise trade deficit specifically for the second quarter (Q2) of FY25, whereas Fact B reports the cumulative merchandise trade deficit for the entire fiscal year (2024-25). The figures are not contradictory; they represent different timeframes.\",\n  \"reconciling_evidence\": \"Fact A: \\\"USD 75.3 billion in Q2 of FY25\\\"; Fact B: \\\"US$ 282.8 billion during 2024-25\\\"\"\n}",
+ "created_at": 1788877883.807484,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1034,
+  "output": 148
+ }
+}

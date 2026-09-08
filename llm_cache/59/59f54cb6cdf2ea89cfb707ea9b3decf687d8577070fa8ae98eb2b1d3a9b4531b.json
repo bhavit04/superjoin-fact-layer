@@ -1,0 +1,12 @@
+{
+ "key": "59f54cb6cdf2ea89cfb707ea9b3decf687d8577070fa8ae98eb2b1d3a9b4531b",
+ "response": "{\n  \"assignments\": [\n    {\n      \"index\": 0,\n      \"canonical\": \"nse symbol\"\n    },\n    {\n      \"index\": 1,\n      \"canonical\": \"board role\"\n    },\n    {\n      \"index\": 2,\n      \"canonical\": \"ebitda\"\n    },\n    {\n      \"index\": 3,\n      \"canonical\": \"ebitda margin\"\n    },\n    {\n      \"index\": 4,\n      \"canonical\": \"adjusted ebitda margin\"\n    },\n    {\n      \"index\": 5,\n      \"canonical\": \"cwip\"\n    },\n    {\n      \"index\": 6,\n      \"canonical\": \"adjusted ebitda\"\n    }\n  ]\n}",
+ "created_at": 1788878376.352774,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 737,
+  "output": 181
+ }
+}

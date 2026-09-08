@@ -1,0 +1,12 @@
+{
+ "key": "7f3b73b09afacc793ae23c68e51ea589c4f987db38d56c31c3a598ee5e9970c2",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (revenue from sale of traded goods) for two distinct, non-overlapping time periods (nine months ended December 31, 2020 vs. Fiscal 2019). This constitutes a time series rather than a contradiction.\",\n  \"reconciling_evidence\": \"Our revenue from sale of traded goods was nil... for Fiscal 2019... and the nine months period ended December 31, 2020... respectively\"\n}",
+ "created_at": 1788877019.4404411,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1167,
+  "output": 139
+ }
+}

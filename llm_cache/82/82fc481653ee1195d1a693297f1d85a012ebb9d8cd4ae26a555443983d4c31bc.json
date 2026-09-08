@@ -1,0 +1,12 @@
+{
+ "key": "82fc481653ee1195d1a693297f1d85a012ebb9d8cd4ae26a555443983d4c31bc",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts describe different CSR initiatives undertaken by the same company during the same fiscal year. They are not contradictory because they represent distinct components of the company's total CSR expenditure rather than conflicting reports on the same project.\",\n  \"reconciling_evidence\": \"Fact A: '₹0.35 million for IIT Delhi's efforts...'; Fact B: 'contributing ₹0.93 million towards preventive healthcare...'\"\n}",
+ "created_at": 1788878532.003835,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1116,
+  "output": 124
+ }
+}

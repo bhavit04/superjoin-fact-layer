@@ -1,0 +1,12 @@
+{
+ "key": "e6189c72023876ccc10b6b32eb081ab2774590274df8b1c9239621a717d408a4",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"Fact A and Fact B are two different ways of expressing the same projected growth from the same sentence. One provides the percentage (3.3%) and the other provides the absolute value (USD 1 trillion).\",\n  \"reconciling_evidence\": \"Overall, global trade is expected to expand by about USD 1 trillion (or 3.3 per cent) in 2024\"\n}",
+ "created_at": 1788877288.721142,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 921,
+  "output": 122
+ }
+}

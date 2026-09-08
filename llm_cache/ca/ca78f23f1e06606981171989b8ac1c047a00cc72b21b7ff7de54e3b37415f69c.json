@@ -1,0 +1,12 @@
+{
+ "key": "ca78f23f1e06606981171989b8ac1c047a00cc72b21b7ff7de54e3b37415f69c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe the yield change relative to different starting points within the same fiscal year. Fact A measures the decline from end-June 2024, while Fact B measures the decline from end-December 2024.\",\n  \"reconciling_evidence\": \"Fact A: 'a decline of 26 bps from its level at end- June 2024'; Fact B: '18 bps lower than its level as at end-December 2024.'\"\n}",
+ "created_at": 1788878017.92113,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1061,
+  "output": 148
+ }
+}

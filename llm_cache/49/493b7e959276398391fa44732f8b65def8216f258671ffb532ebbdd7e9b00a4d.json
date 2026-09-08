@@ -1,0 +1,12 @@
+{
+ "key": "493b7e959276398391fa44732f8b65def8216f258671ffb532ebbdd7e9b00a4d",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A refers specifically to 'Cross Border Services revenue,' while Fact B refers to total 'revenue from services' for the Express Parcel segment. Because these represent different revenue streams (a sub-segment versus the total), the values are not comparable, and the difference in magnitude is expected.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Cross Border Services revenue\\\"; Fact B: \\\"revenue from services\\\"\"\n}",
+ "created_at": 1788876438.967881,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1030,
+  "output": 121
+ }
+}

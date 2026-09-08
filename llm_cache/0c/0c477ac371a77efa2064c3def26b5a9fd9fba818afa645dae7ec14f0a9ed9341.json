@@ -1,0 +1,12 @@
+{
+ "key": "0c477ac371a77efa2064c3def26b5a9fd9fba818afa645dae7ec14f0a9ed9341",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"date\",\n  \"explanation\": \"The facts are not contradictory; they describe distinct events occurring on different dates within the same year. Fact A reports an allotment on September 11, 2023, while Fact B reports a separate allotment on August 08, 2023.\",\n  \"reconciling_evidence\": \"Fact A: \\\"September 11, 2023\\\"; Fact B: \\\"August 08, 2023\\\"\"\n}",
+ "created_at": 1788878662.6590211,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 132
+ }
+}

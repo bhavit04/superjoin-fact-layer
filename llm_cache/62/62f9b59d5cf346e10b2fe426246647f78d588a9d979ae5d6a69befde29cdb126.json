@@ -1,0 +1,12 @@
+{
+ "key": "62f9b59d5cf346e10b2fe426246647f78d588a9d979ae5d6a69befde29cdb126",
+ "response": "{\"assignments\": [{\"index\": 0, \"canonical\": \"board role\"}, {\"index\": 1, \"canonical\": \"offer size\"}, {\"index\": 2, \"canonical\": \"net offer size\"}, {\"index\": 3, \"canonical\": \"net worth\"}, {\"index\": 4, \"canonical\": \"current tax\"}, {\"index\": 5, \"canonical\": \"goodwill\"}, {\"index\": 6, \"canonical\": \"role\"}, {\"index\": 7, \"canonical\": \"air freight transacted\"}, {\"index\": 8, \"canonical\": \"ebitda margin\"}, {\"index\": 9, \"canonical\": \"adjusted ebitda margin\"}, {\"index\": 10, \"canonical\": \"chairperson\"}, {\"index\": 11, \"canonical\": \"constitution date\"}, {\"index\": 12, \"canonical\": \"payment received\"}]}",
+ "created_at": 1788878677.3649762,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 3188,
+  "output": 183
+ }
+}

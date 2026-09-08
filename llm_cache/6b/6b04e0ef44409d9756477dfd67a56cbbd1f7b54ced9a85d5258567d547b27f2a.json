@@ -1,0 +1,12 @@
+{
+ "key": "6b04e0ef44409d9756477dfd67a56cbbd1f7b54ced9a85d5258567d547b27f2a",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts refer to different export baskets. Fact A measures non-petroleum exports (7.1%), while Fact B measures a narrower subset that also excludes gems and jewellery (9.1%), explaining the difference in growth rates for the same period.\",\n  \"reconciling_evidence\": \"Fact A: \\\"non-petroleum exports\\\" vs Fact B: \\\"non-petroleum and non-gems and jewellery exports\\\"\"\n}",
+ "created_at": 1788877319.1338902,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1009,
+  "output": 128
+ }
+}

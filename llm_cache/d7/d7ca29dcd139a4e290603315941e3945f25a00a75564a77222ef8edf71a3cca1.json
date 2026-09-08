@@ -1,0 +1,12 @@
+{
+ "key": "d7ca29dcd139a4e290603315941e3945f25a00a75564a77222ef8edf71a3cca1",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different timeframes within the same fiscal year. Fact A reports the yield change for the full fiscal year 2024-25, while Fact B reports the yield change relative to a specific point in time (end-December 2024).\",\n  \"reconciling_evidence\": \"Fact A: 'softened by 48 bps'; Fact B: '18 bps lower than its level as at end-December 2024.'\"\n}",
+ "created_at": 1788878024.481374,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1039,
+  "output": 141
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "848c67223e4954898bb33f02ed3cc3241ee0d536112e0ea91feeedba514b510b",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts describe different revenue streams within the same business segment. Fact A reports total 'Express Parcel' revenue, while Fact B reports a specific sub-component, 'Cross Border Services' revenue. They are not the same metric and therefore do not contradict each other.\",\n  \"reconciling_evidence\": \"Fact A: 'Express Parcel revenue from services'; Fact B: 'Cross Border Services revenue'\"\n}",
+ "created_at": 1788876433.735428,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1016,
+  "output": 118
+ }
+}

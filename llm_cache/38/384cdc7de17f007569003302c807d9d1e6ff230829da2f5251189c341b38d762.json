@@ -1,0 +1,12 @@
+{
+ "key": "384cdc7de17f007569003302c807d9d1e6ff230829da2f5251189c341b38d762",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the profit/loss for the fourth quarter (Q4 FY2024), while Fact B reports the cumulative profit/loss for the full fiscal year (FY2024). Because the periods are different (a quarter versus a full year), the figures are not expected to be identical.\",\n  \"reconciling_evidence\": \"Fact A: 'Q4 FY24'; Fact B: 'FY24'\"\n}",
+ "created_at": 1788878414.3705332,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1122,
+  "output": 130
+ }
+}

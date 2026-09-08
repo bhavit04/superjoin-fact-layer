@@ -1,0 +1,12 @@
+{
+ "key": "3753f51a525d8bf508e54a2b9510a1b1ef093d089a0f26f0b56c058e37a9ef1e",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts describe different scopes of responsibility. Fact A specifies his role as a member of the Risk Management Committee, while Fact B describes his executive title within the organization as a whole. These are complementary descriptions of his professional capacity rather than conflicting claims.\",\n  \"reconciling_evidence\": \"Fact A: 'Risk Management Committee'; Fact B: 'Executive Director and Chief Technology Officer'\"\n}",
+ "created_at": 1788878719.220917,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 898,
+  "output": 117
+ }
+}

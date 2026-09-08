@@ -1,0 +1,12 @@
+{
+ "key": "e8307ac63c938cdc5e69dfc207c6af759c16d27af9b9d5b0ae38281bc5b1ff12",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence lists a sequence of three values (73, 47, 37) for 'Net Working Capital Days'. Fact A (47) and Fact B (33) are attempting to extract values from this sequence, but the document does not explicitly label which value corresponds to which period. Because the periods are ambiguous, they are related data points rather than a direct contradiction.\",\n  \"reconciling_evidence\": \"73 47 37\"\n}",
+ "created_at": 1788878439.122634,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 935,
+  "output": 136
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "3401891b61672458e9bad67411bd8bad94894507862594da2e8291a99c076462",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The terms 'Chairman' and 'Chairperson' are synonymous titles for the same board role. The slight variation in terminology does not constitute a factual disagreement.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876910.659494,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 855,
+  "output": 80
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "f643cac184a95f1f76b4f3d549f49ae17e7d18cd62e718c9c413b60a854eebb3",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different timeframes: Fact A covers the first half of the fiscal year 2025 (April to September 2024), while Fact B covers the calendar year 2024. Because the periods are not identical, the difference in values does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"Fact A: \\\"In H1 of FY25\\\"; Fact B: \\\"in 2024\\\"\"\n}",
+ "created_at": 1788877265.567889,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 958,
+  "output": 136
+ }
+}

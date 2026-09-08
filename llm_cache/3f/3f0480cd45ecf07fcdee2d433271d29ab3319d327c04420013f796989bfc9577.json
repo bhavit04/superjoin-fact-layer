@@ -1,0 +1,12 @@
+{
+ "key": "3f0480cd45ecf07fcdee2d433271d29ab3319d327c04420013f796989bfc9577",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts are consistent. Fact A identifies Sahil Barua's primary executive role at Delhivery Limited, while Fact B specifies his additional role as a member of the Corporate Social Responsibility Committee.\",\n  \"reconciling_evidence\": \"Fact A: 'Managing Director and Chief Executive Officer'; Fact B: 'Managing Director and Chief Executive Officer (Member)'\"\n}",
+ "created_at": 1788876947.257117,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 894,
+  "output": 113
+ }
+}

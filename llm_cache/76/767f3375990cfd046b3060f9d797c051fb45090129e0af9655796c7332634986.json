@@ -1,0 +1,12 @@
+{
+ "key": "767f3375990cfd046b3060f9d797c051fb45090129e0af9655796c7332634986",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A and Fact B describe distinct categories of imports (oil versus non-oil). They are not conflicting claims about the same metric, but rather complementary components of India's total import data for 2023.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878210.7186172,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1072,
+  "output": 89
+ }
+}

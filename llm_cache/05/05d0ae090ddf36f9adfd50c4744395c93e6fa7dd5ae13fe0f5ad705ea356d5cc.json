@@ -1,0 +1,12 @@
+{
+ "key": "05d0ae090ddf36f9adfd50c4744395c93e6fa7dd5ae13fe0f5ad705ea356d5cc",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the current account deficit for the full fiscal year 2024/25 (0.6% of GDP), while Fact B reports the deficit for the first nine months of that fiscal year (April-December 2024) at 1.3% of GDP. They represent different time segments of the same fiscal cycle.\",\n  \"reconciling_evidence\": \"Fact A: \\\"FY2024/25\\\" vs Fact B: \\\"April-December 2024\\\"\"\n}",
+ "created_at": 1788879198.1316118,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1005,
+  "output": 148
+ }
+}

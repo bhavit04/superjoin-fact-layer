@@ -1,0 +1,12 @@
+{
+ "key": "a023ed10c617420f3e0435508f6210d9a1faf55dc767cff9db95e5a4689bd522",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts report the same value of 8,911.39 million. In financial reporting, the use of parentheses indicates a negative number (a loss). Fact A explicitly labels this as a 'loss', and Fact B's value is presented in the same context. They are describing the same figure.\",\n  \"reconciling_evidence\": \"Fact A: 'Restated loss for the period/ year... (8,911.39)'; Fact B: 'Restated loss for the period/ year (8,911.39)'\"\n}",
+ "created_at": 1788876959.8132749,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1127,
+  "output": 156
+ }
+}

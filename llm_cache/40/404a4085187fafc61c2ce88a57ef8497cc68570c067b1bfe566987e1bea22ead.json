@@ -1,0 +1,12 @@
+{
+ "key": "404a4085187fafc61c2ce88a57ef8497cc68570c067b1bfe566987e1bea22ead",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A specifies a change relative to a specific point in time (end-March 2024), whereas Fact B likely refers to the total softening over a different or broader timeframe within the fiscal year. The discrepancy is explained by the difference in the reference period for the yield change calculation.\",\n  \"reconciling_evidence\": \"Fact A: 'a decline of 5 bps from its level as at end-March 2024'; Fact B: 'the 10-year generic G-sec yield softened by 48 bps'\"\n}",
+ "created_at": 1788878012.94082,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1039,
+  "output": 154
+ }
+}

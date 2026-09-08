@@ -1,0 +1,12 @@
+{
+ "key": "cd4cb3eeb210be629a0adaf088bbffc9b361e6150c4d72794433a1547540d6a8",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"scope\",\n  \"explanation\": \"Fact A refers specifically to 'Cross Border Services revenue,' while Fact B refers to the broader 'Revenue for services.' These are distinct components of the Express Parcel segment's total revenue, not conflicting reports of the same metric.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876452.9503949,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1039,
+  "output": 91
+ }
+}

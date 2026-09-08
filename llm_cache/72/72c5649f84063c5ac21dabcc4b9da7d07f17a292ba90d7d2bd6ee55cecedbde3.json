@@ -1,0 +1,12 @@
+{
+ "key": "72c5649f84063c5ac21dabcc4b9da7d07f17a292ba90d7d2bd6ee55cecedbde3",
+ "response": "```json\n{\"facts\": [\n  {\"subject\": \"India\", \"metric\": \"real GDP growth rate\", \"value\": \"6.4 per cent\", \"unit_hint\": \"\", \"fact_type\": \"numeric\", \"qualifiers\": {\"period\": \"FY25\", \"basis\": \"first advance estimates of national accounts\"}, \"polarity\": \"affirmed\", \"evidence\": \"As per the first advance estimates of national accounts, India’s real GDP is estimated to grow by 6.4 per cent in FY25.\", \"page\": 4, \"confidence\": 1.0},\n  {\"subject\": \"global economy\", \"metric\": \"economic growth rate\", \"value\": \"3.3 per cent\", \"unit_hint\": \"\", \"fact_type\": \"numeric\", \"qualifiers\": {\"period\": \"2023\"}, \"polarity\": \"affirmed\", \"evidence\": \"The global economy grew by 3.3 per cent in 2023.\", \"page\": 5, \"confidence\": 1.0},\n  {\"subject\": \"global economy\", \"metric\": \"projected economic growth rate\", \"value\": \"3.2 per cent\", \"unit_hint\": \"\", \"fact_type\": \"numeric\", \"qualifiers\": {\"period\": \"2024\", \"source\": \"International Monetary Fund (IMF)\"}, \"polarity\": \"affirmed\", \"evidence\": \"The International Monetary Fund (IMF) has projected growth of 3.2 per cent and 3.3 per cent for 2024 and 2025, respectively.\", \"page\": 5, \"confidence\": 1.0},\n  {\"subject\": \"global economy\", \"metric\": \"projected economic growth rate\", \"value\": \"3.3 per cent\", \"unit_hint\": \"\", \"fact_type\": \"numeric\", \"qualifiers\": {\"period\": \"2025\", \"source\": \"International Monetary Fund (IMF)\"}, \"polarity\": \"affirmed\", \"evidence\": \"The International Monetary Fund (IMF) has projected growth of 3.2 per cent and 3.3 per cent for 2024 and 2025, respectively.\", \"page\": 5, \"confidence\": 1.0},\n  {\"subject\": \"global economy\", \"metric\": \"average projected economic growth rate\", \"value\": \"around 3.2 per cent\", \"unit_hint\": \"\", \"fact_type\": \"numeric\", \"qualifiers\": {\"period\": \"next five years\"}, \"polarity\": \"affirmed\", \"evidence\": \"Over the next five years, global growth is expected to average around 3.2 per cent, which is modest by historical standards.\", \"page\": 5, \"confidence\": 0.9}\n]}\n```",
+ "created_at": 1788877076.116577,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "extract_facts",
+ "usage": {
+  "input": 4364,
+  "output": 599
+ }
+}

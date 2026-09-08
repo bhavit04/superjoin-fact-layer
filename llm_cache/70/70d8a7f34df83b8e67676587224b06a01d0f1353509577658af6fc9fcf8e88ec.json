@@ -1,0 +1,12 @@
+{
+ "key": "70d8a7f34df83b8e67676587224b06a01d0f1353509577658af6fc9fcf8e88ec",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the current account balance for entirely different time periods (calendar year 2023 versus Q2 FY2025). They are not conflicting or corroborating, but rather represent different data points in a time series.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878312.725995,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1022,
+  "output": 94
+ }
+}

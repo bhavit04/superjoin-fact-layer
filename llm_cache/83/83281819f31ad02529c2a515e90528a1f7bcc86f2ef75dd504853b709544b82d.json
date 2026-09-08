@@ -1,0 +1,12 @@
+{
+ "key": "83281819f31ad02529c2a515e90528a1f7bcc86f2ef75dd504853b709544b82d",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (CAD) but for different, non-overlapping time periods (April-December 2024 vs. Q2 FY25). They are not contradictory; they simply provide data points for different segments of the fiscal year.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788879035.064896,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1015,
+  "output": 99
+ }
+}

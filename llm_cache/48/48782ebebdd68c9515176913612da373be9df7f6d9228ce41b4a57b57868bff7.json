@@ -1,0 +1,12 @@
+{
+ "key": "48782ebebdd68c9515176913612da373be9df7f6d9228ce41b4a57b57868bff7",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts refer to different metrics: Fact A reports the overall 'EBITDA margin' for the Express Parcel segment, while Fact B reports the 'Service EBITDA margin' for the same segment. These are distinct financial definitions, explaining the variance in the reported percentages.\",\n  \"reconciling_evidence\": \"Fact A: 'EBITDA margin'; Fact B: 'Service EBITDA margin'\"\n}",
+ "created_at": 1788876425.2061388,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1003,
+  "output": 119
+ }
+}

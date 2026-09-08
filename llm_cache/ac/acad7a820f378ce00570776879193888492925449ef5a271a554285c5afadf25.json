@@ -1,0 +1,12 @@
+{
+ "key": "acad7a820f378ce00570776879193888492925449ef5a271a554285c5afadf25",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (revenue from sale of traded goods) but for entirely different, non-overlapping time periods. Fact A refers to Fiscal 2019, while Fact B refers to the nine months period ended December 31, 2021. They are part of a time series, not conflicting claims.\",\n  \"reconciling_evidence\": \"nil... for Fiscal 2019... and ₹1,874.74 million for... the nine months period ended December 31, 2021\"\n}",
+ "created_at": 1788877023.6175869,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1173,
+  "output": 154
+ }
+}

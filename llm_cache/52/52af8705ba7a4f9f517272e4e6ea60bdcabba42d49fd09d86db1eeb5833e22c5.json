@@ -1,0 +1,12 @@
+{
+ "key": "52af8705ba7a4f9f517272e4e6ea60bdcabba42d49fd09d86db1eeb5833e22c5",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"While both facts relate to FY2025, they refer to different specific timeframes within that fiscal year. Fact A refers to the closing rate for a general quarter (likely Q3 or Q4 given the higher value), while Fact B specifically identifies the closing rate for Q2.\",\n  \"reconciling_evidence\": \"Fact A: 'closed the quarter'; Fact B: 'closed the Q2'\"\n}",
+ "created_at": 1788879018.4876292,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1006,
+  "output": 124
+ }
+}

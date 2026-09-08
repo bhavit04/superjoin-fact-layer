@@ -1,0 +1,12 @@
+{
+ "key": "8193efd625f24f9a40b29d2f149cffdc95daa5425f025000e778b2e4a5866b72",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts describe different metrics: Fact A refers to the total cumulative fleet size at the end of the year, while Fact B refers only to the number of new tractors added during that same period.\",\n  \"reconciling_evidence\": \"Fact A: 'total count to 753'; Fact B: 'inducted 191 additional 46-ft tractors'\"\n}",
+ "created_at": 1788878513.056024,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 981,
+  "output": 118
+ }
+}

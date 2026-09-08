@@ -1,0 +1,12 @@
+{
+ "key": "02fa036a7fde4d44f862f589cb46c2a7f8ac51dc58a10885dce18c9430114105",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe two distinct allotment events occurring on different dates within the same year (April 06 vs. December 07). They are not conflicting reports of the same total, but rather separate line items in a list of share allotments.\",\n  \"reconciling_evidence\": \"Fact A: 'April 06, 2023'; Fact B: 'December 07, 2023'\"\n}",
+ "created_at": 1788878594.109189,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1095,
+  "output": 125
+ }
+}

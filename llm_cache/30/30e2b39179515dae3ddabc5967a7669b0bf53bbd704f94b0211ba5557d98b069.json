@@ -1,0 +1,12 @@
+{
+ "key": "30e2b39179515dae3ddabc5967a7669b0bf53bbd704f94b0211ba5557d98b069",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact B clarifies that the 3.5 per cent figure refers to the growth rate 'a year ago' (2023), not 2024. Both facts agree that the 2024 growth rate is 3.3 per cent.\",\n  \"reconciling_evidence\": \"Fact B source evidence: 'global growth at 3.3 per cent in 2024 (3.5 per cent a year ago)'\"\n}",
+ "created_at": 1788878930.9051461,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 986,
+  "output": 136
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "54bec62fb39a665d35db6f8febc8cb141d045c23f1671b872002143e1ae5adf5",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The figures differ because they represent different geographic scopes: Fact A specifically covers the 'monsoon core zone' (rainfed agriculture regions), while Fact B covers the 'all-India level'. It is expected that specific regions deviate from the national average.\",\n  \"reconciling_evidence\": \"The SWM rainfall over the monsoon core zone... stood at 122 per cent of LPA. vs The overall SWM rainfall... was 108 per cent... at the all-India level\"\n}",
+ "created_at": 1788879077.625828,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1089,
+  "output": 142
+ }
+}

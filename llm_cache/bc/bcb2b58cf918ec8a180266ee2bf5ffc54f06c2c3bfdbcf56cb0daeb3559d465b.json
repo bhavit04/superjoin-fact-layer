@@ -1,0 +1,12 @@
+{
+ "key": "bcb2b58cf918ec8a180266ee2bf5ffc54f06c2c3bfdbcf56cb0daeb3559d465b",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Both facts report the same 6.5% growth figure, but they refer to different timeframes. Fact A specifies the fiscal year (FY2024/25), while Fact B refers to the calendar year 2024. The values are identical, confirming they describe the same economic performance period.\",\n  \"reconciling_evidence\": \"Fact A: 'FY2024/25'; Fact B: '2024'\"\n}",
+ "created_at": 1788878329.078166,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1034,
+  "output": 136
+ }
+}

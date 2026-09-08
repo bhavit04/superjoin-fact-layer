@@ -1,0 +1,12 @@
+{
+ "key": "efc3970ec2df309a2028e489b5cac3d9fa61cd60213642770ef711031fbc5cdf",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different time periods listed in the source text. Fact A corresponds to Fiscal 2021, while Fact B corresponds to the nine-month period ended December 31, 2020. They are distinct data points in a time series, not conflicting claims.\",\n  \"reconciling_evidence\": \"89.53%, nil, 0.25%, nil, and 6.23% in Fiscal 2019, Fiscal 2020, Fiscal 2021 and the nine months periods ended December 31, 2020 and December 31, 2021, respectively.\"\n}",
+ "created_at": 1788878746.4201899,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1139,
+  "output": 180
+ }
+}

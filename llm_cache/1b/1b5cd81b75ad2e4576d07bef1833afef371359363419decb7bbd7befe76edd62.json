@@ -1,0 +1,12 @@
+{
+ "key": "1b5cd81b75ad2e4576d07bef1833afef371359363419decb7bbd7befe76edd62",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A provides a precise figure (10.9 months) for a specific date, while Fact B provides a qualitative lower bound ('more than ten months') for the same metric. The precise figure in Fact A is consistent with the lower bound in Fact B.\",\n  \"reconciling_evidence\": \"Fact A: '10.9 months as of December 2024'; Fact B: 'provide an import cover of more than ten months'\"\n}",
+ "created_at": 1788877188.892073,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 872,
+  "output": 134
+ }
+}

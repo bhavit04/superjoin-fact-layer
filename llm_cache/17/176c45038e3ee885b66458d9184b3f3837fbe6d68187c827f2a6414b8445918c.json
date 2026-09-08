@@ -1,0 +1,12 @@
+{
+ "key": "176c45038e3ee885b66458d9184b3f3837fbe6d68187c827f2a6414b8445918c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts do not contradict each other; they describe the same metric (fresh issuance of CDs) for different time periods within the same fiscal year. Fact A refers to the third quarter (Q3), while Fact B refers to the first quarter (Q1).\",\n  \"reconciling_evidence\": \"Fact A: \\\"in Q3\\\"; Fact B: \\\"in Q1\\\"\"\n}",
+ "created_at": 1788878988.826159,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 998,
+  "output": 119
+ }
+}

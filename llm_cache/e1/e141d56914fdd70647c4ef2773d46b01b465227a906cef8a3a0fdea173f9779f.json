@@ -1,0 +1,12 @@
+{
+ "key": "e141d56914fdd70647c4ef2773d46b01b465227a906cef8a3a0fdea173f9779f",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts refer to the same metric but describe slightly different closing points. Fact A refers to the yield at the close of the quarter, while Fact B specifies the yield at 'end-December 2024'. The minor discrepancy (0.01%) likely reflects the difference between a quarterly average or specific closing date versus the precise end-of-month figure.\",\n  \"reconciling_evidence\": \"Fact A: 'closed the quarter at 6.75 per cent'; Fact B: 'closed at 6.76 per cent at end-December 2024'\"\n}",
+ "created_at": 1788878018.173284,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1027,
+  "output": 163
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "a547067c04eaeded628c28a5c488622715c22651e6352f05a3c3e373491d5746",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports 3.5% as the growth rate for 'a year ago' (2023), while Fact B correctly identifies 3.3% as the growth rate for 2024. The document text in Fact A clarifies that the 3.5% figure refers to the prior year, not 2024.\",\n  \"reconciling_evidence\": \"Fact A: \\\"3.5 per cent a year ago\\\"; Fact B: \\\"Global GDP grew by 3.3 per cent in 2024\\\"\"\n}",
+ "created_at": 1788877899.196983,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 992,
+  "output": 157
+ }
+}

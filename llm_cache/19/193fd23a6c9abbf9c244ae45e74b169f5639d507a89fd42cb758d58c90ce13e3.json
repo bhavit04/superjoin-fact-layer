@@ -1,0 +1,12 @@
+{
+ "key": "193fd23a6c9abbf9c244ae45e74b169f5639d507a89fd42cb758d58c90ce13e3",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"Fact A and Fact B describe different financial metrics (investing activities vs. operating activities) for the same entity and period. They are not conflicting claims about the same value, but rather distinct components of a cash flow statement.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876402.090505,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1021,
+  "output": 91
+ }
+}

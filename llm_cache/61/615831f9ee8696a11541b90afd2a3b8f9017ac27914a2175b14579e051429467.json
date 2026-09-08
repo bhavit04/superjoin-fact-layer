@@ -1,0 +1,12 @@
+{
+ "key": "615831f9ee8696a11541b90afd2a3b8f9017ac27914a2175b14579e051429467",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different timeframes: Fact A refers to the calendar year 2025, while Fact B refers to the fiscal year 2024/25. These are distinct reporting periods, explaining the slight difference in growth figures.\",\n  \"reconciling_evidence\": \"Fact A: '2025'; Fact B: 'FY2024/25'\"\n}",
+ "created_at": 1788878330.787453,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1039,
+  "output": 123
+ }
+}

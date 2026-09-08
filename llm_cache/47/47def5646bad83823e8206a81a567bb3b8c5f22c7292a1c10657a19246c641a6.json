@@ -1,0 +1,12 @@
+{
+ "key": "47def5646bad83823e8206a81a567bb3b8c5f22c7292a1c10657a19246c641a6",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a historical figure from 'a year ago' (relative to its report), while Fact B provides a specific figure for FY2024/25. Because they describe different time periods, they are not conflicting or corroborating, but rather represent a time series of data points.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878272.825417,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 950,
+  "output": 107
+ }
+}

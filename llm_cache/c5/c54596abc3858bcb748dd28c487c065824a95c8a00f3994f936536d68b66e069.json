@@ -1,0 +1,12 @@
+{
+ "key": "c54596abc3858bcb748dd28c487c065824a95c8a00f3994f936536d68b66e069",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods within the same fiscal year. Fact A reports the share for Q3:2024-25, while Fact B reports the share for Q1:2024-25.\",\n  \"reconciling_evidence\": \"Fact A: \\\"72 per cent in Q3:2024-25\\\"; Fact B: \\\"66 per cent in Q1:2024-25\\\"\"\n}",
+ "created_at": 1788878969.626061,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1006,
+  "output": 143
+ }
+}

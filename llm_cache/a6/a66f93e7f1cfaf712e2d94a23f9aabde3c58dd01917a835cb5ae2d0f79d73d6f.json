@@ -1,0 +1,12 @@
+{
+ "key": "a66f93e7f1cfaf712e2d94a23f9aabde3c58dd01917a835cb5ae2d0f79d73d6f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory because they describe different financial metrics: Fact A reports 'net cash from operating activities' while Fact B reports 'net cash from financing activities'. These are distinct components of a cash flow statement and are expected to have different values.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876413.146827,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1023,
+  "output": 96
+ }
+}

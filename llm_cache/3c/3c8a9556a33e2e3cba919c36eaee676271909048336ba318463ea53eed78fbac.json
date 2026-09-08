@@ -1,0 +1,12 @@
+{
+ "key": "3c8a9556a33e2e3cba919c36eaee676271909048336ba318463ea53eed78fbac",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"The two values appear side-by-side in a financial table, typically representing the current period and the prior period (e.g., FY24 and FY23). While the specific dates aren't in the snippet, the layout '199 126' indicates a time-series relationship rather than a contradiction.\",\n  \"reconciling_evidence\": \"Debt (excludes CCPS) (A) 199 126\"\n}",
+ "created_at": 1788880291.1617138,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 953,
+  "output": 134
+ }
+}

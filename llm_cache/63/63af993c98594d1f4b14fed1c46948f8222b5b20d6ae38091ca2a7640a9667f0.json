@@ -1,0 +1,12 @@
+{
+ "key": "63af993c98594d1f4b14fed1c46948f8222b5b20d6ae38091ca2a7640a9667f0",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory; they describe the fresh issuance of CDs for different quarters within the same fiscal year (Q3 vs Q1). They represent a time series of data points rather than conflicting reports on the same period.\",\n  \"reconciling_evidence\": \"Fact A: \\\"in Q3\\\"; Fact B: \\\"in Q1\\\"\"\n}",
+ "created_at": 1788877968.416831,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1009,
+  "output": 108
+ }
+}

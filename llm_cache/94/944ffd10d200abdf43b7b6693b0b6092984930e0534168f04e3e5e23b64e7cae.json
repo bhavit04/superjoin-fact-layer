@@ -1,0 +1,12 @@
+{
+ "key": "944ffd10d200abdf43b7b6693b0b6092984930e0534168f04e3e5e23b64e7cae",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are related as a time-series comparison. Fact A reports net inflows for H1 FY25, while Fact B reports the figure for the corresponding period in the prior year (H1 FY24). They describe the same metric for different, non-overlapping timeframes.\",\n  \"reconciling_evidence\": \"Fact A: 'H1 of FY25'; Fact B: 'same period of the previous year'\"\n}",
+ "created_at": 1788878893.1437051,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 927,
+  "output": 126
+ }
+}

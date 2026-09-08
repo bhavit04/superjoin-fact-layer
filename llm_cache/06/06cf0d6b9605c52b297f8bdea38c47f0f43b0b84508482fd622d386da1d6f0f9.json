@@ -1,0 +1,12 @@
+{
+ "key": "06cf0d6b9605c52b297f8bdea38c47f0f43b0b84508482fd622d386da1d6f0f9",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"scope\",\n  \"explanation\": \"Fact A refers to the overall Wholesale Price Index (WPI) inflation, while Fact B refers specifically to the 'fuel and power' sub-component of the WPI. They describe different scopes within the same economic index.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Inflation measured by the wholesale price index (WPI)\\\" vs Fact B: \\\"fuel and power recorded deflation\\\"\"\n}",
+ "created_at": 1788879071.076618,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1028,
+  "output": 120
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "9e37f7fff40cf0780e8db679aafe4c880bc73ab091d5db6442649a6023e7dafb",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are reconciled by the difference in reporting periods. Fact A provides the EBITDA for the third quarter (Q3 FY24), while Fact B provides the EBITDA for the full fiscal year (FY24). A quarterly figure is a subset of the annual figure, so they are not directly comparable.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Q3 FY24: ₹109 Cr\\\"; Fact B: \\\"FY24 ... ₹127Cr\\\"\"\n}",
+ "created_at": 1788876361.4030788,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1005,
+  "output": 141
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "ac6ae485f159bb82bf1c88b8c792b2c5b2d0c731562798fe3e59a2e09ae213a1",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact B actually states that the 3.5 per cent figure refers to 'a year ago' (2023), not 2024. Therefore, the two facts do not conflict; they describe different time periods.\",\n  \"reconciling_evidence\": \"Fact B source evidence: '3.5 per cent a year ago'\"\n}",
+ "created_at": 1788878939.544737,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 993,
+  "output": 112
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "f2d60d53b9a32aa2241eff195bdd19312ccb20f3c3b06a14b31cc5eb433af3b3",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts describe different roles held by the same individual. Fact A refers to his appointment as a Non-Executive Independent Director on the board, while Fact B refers to his subsequent appointment as a member of the Risk Management Committee.\",\n  \"reconciling_evidence\": \"Fact A: 'Appointment of Mr. Anindya Ghose as a Non-Executive Independent Director'; Fact B: 'Mr. Anindya Ghose has been appointed as member of the Committee'\"\n}",
+ "created_at": 1788878554.662915,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1017,
+  "output": 135
+ }
+}

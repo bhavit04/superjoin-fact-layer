@@ -1,0 +1,12 @@
+{
+ "key": "0f05b97c6b590c208384ef3ef25e8be95f0e8d19e3473f6e55e84f1541995a69",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"The facts are consistent. Fact A reports a loss of 4,516 million INR (451.6 crore), while Fact B reports a loss of 452 crore INR. The difference is merely a result of rounding 451.6 to 452.\",\n  \"reconciling_evidence\": \"Fact A: 'loss of ₹4,516 million'; Fact B: '₹(452) Cr'\"\n}",
+ "created_at": 1788878505.114614,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1015,
+  "output": 136
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "c48b21f1bd34b9dc81130c43c6b400711ec419a556b1b3fb4ede198c69391fd8",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.9,\n  \"dimension\": \"\",\n  \"explanation\": \"Both sources identify Deepak Kapoor as the Chairman and a Non-Executive Independent Director of Delhivery Limited. Fact A provides additional detail regarding his committee membership, which does not conflict with the broader title provided in Fact B.\",\n  \"reconciling_evidence\": \"Fact A: 'Chairman, Non-Executive Independent Director'; Fact B: 'Chairperson & Non-Executive Independent Director'\"\n}",
+ "created_at": 1788876943.873667,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 901,
+  "output": 115
+ }
+}

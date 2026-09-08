@@ -1,0 +1,12 @@
+{
+ "key": "70d4f82153990afbb54316c2addfacacc33de39ca93b54d5e52890a29707afc6",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to the current account deficit as a percentage of GDP for Q2 of FY24, while Fact B refers to the deficit in absolute dollar terms for the period of April-December 2024. These are distinct time periods and different metrics (percentage vs. absolute value), making them related data points rather than conflicting or identical claims.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788879042.904066,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 961,
+  "output": 118
+ }
+}

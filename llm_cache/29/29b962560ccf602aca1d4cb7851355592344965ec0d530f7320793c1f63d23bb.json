@@ -1,0 +1,12 @@
+{
+ "key": "29b962560ccf602aca1d4cb7851355592344965ec0d530f7320793c1f63d23bb",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are reconciled by the difference in metric definition: Fact A reports 'Adj. EBITDA margin' while Fact B reports 'EBITDA margin'. These are distinct financial metrics, explaining why the values differ for the same period and business segment.\",\n  \"reconciling_evidence\": \"Fact A: 'Adj. EBITDA margin' vs Fact B: 'EBITDA margin'\"\n}",
+ "created_at": 1788876398.990746,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 987,
+  "output": 117
+ }
+}

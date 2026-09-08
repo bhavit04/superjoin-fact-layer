@@ -1,0 +1,12 @@
+{
+ "key": "abf11b156c27d5b28b4bc163364b77d3d8652cf5f275bd2dc98f9f9d5382bf3e",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"The two facts describe the same individual, the same role, and the same cessation date. The slight variation in the title's phrasing ('Head-Business Development' versus 'Head of Business Development') is a stylistic difference, not a factual contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878568.232223,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 949,
+  "output": 97
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "0e3896117f0c49fdf2ed45446fb90674af706b71d8334976e50ab279a88c6c04",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts describe the same event: Mr. Vivek Kumar leaving his position as Company Secretary and Compliance Officer on March 27, 2024. The difference in terminology ('ceased to be associated' vs 'resigned') describes the same outcome.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878563.1873212,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 947,
+  "output": 99
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "7ccfa9f66ecbf138d26417e5aeb46424dbaa4286717d2790e2bff673b93a4150",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports an annual figure (FY24) that is lower than the quarterly figure (Q3 FY24) reported in Fact B. Since the full year must encompass the quarterly performance, it is mathematically impossible for the annual total to be less than a single quarter's result, indicating a reporting error in the source document.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876370.757162,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 999,
+  "output": 117
+ }
+}

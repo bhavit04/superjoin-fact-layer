@@ -1,0 +1,12 @@
+{
+ "key": "81473af57e258ea7feed44add6399ffb852f2196b3ec36e7057d61cc18d3d94a",
+ "response": "{\"ok\": true, \"word\": \"hello\"}",
+ "created_at": 1788875318.538537,
+ "provider": "gemini",
+ "model": "gemini-3.6-flash",
+ "task": "smoke_test_v2",
+ "usage": {
+  "input": 24,
+  "output": 11
+ }
+}

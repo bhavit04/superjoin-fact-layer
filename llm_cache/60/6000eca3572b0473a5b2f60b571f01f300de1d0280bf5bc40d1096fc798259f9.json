@@ -1,0 +1,12 @@
+{
+ "key": "6000eca3572b0473a5b2f60b571f01f300de1d0280bf5bc40d1096fc798259f9",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not contradictory because they refer to different time periods: Fact A reports the EBITDA for the fourth quarter (Q4 FY23), while Fact B reports the EBITDA for the entire fiscal year (FY23). A positive quarterly result can coexist with a negative full-year result.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Q4 FY23: ₹13 Cr\\\"; Fact B: \\\"Reported EBITDA ... (452)\\\"\"\n}",
+ "created_at": 1788876523.028346,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1017,
+  "output": 137
+ }
+}

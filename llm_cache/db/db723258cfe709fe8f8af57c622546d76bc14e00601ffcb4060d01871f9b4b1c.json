@@ -1,0 +1,12 @@
+{
+ "key": "db723258cfe709fe8f8af57c622546d76bc14e00601ffcb4060d01871f9b4b1c",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A reports a loss (indicated by parentheses), while Fact B reports the same numerical value but omits the negative sign or parentheses in the normalized value, despite the source evidence showing the figure in parentheses. The underlying data is identical; the discrepancy is a labeling/formatting error in the extraction of Fact B.\",\n  \"reconciling_evidence\": \"Fact A: '(8,911.39)'; Fact B: '(₹8,911.39) million'\"\n}",
+ "created_at": 1788876986.411875,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1204,
+  "output": 140
+ }
+}

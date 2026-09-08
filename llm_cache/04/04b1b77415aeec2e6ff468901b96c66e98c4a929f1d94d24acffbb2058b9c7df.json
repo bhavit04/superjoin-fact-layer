@@ -1,0 +1,12 @@
+{
+ "key": "04b1b77415aeec2e6ff468901b96c66e98c4a929f1d94d24acffbb2058b9c7df",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports the number of active customers for cross-border shipping services, while Fact B reports the total revenue from contracts with customers. These are distinct metrics measuring entirely different aspects of the company's performance.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788877005.972827,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1098,
+  "output": 86
+ }
+}

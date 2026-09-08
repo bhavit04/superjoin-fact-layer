@@ -1,0 +1,12 @@
+{
+ "key": "38777038da232fbf319011183931d71b1caa083fa82c47109b0e2816dae0f505",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"currency\",\n  \"explanation\": \"The facts are reconciled because they express the same economic metric (India's GDP) in different currencies (INR vs. USD). Fact A provides the figure in local currency (Rs billions) for the fiscal year, while Fact B provides the figure in US dollars for the calendar year, making them non-comparable without conversion.\",\n  \"reconciling_evidence\": \"Fact A: 'Nominal GDP (Rs billions) 3/ 301,230'; Fact B: 'India’s GDP was US$3.9 trillion in 2024'\"\n}",
+ "created_at": 1788878323.996136,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1009,
+  "output": 159
+ }
+}

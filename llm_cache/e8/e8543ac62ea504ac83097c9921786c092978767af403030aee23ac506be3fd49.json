@@ -1,0 +1,12 @@
+{
+ "key": "e8543ac62ea504ac83097c9921786c092978767af403030aee23ac506be3fd49",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"Fact A and Fact B describe different economic metrics (merchandise imports versus merchandise exports) for the same period. They are not conflicting claims about the same metric, but rather distinct components of India's trade balance.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878254.145014,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1089,
+  "output": 89
+ }
+}

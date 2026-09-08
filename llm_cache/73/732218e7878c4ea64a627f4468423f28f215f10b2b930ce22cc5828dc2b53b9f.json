@@ -1,0 +1,12 @@
+{
+ "key": "732218e7878c4ea64a627f4468423f28f215f10b2b930ce22cc5828dc2b53b9f",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Both facts claim to represent the weight of 'Oils and Fats' within the 'CPI-food and beverages' index for the same period (FY2025). Because they provide significantly different values (7.8% vs 3.6%) for the exact same metric and scope within the same document, they are in direct conflict.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878963.3436868,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 999,
+  "output": 119
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "bc14a1aeb24798930c1026f30f1c4cc060ba71dc4ff7023224e74788d1889a81",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A describes the current ownership status of Spoton Logistics as a wholly-owned subsidiary. Fact B discusses the accounting treatment (pro forma consolidation) used to model the financial impact of that acquisition as if it occurred on a specific date. They describe different aspects of the same corporate event and do not conflict.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876928.246491,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1008,
+  "output": 105
+ }
+}

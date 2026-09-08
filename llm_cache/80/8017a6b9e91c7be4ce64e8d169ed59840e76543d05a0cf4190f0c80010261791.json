@@ -1,0 +1,12 @@
+{
+ "key": "8017a6b9e91c7be4ce64e8d169ed59840e76543d05a0cf4190f0c80010261791",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts refer to different metrics: Fact A reports on 'total expenditure' growth, while Fact B reports on 'revenue expenditure' growth. These are distinct components of state spending, so the difference in figures is expected and does not constitute a contradiction.\",\n  \"reconciling_evidence\": \"Fact A: \\\"total expenditure grew by 9.5 per cent.\\\" Fact B: \\\"The revenue expenditure of the states grew at 12 per cent\\\"\"\n}",
+ "created_at": 1788877248.1289861,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 986,
+  "output": 130
+ }
+}

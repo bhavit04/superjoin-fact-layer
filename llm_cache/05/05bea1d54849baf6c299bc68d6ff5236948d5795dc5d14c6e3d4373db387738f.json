@@ -1,0 +1,12 @@
+{
+ "key": "05bea1d54849baf6c299bc68d6ff5236948d5795dc5d14c6e3d4373db387738f",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Both facts are extracted from the same sequence of numbers (73, 47, 37) in the same document. Fact A identifies '37' as the Net Working Capital Days, while Fact B identifies '33' as the value. Since '33' does not appear in the source text provided, Fact B is an erroneous extraction or misinterpretation of the data presented.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878447.357704,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 935,
+  "output": 130
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "35d2390352c56bf61b6dd573802885271d4370e755ebe57310acf94ee10ef2a9",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are reconciled by the distinction between a nominal tariff rate and an effective tariff rate. Fact B cites a 50 percent headline tariff rate, while Fact A cites a 37.8 percent effective rate, which accounts for the actual impact on trade flows rather than just the statutory rate.\",\n  \"reconciling_evidence\": \"Fact A: \\\"effective tariff rate to 37.8 percent.\\\" Fact B: \\\"subject to 50 percent tariffs\\\"\"\n}",
+ "created_at": 1788878211.843772,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1109,
+  "output": 137
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "e15dae9a217fafbad2ad2f9dea5d700b89172c08cae0ac4ae61652bac67a1d92",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a sub-period within FY24 (implied by the phrase 'corresponding period'), whereas Fact B explicitly states the figure is for 'FY24 as a whole.' The difference in the reported values is explained by the difference in the time scope covered.\",\n  \"reconciling_evidence\": \"Fact A: 'corresponding period of FY24'; Fact B: 'For FY24 as a whole'\"\n}",
+ "created_at": 1788878851.3686259,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 971,
+  "output": 128
+ }
+}

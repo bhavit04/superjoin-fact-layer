@@ -1,0 +1,12 @@
+{
+ "key": "849c2a3600dca5564f4749d343cd767f4daa464d315f4bbe846a376a1ae0dd3d",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A identifies a company registration number, while Fact B identifies the name of an associate company. These are entirely different metrics describing different attributes of the entity.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876950.789224,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 896,
+  "output": 75
+ }
+}

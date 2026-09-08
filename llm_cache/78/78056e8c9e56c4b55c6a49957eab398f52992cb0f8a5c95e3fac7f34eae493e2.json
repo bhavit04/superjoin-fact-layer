@@ -1,0 +1,12 @@
+{
+ "key": "78056e8c9e56c4b55c6a49957eab398f52992cb0f8a5c95e3fac7f34eae493e2",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts are not contradictory; they describe the beginning and end points of a change during the period. Fact A refers to the starting value of the net working capital cycle, while Fact B refers to the ending value after the reduction occurred during FY24.\",\n  \"reconciling_evidence\": \"reducing our net working capital cycle from 38 to 31 days\"\n}",
+ "created_at": 1788878515.376819,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 992,
+  "output": 116
+ }
+}

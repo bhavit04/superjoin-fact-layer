@@ -1,0 +1,12 @@
+{
+ "key": "05f0ba54635c17ace31e0e76b222118ab654c6a77e9982c6d06a20f5c4982c00",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports the exit value for the first nine months of 2024. Fact B reports the exit value for the 'corresponding period of the previous year' (January to September 2023). Because they refer to different time periods, they are not conflicting claims but rather a comparison of year-over-year performance.\",\n  \"reconciling_evidence\": \"Fact A: 'January to September 2024'; Fact B: 'corresponding period of the previous year'\"\n}",
+ "created_at": 1788878872.712845,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 950,
+  "output": 139
+ }
+}

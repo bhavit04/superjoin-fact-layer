@@ -1,0 +1,12 @@
+{
+ "key": "913fe9ca7a0b5c232d90f977f3881e57c809499488c5a53a1953034236e726a7",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric for different fiscal years (FY2020 vs FY2019). They are part of a time series provided in the same source sentence, not conflicting claims.\",\n  \"reconciling_evidence\": \"Our revenue from sale of traded goods was nil, ₹57.50 million... for Fiscal 2019, Fiscal 2020\"\n}",
+ "created_at": 1788877020.829996,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1129,
+  "output": 120
+ }
+}

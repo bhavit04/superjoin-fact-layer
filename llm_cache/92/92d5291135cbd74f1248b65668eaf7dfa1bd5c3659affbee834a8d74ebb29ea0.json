@@ -1,0 +1,12 @@
+{
+ "key": "92d5291135cbd74f1248b65668eaf7dfa1bd5c3659affbee834a8d74ebb29ea0",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are not in conflict; they describe the same metric for different, non-overlapping time periods. Fact A refers to the nine-month period ended December 31, 2021, while Fact B refers to the nine-month period ended December 31, 2020.\",\n  \"reconciling_evidence\": \"the nine months periods ended December 31, 2020 and December 31, 2021, respectively.\"\n}",
+ "created_at": 1788878775.615541,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1213,
+  "output": 139
+ }
+}

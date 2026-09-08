@@ -1,0 +1,12 @@
+{
+ "key": "d08919921d4ec8395fac3f950709ea8ba99d6dcea724f6c6a4580e24a23bcbec",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different fiscal quarters within the same fiscal year (Q4 vs Q3), rather than conflicting figures for the same period. Fact A reports the issuance for Q4, while Fact B reports the issuance for Q3.\",\n  \"reconciling_evidence\": \"Fact A: \\\"stood at ₹3.7 lakh crore in Q4\\\"; Fact B: \\\"further to ₹2.9 lakh crore in Q3\\\"\"\n}",
+ "created_at": 1788878997.602022,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1003,
+  "output": 129
+ }
+}

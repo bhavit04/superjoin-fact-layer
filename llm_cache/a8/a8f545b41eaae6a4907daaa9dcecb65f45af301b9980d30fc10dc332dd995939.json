@@ -1,0 +1,12 @@
+{
+ "key": "a8f545b41eaae6a4907daaa9dcecb65f45af301b9980d30fc10dc332dd995939",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same metric (revenue from sale of traded goods) for different, non-overlapping fiscal years (2021 vs 2019). This constitutes a time series rather than a contradiction.\",\n  \"reconciling_evidence\": \"Our revenue from sale of traded goods was nil... for Fiscal 2019... ₹110.89 million... for Fiscal 2021\"\n}",
+ "created_at": 1788877015.515906,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1131,
+  "output": 125
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "58ef9e7db804f796f1c8d87d970ba75706602fdff7829fe1be8cc5a252d8f902",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports on 'financing activities' while Fact B reports on 'operating activities'. These are distinct components of a cash flow statement and are not comparable metrics, so they do not contradict or corroborate one another.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788876412.665741,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1024,
+  "output": 86
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "5b8b1d81c018af2e4560dd8d744aad6f8d950c8ca60bb9fb53629d03158366ce",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different timeframes: Fact A refers to the calendar year 2024, while Fact B refers to the fiscal year 2024/25. Despite the different periods, the reported growth figures are identical.\",\n  \"reconciling_evidence\": \"Fact A: 'Real GDP (at market prices) ... 6.5'; Fact B: 'economic growth of 6.5 percent in FY2024/25'\"\n}",
+ "created_at": 1788878334.794197,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1035,
+  "output": 138
+ }
+}

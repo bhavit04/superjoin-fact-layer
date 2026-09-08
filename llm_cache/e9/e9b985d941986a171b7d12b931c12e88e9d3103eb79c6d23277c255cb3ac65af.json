@@ -1,0 +1,12 @@
+{
+ "key": "e9b985d941986a171b7d12b931c12e88e9d3103eb79c6d23277c255cb3ac65af",
+ "response": "{\"facts\": [\n  {\n    \"subject\": \"Delhivery Limited\",\n    \"metric\": \"corporate identity number\",\n    \"value\": \"L63090DL2011PLC221234\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"textual\",\n    \"qualifiers\": {},\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"CIN: L63090DL2011PLC221234\",\n    \"page\": 74,\n    \"confidence\": 1.0\n  },\n  {\n    \"subject\": \"The Group\",\n    \"metric\": \"reporting period\",\n    \"value\": \"the year ended March 31, 2024\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"temporal\",\n    \"qualifiers\": {},\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"Notes\\nTo the Consolidated Financial Statements for the year ended March 31, 2024\",\n    \"page\": 74,\n    \"confidence\": 1.0\n  },\n  {\n    \"subject\": \"Delhivery Limited\",\n    \"metric\": \"report type\",\n    \"value\": \"Annual Report 2023-24\",\n    \"unit_hint\": \"\",\n    \"fact_type\": \"textual\",\n    \"qualifiers\": {},\n    \"polarity\": \"affirmed\",\n    \"evidence\": \"Annual Report 2023-24\",\n    \"page\": 74,\n    \"confidence\": 1.0\n  }\n]}",
+ "created_at": 1788876673.249673,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "extract_facts",
+ "usage": {
+  "input": 3762,
+  "output": 374
+ }
+}

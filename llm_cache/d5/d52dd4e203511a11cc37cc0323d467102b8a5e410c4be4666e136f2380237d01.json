@@ -1,0 +1,12 @@
+{
+ "key": "d52dd4e203511a11cc37cc0323d467102b8a5e410c4be4666e136f2380237d01",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"Fact A describes Kapil Bharati's primary board designation, while Fact B lists his title specifically in his capacity as a member of the Risk Management Committee. The slight variation in title ('Executive Director' vs 'Executive Officer') is a common inconsistency in committee reporting versus board reporting within the same document.\",\n  \"reconciling_evidence\": \"Fact A: 'Kapil Bharati Executive Director and Chief Technology Officer'; Fact B: 'Kapil Bharati, Executive Officer and Chief Technology Officer (Member)'\"\n}",
+ "created_at": 1788876994.2977731,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 898,
+  "output": 140
+ }
+}

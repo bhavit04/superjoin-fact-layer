@@ -1,0 +1,12 @@
+{
+ "key": "1a9d5932d3390525939f06826a587acdada7a14bbbc8a4d9f33ae0572b8475e2",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence lists a sequence of three numbers (73, 47, 37) for 'Net Working Capital Days', but does not explicitly label which period corresponds to which value. Because the values 40 and 33 do not match the sequence provided in the text and the periods are ambiguous, these facts represent different, unidentifiable data points rather than a direct contradiction.\",\n  \"reconciling_evidence\": \"73 47 37\"\n}",
+ "created_at": 1788878458.271156,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 935,
+  "output": 136
+ }
+}

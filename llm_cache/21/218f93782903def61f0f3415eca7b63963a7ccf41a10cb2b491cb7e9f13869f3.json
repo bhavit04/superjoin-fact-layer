@@ -1,0 +1,12 @@
+{
+ "key": "218f93782903def61f0f3415eca7b63963a7ccf41a10cb2b491cb7e9f13869f3",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The source evidence lists a sequence of three values (73, 47, 37) for 'Net Working Capital Days'. These represent a time series of data points rather than a single conflicting claim. Fact A and Fact B are simply different data points from that series.\",\n  \"reconciling_evidence\": \"Net Working Capital Days (Receivable days – Payable days) 73 47 37\"\n}",
+ "created_at": 1788878431.9974241,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 936,
+  "output": 125
+ }
+}

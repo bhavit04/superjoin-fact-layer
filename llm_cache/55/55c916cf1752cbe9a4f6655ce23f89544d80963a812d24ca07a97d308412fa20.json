@@ -1,0 +1,12 @@
+{
+ "key": "55c916cf1752cbe9a4f6655ce23f89544d80963a812d24ca07a97d308412fa20",
+ "response": "{\"assignments\": [{\"index\": 0, \"canonical\": \"rate\"}, {\"index\": 1, \"canonical\": \"deficit\"}, {\"index\": 2, \"canonical\": \"growth projection\"}, {\"index\": 3, \"canonical\": \"deficit projection\"}, {\"index\": 4, \"canonical\": \"deficit target\"}, {\"index\": 5, \"canonical\": \"contingent liability\"}, {\"index\": 6, \"canonical\": \"policy rate\"}, {\"index\": 7, \"canonical\": \"poverty rate\"}, {\"index\": 8, \"canonical\": \"gini index\"}, {\"index\": 9, \"canonical\": \"likelihood\"}, {\"index\": 10, \"canonical\": \"deduction rate\"}, {\"index\": 11, \"canonical\": \"annual cost\"}]}",
+ "created_at": 1788879188.985366,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "cluster_metrics",
+ "usage": {
+  "input": 3063,
+  "output": 163
+ }
+}

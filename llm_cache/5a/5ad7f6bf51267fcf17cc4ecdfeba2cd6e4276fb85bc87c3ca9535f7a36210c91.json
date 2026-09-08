@@ -1,0 +1,12 @@
+{
+ "key": "5ad7f6bf51267fcf17cc4ecdfeba2cd6e4276fb85bc87c3ca9535f7a36210c91",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"metric\",\n  \"explanation\": \"The facts are not contradictory because they describe two distinct economic metrics: Fact A reports 'gross foreign assets' while Fact B reports 'gross foreign liabilities'. These are separate components of a country's international investment position, not the same metric.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878249.138104,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1055,
+  "output": 94
+ }
+}

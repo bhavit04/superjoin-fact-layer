@@ -1,0 +1,12 @@
+{
+ "key": "0e2866acad1fd40528e7f5142d993e599a9786650ba76db1e7918f88e8c8698c",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A provides the total count of members on the Audit Committee, while Fact B identifies a specific individual who is a member of that committee. They describe different aspects of the same entity and do not conflict.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788878690.405335,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 906,
+  "output": 85
+ }
+}
