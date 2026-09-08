@@ -268,3 +268,30 @@ def test_a_table_of_repeated_events_is_not_a_pile_of_contradictions():
     pair = [make_fact(id="x", value_num=8_142_000_000.0),
             make_fact(id="y", value_num=9_010_000_000.0)]
     assert enumeration_key(pair[0]) not in find_enumerations(pair)
+
+
+def test_the_same_role_written_two_ways_is_not_a_conflict():
+    """'Managing Director and CEO' against 'Managing Director & CEO' had the same
+    person contradicting themselves across two filings."""
+    a = make_fact(id="a", fact_type="categorical", metric_raw="board role",
+                  value_raw="Managing Director and Chief Executive Officer",
+                  value_num=None, value_unit="", value_kind="other")
+    b = make_fact(id="b", doc_id="doc_b", fact_type="categorical", metric_raw="board role",
+                  value_raw="Managing Director & Chief Executive Officer",
+                  value_num=None, value_unit="", value_kind="other")
+    assert decide(a, b)[0].kind == CORROBORATES
+
+
+def test_a_textual_value_changing_between_periods_is_a_change_not_a_conflict():
+    """A line item that was nil in FY2019 and 16.54 in FY2023 is a change over
+    time. The non-numeric path ignored periods entirely and called it a conflict."""
+    old = make_fact(id="a", fact_type="textual", metric_raw="revenue from traded goods",
+                    value_raw="nil", value_num=None, value_unit="", value_kind="other",
+                    period_canonical="FY2019", period_start="2018-04-01", period_end="2019-03-31")
+    new = make_fact(id="b", doc_id="doc_b", fact_type="textual",
+                    metric_raw="revenue from traded goods", value_raw="16.54 (unaudited)",
+                    value_num=None, value_unit="", value_kind="other",
+                    period_canonical="FY2023", period_start="2022-04-01", period_end="2023-03-31")
+    verdict, _ = decide(old, new)
+    assert verdict.kind == RELATED
+    assert verdict.dimension == "period"

@@ -190,8 +190,19 @@ def _value_spec(fact: dict) -> units.ValueSpec:
     )
 
 
+_TEXT_NOISE = {"and", "the", "of", "a", "an", "&", "for", "to", "in", "at", "on", "with", "member"}
+
+
 def _normalize_text_value(text: str | None) -> str:
-    return re.sub(r"[^\w]+", " ", str(text or "").lower()).strip()
+    """Reduce a textual value to comparable words.
+
+    Dropping connectives matters more than it sounds: "Managing Director and
+    Chief Executive Officer" and "Managing Director & Chief Executive Officer"
+    are one role, and comparing them literally reported the same person as
+    contradicting themselves across two filings.
+    """
+    words = re.sub(r"[^\w]+", " ", str(text or "").replace("&", " and ").lower()).split()
+    return " ".join(w for w in words if w not in _TEXT_NOISE)
 
 
 def _scale_hypothesis(ratio: float) -> str | None:
@@ -324,6 +335,18 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
             return Verdict(
                 CORROBORATES, 0.8, "deterministic",
                 f"Both sources state the same value for this claim: \"{fact_a.get('value_raw')}\".",
+            )
+        # Time applies to textual claims too. A value stated for one period and a
+        # different value stated for a later, non-overlapping period is a change
+        # over time -- a director appointed and later resigned, a line item that
+        # was nil and later was not -- and calling that a contradiction misreads
+        # the most ordinary thing documents do.
+        if obs.period_relation == periods.DISJOINT:
+            return Verdict(
+                RELATED, 0.4, "deterministic",
+                f"The value differs between two non-overlapping periods ({obs.period_a} vs "
+                f"{obs.period_b}), which describes a change over time rather than a conflict.",
+                dimension="period",
             )
         if obs.text_equal is False:
             # Differing statuses over time are a change, not a conflict, so this

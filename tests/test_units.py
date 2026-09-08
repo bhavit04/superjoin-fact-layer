@@ -62,3 +62,23 @@ def test_different_currencies_are_not_comparable():
 
 def test_humanize_uses_indian_scale_for_rupees():
     assert "crore" in humanize(8_142_000_000.0, "INR")
+
+
+@pytest.mark.parametrize("raw,expected", [
+    ("Rs. (452 Cr)", -4_520_000_000.0),   # parentheses wrap the number, not the string
+    ("₹(452) Cr", -4_520_000_000.0),
+    ("(4,516)", -4516.0),
+    ("(6.3%)", -6.3),
+])
+def test_accounting_negatives_inside_a_longer_string(raw, expected):
+    """A loss written 'Rs. (452 Cr)' was read as a profit, which then contradicted
+    the same loss written '(4,516)' elsewhere in the corpus."""
+    assert parse_value(raw).number == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("raw,expected", [
+    ("12.7%(2)", 12.7),
+    ("₹8,142 Cr(2)", 81_420_000_000.0),
+])
+def test_footnote_markers_are_not_read_as_negatives(raw, expected):
+    assert parse_value(raw).number == pytest.approx(expected)

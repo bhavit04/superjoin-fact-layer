@@ -152,11 +152,23 @@ def parse_value(raw: str, unit_hint: str | None = None) -> ValueSpec:
     lowered = search_space.lower()
 
     is_approx = bool(re.search(r"\b(about|around|approx\.?|approximately|nearly|roughly|circa|~|over|almost)\b", lowered))
-    # Accounting negative: (1,234) means -1234.
-    negative_parens = bool(re.match(r"^\(.*\)$", text.strip()))
 
-    numbers = [_to_float(m.group()) for m in _NUM_RE.finditer(text)]
+    matches = list(_NUM_RE.finditer(text))
+    numbers = [_to_float(m.group()) for m in matches]
     numbers = [n for n in numbers if n is not None]
+
+    # Accounting negative. The parentheses wrap the *number*, not necessarily the
+    # whole string: "Rs. (452 Cr)" and "₹(452) Cr" are both minus 452 crore.
+    # Requiring the entire string to be parenthesised missed both, turning a loss
+    # into a profit and inventing a contradiction against the same figure written
+    # elsewhere. Anchoring on the number also avoids reading a footnote marker
+    # like "12.7%(2)" as a negative.
+    negative_parens = False
+    if matches:
+        token = re.escape(matches[0].group())
+        negative_parens = bool(
+            re.search(r"\(\s*" + token + r"\s*[A-Za-z%$₹.\s]*\)", text)
+        )
 
     scale_match = _SCALE_RE.search(search_space)
     scale_word = scale_match.group(1).lower() if scale_match else None

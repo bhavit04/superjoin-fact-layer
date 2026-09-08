@@ -81,6 +81,17 @@ either way; only the transport differs.
 
 ---
 
+## What it produces on the starter corpus
+
+<!--STATS-->
+<!--/STATS-->
+
+Full output, with evidence and reasoning for every example, is in
+**[`cases/CASES.md`](cases/CASES.md)**. `make verify` re-checks all of this against the
+database and exits non-zero if any of it stops being true.
+
+---
+
 ## Video demo
 
 **<< add link here >>**

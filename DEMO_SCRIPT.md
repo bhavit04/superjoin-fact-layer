@@ -27,11 +27,20 @@ Point at the log lines as they appear: `extracted`, `grounded`, `clustered`,
 
 ### 0:50 – 1:20 · Case 1 — corroboration  *(required)*
 
-**Four cases** tab, first section.
+**Four cases** tab, first section. The strongest example on the starter corpus is
+Delhivery shipment volume: the FY24 annual report states it inside a **chart series**
+("225 289 582 663 740 / FY20 FY21 FY22 FY23 FY24") while the 2022 prospectus states it
+in **prose** ("289.20 million orders in Fiscal 2021").
 
-> "These two documents state the same figure in different units and call the metric
-> different things. They only match because units are normalized to one magnitude
-> and both period spellings resolve to the same interval."
+> "Two documents published two years apart. One states the figure in a chart, the
+> other in a sentence. They call the metric different things and spell the period
+> differently — 'FY21' against 'Fiscal 2021'. They match because units resolve to one
+> magnitude and both period spellings resolve to the same interval."
+
+Read the reasoning line aloud — it is the distinctive part:
+
+> "…agree to within 0.07%, inside the 0.17% tolerance implied by how precisely each
+> figure is written."
 
 Expand **Mechanical observations** — point to `period relation: EQUAL`, the
 reconciled units, and the relative difference sitting inside the rounding tolerance.
@@ -50,14 +59,25 @@ Show both evidence quotes side by side, then the reasoning line.
 
 ### 1:55 – 2:25 · Case 3 — explained by context  *(required)*
 
-> "These two also disagree. But here the difference *is* explained — "
-> (read the named dimension: period / basis / scope / currency)
-> "— so it's reconciled, not a contradiction. That distinction is the whole point:
-> most apparent conflicts in financial documents are context differences."
+The best example is the **current account deficit**: the IMF reports 0.6% of GDP, the
+Economic Survey reports 1.2%. Both periods resolve to FY2025, so this looks like two
+institutions flatly disagreeing.
 
-Expand the observations to show the qualifier delta or the nested periods.
+> "Two different institutions, the same metric, and both periods resolve to the same
+> fiscal year — so the rules escalated it. The adjudicator then found the answer in
+> the evidence itself: the IMF figure is the full year, the Survey figure is Q2 of
+> that year. Reconciled on period, not a contradiction."
+
+Point at the quoted supporting words in the reasoning. If time is tight, the food
+inflation pair makes the same point in one line: RBI 6.7% for the full year against
+the Survey's 8.4% for "FY25 (April–December)".
 
 ### 2:25 – 2:45 · Case 4 — failures  *(required)*
+
+If you want the sharpest single line here, use the system diagnosing its **own**
+extraction error: the adjudicator's reasoning on the working-capital-days pair reads
+"Both facts are extracted from the same sequence of numbers ('73 47 37')… since '40'
+does not appear in that sequence" — it caught a table misread that invented a value.
 
 **Failures** tab.
 
