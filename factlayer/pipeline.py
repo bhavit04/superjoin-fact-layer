@@ -149,7 +149,26 @@ async def ingest(
             if not stored:
                 store.update_document(doc_id, status="ready", duration_s=time.time() - started)
                 result.duration_s = time.time() - started
-                result.notes.append("No groundable facts were extracted from this document.")
+                # Distinguish "this document yielded nothing" from "we never got to
+                # look at it". Reporting an exhausted quota as an empty document
+                # sends the reader hunting for a problem in their PDF.
+                quota_failures = [f for f in client.failures if "quota" in f["error"].lower()
+                                  or "429" in f["error"] or "too_many_requests" in f["error"].lower()]
+                if quota_failures or client.exhausted:
+                    result.notes.append(
+                        f"Extraction could not run: the provider's quota was exhausted "
+                        f"({len(quota_failures)} rejected call(s)). Nothing was extracted from this "
+                        f"document. Re-run when quota resets, or set a key for another provider -- "
+                        f"already-cached responses are unaffected."
+                    )
+                elif client.failures:
+                    result.notes.append(
+                        f"Extraction failed on every chunk ({len(client.failures)} error(s)); "
+                        f"first was: {client.failures[0]['error'][:160]}"
+                    )
+                else:
+                    result.notes.append("No groundable facts were extracted from this document.")
+                result.usage = client.usage.to_dict()
                 return result
 
             # --- metric vocabulary -------------------------------------------
