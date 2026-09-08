@@ -232,9 +232,11 @@ class PdfDocument:
             return EvidenceLocation(page_no, rects, round(ratio, 3), matched,
                                     verified=ratio >= 0.80, mode="fuzzy")
 
-        # An ellipsis is the model telling us it skipped text. Those quotes can
-        # still be verified, but only against a single rendered line.
-        if "..." in quote or "\u2026" in quote:
+        # An ellipsis or a pipe is the model telling us it joined separate cells:
+        # "Adjusted EBITDA ... 76 ... FY24", "No. of gateways | 38 | 40". The claim
+        # such a quote makes is that those cells belong together, so it is checked
+        # against a single rendered line rather than against the page as a whole.
+        if any(marker in quote for marker in ("...", "\u2026", "|")):
             row = self._locate_in_row(page_text, quote, page_no)
             if row is not None:
                 return row
@@ -279,7 +281,7 @@ class PdfDocument:
         the association is real and checkable. If they are scattered across
         different lines, the fact is rejected.
         """
-        fragments = [normalize_ws(f) for f in re.split(r"\.\.\.|…", quote)]
+        fragments = [normalize_ws(f) for f in re.split(r"\.\.\.|…|\|", quote)]
         fragments = [f for f in fragments if len(f) >= 2]
         if len(fragments) < 2:
             return None
@@ -297,7 +299,7 @@ class PdfDocument:
         """Verify a quote as a set of short contiguous runs rather than one span."""
         haystack = page_text.lower()
         # Ellipses are the model's own marker for "I skipped text here".
-        segments = [seg for seg in re.split(r"\.\.\.|…", quote) if seg.strip()]
+        segments = [seg for seg in re.split(r"\.\.\.|…|\|", quote) if seg.strip()]
         runs: list[str] = []
         for segment in segments:
             words = segment.split()
