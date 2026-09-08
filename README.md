@@ -121,13 +121,13 @@ doctor` reports it directly.
 
 | relationship | count | |
 |---|---:|---|
-| **CORROBORATES** | 248 | the same claim, agreeing |
-| **RECONCILED** | 451 | disagreeing, but a stated difference in context explains it |
-| **CONTRADICTS** | 26 | disagreeing with nothing to explain it |
-| **RELATED** | 2,058 | same metric, different periods — a time series |
+| **CORROBORATES** | 187 | the same claim, agreeing |
+| **RECONCILED** | 364 | disagreeing, but a stated difference in context explains it |
+| **CONTRADICTS** | 14 | disagreeing with nothing to explain it |
+| **RELATED** | 2,218 | same metric, different periods — a time series |
 | _of which cross-document_ | 629 | |
 
-The fact schema grew to **1,322 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **130** proposed facts were rejected for failing to ground.
+The fact schema grew to **1,322 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **155** proposed facts were rejected for failing to ground.
 <!--/STATS-->
 
 Full output, with evidence and reasoning for every example, is in
