@@ -68,16 +68,22 @@ def test_same_metric_same_period_no_explanation_contradicts():
     assert not obs.qualifier_deltas           # nothing stated explains the gap
 
 
-def test_a_part_larger_than_its_whole_is_a_contradiction():
-    """A quarter reporting more than the full year that contains it is a real
-    inconsistency, not a period difference."""
+def test_a_part_larger_than_its_whole_is_escalated_not_asserted():
+    """A quarter reporting more than the year containing it looks impossible, and
+    for a non-negative quantity it is. But EBITDA and profit go negative -- a
+    profitable quarter inside a loss-making year is ordinary -- so this layer
+    raises the tension as a hypothesis rather than asserting an impossibility it
+    cannot establish."""
     year = make_fact(id="a", value_raw="8,142", value_num=8_142_000_000.0)
     quarter = make_fact(
         id="b", doc_id="doc_b", value_raw="9,500", value_num=9_500_000_000.0,
         period_label="Q4 FY24", period_canonical="Q4 FY2024", period_kind="QUARTER",
         period_start="2024-01-01", period_end="2024-03-31",
     )
-    assert decide(year, quarter)[0].kind == CONTRADICTS
+    verdict, obs = decide(year, quarter)
+    assert verdict.kind == RECONCILED
+    assert verdict.needs_llm is True
+    assert any("exceeds" in h for h in obs.hypotheses)
 
 
 # --- case 3: apparent contradiction explained by context ---------------------
@@ -186,3 +192,14 @@ def test_rationales_never_crash_on_an_absent_difference():
                       value_a=1.0, value_b=2.0, rel_diff=None, period_relation="EQUAL")
     verdict = _classify(a, b, obs)
     assert isinstance(verdict.rationale, str) and verdict.rationale
+
+
+def test_a_scale_suffix_attached_to_the_digits_is_not_lost():
+    """'Rs 76Cr' has no word boundary between the digits and the suffix. Missing
+    it dropped a factor of ten million and manufactured a false contradiction
+    against a figure written 'Rs 92 Cr'."""
+    from factlayer.normalize.units import parse_value
+    assert parse_value("\u20b976Cr").number == 760_000_000.0
+    assert parse_value("\u20b992 Cr").number == 920_000_000.0
+    # ...without matching the "cr" buried inside an ordinary word.
+    assert parse_value("an increase of 12%").number == 12.0

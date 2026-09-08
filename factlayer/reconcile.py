@@ -387,17 +387,31 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
         bigger, smaller = (
             (obs.value_a, obs.value_b) if period_rel == periods.CONTAINS else (obs.value_b, obs.value_a)
         )
-        # A part exceeding its whole is a real inconsistency for additive metrics,
-        # but ratios and rates are not additive, so this only fires for money/counts.
+        # A part exceeding its whole looks like an inconsistency, and for a
+        # strictly non-negative quantity (shipments, headcount, revenue) it is.
+        # But earnings measures go negative: Delhivery's FY23 EBITDA was
+        # Rs (452) crore, so a single profitable quarter can genuinely exceed the
+        # loss-making year containing it. Asserting a contradiction here would be
+        # claiming an impossibility this layer cannot establish, so the tension is
+        # reported as a hypothesis and the adjudicator decides.
         additive = obs.units_a not in {"%", "pp", "bps", "x"} and not metrics.derivative_kind(
             fact_a.get("metric_raw")
         )
-        if additive and smaller is not None and bigger is not None and smaller > bigger * 1.02:
+        exceeds = (
+            additive and smaller is not None and bigger is not None and smaller > bigger * 1.02
+        )
+        if exceeds:
+            obs.hypotheses.insert(0, (
+                f"the shorter period reports {units.humanize(smaller, obs.units_a)}, which exceeds "
+                f"the {units.humanize(bigger, obs.units_a)} reported for the longer period "
+                "containing it -- consistent only if other sub-periods were negative"
+            ))
             return Verdict(
-                CONTRADICTS, 0.55, "deterministic",
-                f"The shorter period reports {units.humanize(smaller, obs.units_a)}, which exceeds the "
-                f"{units.humanize(bigger, obs.units_a)} reported for the longer period that contains it.",
-                needs_llm=True,
+                RECONCILED, 0.45, "deterministic",
+                f"These cover nested periods ({obs.period_note}), but the shorter period's figure "
+                f"exceeds the longer one's. That is possible for a measure that can go negative, "
+                f"such as profit or EBITDA, and an inconsistency otherwise.",
+                dimension="period", needs_llm=True,
             )
         return Verdict(
             RECONCILED, 0.7, "deterministic",

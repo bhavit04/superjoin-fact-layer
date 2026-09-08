@@ -49,8 +49,13 @@ PLAIN_UNITS: list[tuple[str, str]] = [
 ]
 
 _NUM_RE = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
+# Letter boundaries, not word boundaries. "\b" fails on "76Cr" because there is
+# no word boundary between a digit and a letter, so an attached scale suffix was
+# silently dropped -- turning Rs 76 crore into Rs 76 and manufacturing a
+# ten-million-fold discrepancy. Guarding on letters instead matches "76Cr",
+# "₹8,142Cr" and "1.4 Mn" while still refusing the "cr" inside "increase".
 _SCALE_RE = re.compile(
-    r"\b(" + "|".join(sorted((re.escape(k) for k in SCALES), key=len, reverse=True)) + r")\b",
+    r"(?<![a-zA-Z])(" + "|".join(sorted((re.escape(k) for k in SCALES), key=len, reverse=True)) + r")(?![a-zA-Z])",
     re.IGNORECASE,
 )
 _RANGE_RE = re.compile(
