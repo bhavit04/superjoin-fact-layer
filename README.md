@@ -140,15 +140,16 @@ database and exits non-zero if any of it stops being true.
 
 **<< paste your upload link here >>**
 
-A rendered walkthrough is committed at
-[`build/fact-knowledge-layer-demo.mp4`](build/fact-knowledge-layer-demo.mp4) — 1m44s,
-covering a PDF being ingested and all four required cases with their real evidence and
-reasoning. Upload it (YouTube unlisted, Drive, Loom) and put the link above.
+A screencast is committed at
+[`build/fact-knowledge-layer-demo.mp4`](build/fact-knowledge-layer-demo.mp4) — a PDF
+being ingested, then all four required cases with their real evidence and reasoning.
+Upload it (YouTube unlisted, Drive, Loom) and put the link above.
 
-It is built from captured UI frames by `scripts/video/build_demo.py`, driven by
-`scripts/video/storyboard.json`, so re-running the pipeline and re-capturing
-regenerates it. `DEMO_SCRIPT.md` has a shot-by-shot script if you would rather record
-it by hand.
+It is a real recording of the running app, annotated in place: `scripts/video/record.sh`
+captures, `scripts/video/analyze.py` finds where the capture holds still, and
+`scripts/video/annotate.py` trims those holds and draws the commentary onto the frame
+beside whatever it is describing. Re-running it after a change regenerates the video
+rather than requiring a re-record.
 
 ---
 
