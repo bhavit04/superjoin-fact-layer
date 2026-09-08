@@ -461,6 +461,49 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
     )
 
 
+# --- enumerations are not disagreements --------------------------------------
+
+ENUMERATION_MIN_VALUES = 3
+
+
+def find_enumerations(facts: list[dict]) -> set[tuple]:
+    """Group keys whose facts are a list of events rather than one claim.
+
+    Share-capital histories, allotment tables and dividend schedules repeat the
+    same metric for the same period with a different value each time:
+
+        equity shares allotted = 197,846   (2023)
+        equity shares allotted = 113,136   (2023)
+        equity shares allotted = 493,231   (2023)
+
+    Compared pairwise these look like flat contradictions, but nothing is in
+    conflict -- they are three separate allotments. A contradiction requires two
+    sources making the *same singular claim*, so a group carrying three or more
+    distinct values for one subject, metric and period within one document is
+    treated as an enumeration and its pairs are downgraded to RELATED.
+
+    The threshold is three rather than two precisely because two competing values
+    for one quantity is the case we most want to keep.
+    """
+    groups: dict[tuple, set[float]] = {}
+    for fact in facts:
+        if fact.get("value_num") is None:
+            continue
+        key = (
+            fact.get("doc_id"), fact.get("subject_key"),
+            fact.get("metric_cluster"), fact.get("period_canonical") or "",
+        )
+        groups.setdefault(key, set()).add(round(float(fact["value_num"]), 6))
+    return {key for key, values in groups.items() if len(values) >= ENUMERATION_MIN_VALUES}
+
+
+def enumeration_key(fact: dict) -> tuple:
+    return (
+        fact.get("doc_id"), fact.get("subject_key"),
+        fact.get("metric_cluster"), fact.get("period_canonical") or "",
+    )
+
+
 # --- stage 3: LLM adjudication -----------------------------------------------
 
 def _fact_brief(fact: dict, label: str, doc_title: str) -> str:

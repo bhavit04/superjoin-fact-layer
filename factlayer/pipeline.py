@@ -31,7 +31,7 @@ from .normalize import entities, metrics
 from .pdf import PdfDocument, file_sha256
 from .reconcile import (
     CONTRADICTS, CORROBORATES, RECONCILED, RELATED, UNRELATED,
-    Observation, Verdict, adjudicate, classify, observe,
+    Observation, Verdict, adjudicate, classify, enumeration_key, find_enumerations, observe,
 )
 
 ProgressFn = Callable[[str, str, dict], None]
@@ -313,6 +313,7 @@ async def _link(
 
     candidates = generate_pairs(index, probes, settings.candidate_top_k, settings.metric_sim_threshold)
     result.pairs_considered = len(candidates)
+    enumerations = find_enumerations(all_facts)
     emit("candidates", f"{len(candidates)} candidate pairs from {len(all_facts)} facts")
 
     titles = {d["id"]: (d.get("title") or d.get("filename") or "") for d in store.query("SELECT id, title, filename FROM documents")}
@@ -324,6 +325,16 @@ async def _link(
         verdict = classify(candidate.fact_a, candidate.fact_b, obs)
         if verdict.kind == UNRELATED:
             continue
+        # Repeated rows of one table are a list of events, not rival claims.
+        key = enumeration_key(candidate.fact_a)
+        if key in enumerations and key == enumeration_key(candidate.fact_b):
+            verdict = Verdict(
+                RELATED, 0.3, "deterministic",
+                "This subject, metric and period carry several different values in the same "
+                "document, so these are entries in a series -- such as separate allotments or "
+                "transactions -- rather than competing claims about one quantity.",
+                dimension="enumeration",
+            )
         (escalate if verdict.needs_llm else settled).append((candidate, obs, verdict))
 
     # Spend the adjudication budget where it changes the answer most: genuine

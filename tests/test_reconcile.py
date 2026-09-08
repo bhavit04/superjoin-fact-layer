@@ -249,3 +249,22 @@ def test_a_thousandfold_gap_reads_as_a_unit_problem():
     verdict, obs = decide(a, b)
     assert verdict.kind == RECONCILED
     assert any("factor of 10" in h for h in obs.hypotheses)
+
+
+def test_a_table_of_repeated_events_is_not_a_pile_of_contradictions():
+    """A share-capital history lists many allotments for one year. Pairwise they
+    look like flat disagreements; nothing is actually in conflict."""
+    from factlayer.reconcile import find_enumerations, enumeration_key
+    facts = [
+        make_fact(id=f"f{i}", metric_raw="equity shares allotted",
+                  metric_cluster="allot equiti share", value_num=float(v),
+                  period_canonical="2023")
+        for i, v in enumerate((197846, 113136, 493231))
+    ]
+    enumerations = find_enumerations(facts)
+    assert enumeration_key(facts[0]) in enumerations
+
+    # Two rival values for one quantity must still count as a contradiction.
+    pair = [make_fact(id="x", value_num=8_142_000_000.0),
+            make_fact(id="y", value_num=9_010_000_000.0)]
+    assert enumeration_key(pair[0]) not in find_enumerations(pair)
