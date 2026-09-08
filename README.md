@@ -113,7 +113,10 @@ database and exits non-zero if any of it stops being true.
 
 ## Video demo
 
-**<< add link here >>**
+**<< add your link here >>**
+
+The video should show a PDF being processed and the four cases below.
+`DEMO_SCRIPT.md` has a shot-by-shot script naming the specific examples to click.
 
 ---
 
@@ -353,6 +356,10 @@ more facts than the larger `gemini-3.6-flash` (46 against 37) in a third of the 
 Written honestly; several of these are visible in the "Failures" tab of the UI.
 
 **What does not work well yet**
+
+- **No OCR.** Text comes from the PDF's text layer, so a scanned or image-only
+  document yields nothing at all.
+- **English only.** The prompts, stopword lists and period vocabulary are English.
 
 - **Tables are read as prose.** Text is extracted linearly, so a wide financial table
   can lose the association between a row label, a column header and a cell. The
