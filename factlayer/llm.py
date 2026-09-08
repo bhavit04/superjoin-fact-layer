@@ -305,6 +305,20 @@ class LLMClient:
                 return await self._call(system, prompt, max_output_tokens, temperature)
             except httpx.HTTPStatusError as exc:
                 status = exc.response.status_code
+                if status == 404 and "model" in exc.response.text.lower():
+                    # Google retires models per key vintage: a key issued today is
+                    # refused older models outright. That is not a transient error
+                    # and backoff will never fix it, so move down the chain.
+                    self.failures.append(
+                        {"task": "model", "error": f"{self.model} unavailable to this key"}
+                    )
+                    if not self._rotate_model():
+                        raise LLMError(
+                            f"none of the configured models are available to this API key "
+                            f"({', '.join(self._models)}). Run `factlayer doctor` to see which "
+                            f"models your key can reach."
+                        ) from exc
+                    continue
                 if status not in (408, 409, 429, 500, 502, 503, 504):
                     raise
                 last = exc

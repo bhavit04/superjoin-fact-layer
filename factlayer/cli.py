@@ -62,6 +62,8 @@ def main(argv: list[str] | None = None) -> int:
     p_serve.add_argument("--port", type=int, default=8000)
     p_serve.add_argument("--reload", action="store_true")
 
+    sub.add_parser("doctor", help="check configuration and report which models your key can reach")
+
     sub.add_parser("renormalize",
                    help="re-parse stored values and periods in place (no PDFs, no API)")
 
@@ -87,6 +89,9 @@ def main(argv: list[str] | None = None) -> int:
         import uvicorn
         uvicorn.run("factlayer.api:app", host=args.host, port=args.port, reload=args.reload)
         return 0
+
+    if args.command == "doctor":
+        return _doctor(settings)
 
     if args.command == "renormalize":
         result = renormalize(Store(settings.db_path), progress=_progress)
@@ -125,6 +130,75 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     return 1
+
+
+def _doctor(settings) -> int:
+    """Tell the user whether their setup will actually work, and what to change.
+
+    Free-tier keys differ in which models they can reach -- Google refuses older
+    models to newly issued keys -- so "it works on my machine" is not a safe
+    assumption here. This probes the configured chain and reports what is usable.
+    """
+    import httpx
+
+    from .llm import DiskCache, LLMClient
+
+    print(f"provider     {settings.provider}")
+    print(f"model        {settings.model}")
+    print(f"fallbacks    {', '.join(settings.fallback_models) or '(none)'}")
+    print(f"database     {settings.db_path}")
+    cache = DiskCache(settings.cache_dir)
+    print(f"cache        {cache.size()} cached responses at {settings.cache_dir}")
+
+    store = Store(settings.db_path)
+    stats = store.stats()
+    print(f"knowledge    {stats['documents']} documents, {stats['facts']:,} facts, "
+          f"{stats['relations']:,} relations")
+
+    if not settings.api_key:
+        print("\nNo API key set.")
+        print("  Cached documents still replay: FACTLAYER_PROVIDER=replay factlayer ingest <pdf>")
+        print(f"  For new PDFs, set {settings.provider.upper()}_API_KEY in .env")
+        return 0
+
+    print(f"\nProbing models reachable with this {settings.provider} key...")
+    client = LLMClient(settings)
+    reachable: list[str] = []
+    for model in client._models:
+        try:
+            if settings.provider == "gemini":
+                response = httpx.post(
+                    "https://generativelanguage.googleapis.com/v1beta/interactions",
+                    params={"key": settings.api_key}, timeout=45,
+                    json={"model": model, "input": "ok",
+                          "generation_config": {"max_output_tokens": 16, "thinking_level": "low"}},
+                )
+            else:
+                print(f"  {model:28} (live probe not implemented for {settings.provider})")
+                continue
+        except Exception as exc:
+            print(f"  {model:28} unreachable — {type(exc).__name__}")
+            continue
+        if response.status_code == 200:
+            print(f"  {model:28} OK")
+            reachable.append(model)
+        elif response.status_code == 429:
+            limit = ""
+            if "limit:" in response.text:
+                limit = response.text.split("limit:")[1].split(",")[0].strip()
+            print(f"  {model:28} out of quota today (limit {limit or '?'})")
+        elif response.status_code == 404:
+            print(f"  {model:28} not available to this key")
+        else:
+            print(f"  {model:28} HTTP {response.status_code}")
+
+    if reachable:
+        print(f"\nReady. Ingestion will use {reachable[0]}.")
+    else:
+        print("\nNo model is currently usable with this key.")
+        print("  Quota resets daily, or create a key under a different Google Cloud project.")
+        print("  Meanwhile: FACTLAYER_PROVIDER=replay reproduces the committed knowledge layer.")
+    return 0
 
 
 def _print_cases(cases: dict) -> None:

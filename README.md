@@ -65,6 +65,31 @@ pytest -q                          # 55 tests, no API key needed
 Set `FACTLAYER_PROVIDER` to `gemini`, `anthropic`, or `openai`. The code is the same
 either way; only the transport differs.
 
+```bash
+factlayer doctor      # what your key can actually reach, before you rely on it
+```
+
+### What to expect on a free tier
+
+Ingesting one PDF costs roughly one model call per five pages, plus a bounded number
+of adjudications:
+
+| document | model calls | wall time on a free key |
+|---|---:|---|
+| a 27-page deck | ~25 | under a minute |
+| a 100-page report | ~50 | about three minutes |
+
+Google's free tier allows 500 requests/day on `gemini-3.1-flash-lite`, so a reviewer
+can process a dozen documents before running out. Two behaviours matter if you do hit
+a limit: the client paces requests below the rate limit rather than bursting into it,
+and treats repeated rejections as exhaustion — rotating to the next model in the
+chain, then failing fast with a clear message rather than retrying into a wall.
+Anything already cached still replays, so an interrupted run resumes.
+
+Google also retires models per key vintage: a key issued today is refused some older
+models outright. The client detects that and moves down the chain, and `factlayer
+doctor` reports it directly.
+
 ### The API
 
 | endpoint | what it does |
