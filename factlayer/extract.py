@@ -57,19 +57,19 @@ async def extract_chunk(client: LLMClient, chunk: Chunk, doc_title: str) -> list
     return [f for f in raw if isinstance(f, dict)]
 
 
-def _pick_period_text(qualifiers: dict, evidence: str) -> tuple[str, str]:
+def _pick_period_text(qualifiers: dict, evidence: str, fy_start: int | None = None) -> tuple[str, str]:
     """Return (period_text, source) preferring an explicit qualifier over prose."""
     for key in PERIOD_KEYS:
         value = qualifiers.get(key)
         if isinstance(value, str) and value.strip():
-            spec = periods.parse_period(value)
+            spec = periods.parse_period(value, fy_start)
             if spec.known:
                 return value, f"qualifier:{key}"
     # Any qualifier at all whose value parses as a period.
     for key, value in qualifiers.items():
-        if isinstance(value, str) and periods.parse_period(value).known:
+        if isinstance(value, str) and periods.parse_period(value, fy_start).known:
             return value, f"qualifier:{key}"
-    spec = periods.parse_period(evidence)
+    spec = periods.parse_period(evidence, fy_start)
     if spec.known:
         return spec.label, "evidence"
     return "", "none"
@@ -101,6 +101,7 @@ def normalize_fact(
     pdf: PdfDocument,
     primary_entity: str | None,
     extractor: str,
+    fy_start: int | None = None,
 ) -> tuple[dict | None, str | None]:
     """Validate, ground and normalize one proposed fact.
 
@@ -127,8 +128,8 @@ def normalize_fact(
         return None, _classify_grounding_failure(pdf, chunk, value_raw, metric_raw, hint_page)
 
     qualifiers = _clean_qualifiers(raw.get("qualifiers"))
-    period_text, period_source = _pick_period_text(qualifiers, evidence)
-    period = periods.parse_period(period_text)
+    period_text, period_source = _pick_period_text(qualifiers, evidence, fy_start)
+    period = periods.parse_period(period_text, fy_start)
     if period_source != "none":
         qualifiers.setdefault("period", period_text)
     qualifiers["_period_source"] = period_source

@@ -46,3 +46,30 @@ def test_bare_year_is_flagged_ambiguous():
     """A lone '2024' could be calendar or fiscal; the flag lets the adjudicator know."""
     assert parse_period("2024").fiscal_ambiguous is True
     assert parse_period("FY2024").fiscal_ambiguous is False
+
+
+# --- generalizing beyond the starter corpus ----------------------------------
+
+def test_fiscal_year_convention_is_read_from_the_document():
+    """April-March is the Indian convention, not a universal one. A filing with a
+    December year end means January-December by 'FY2024', and assuming otherwise
+    shifts every period comparison against it by a quarter."""
+    from factlayer.normalize.periods import detect_fiscal_year_start, parse_period
+
+    indian = "for the year ended March 31, 2024 the Company reported"
+    american = "for the fiscal year ended December 31, 2024 the Company reported"
+    assert detect_fiscal_year_start(indian) == 4
+    assert detect_fiscal_year_start(american) == 1
+
+    india = parse_period("FY2024", fy_start=4)
+    assert (india.start, india.end) == ("2023-04-01", "2024-03-31")
+    usa = parse_period("FY2024", fy_start=1)
+    assert (usa.start, usa.end) == ("2024-01-01", "2024-12-31")
+    # Quarters follow the same convention.
+    assert parse_period("Q4 FY2024", fy_start=1).start == "2024-10-01"
+    assert parse_period("Q4 FY2024", fy_start=4).start == "2024-01-01"
+
+
+def test_an_unrecognizable_document_keeps_the_default_convention():
+    from factlayer.normalize.periods import detect_fiscal_year_start
+    assert detect_fiscal_year_start("no year-end phrasing here at all") == 4

@@ -17,6 +17,10 @@ from dataclasses import dataclass, asdict
 from datetime import date
 from typing import Any
 
+# The month a fiscal year starts in. April is the Indian convention and the
+# default, but it is a property of the *document*, not of this system: a US filing
+# means January-December by "FY2024" and would otherwise be silently shifted by a
+# quarter. ``detect_fiscal_year_start`` reads it off the document instead.
 FY_START_MONTH = 4  # April
 
 MONTHS = {
@@ -47,15 +51,65 @@ class PeriodSpec:
         return self.start is not None and self.end is not None
 
 
-def _fy_bounds(end_year: int) -> tuple[date, date]:
+# Set per document at ingest time by detect_fiscal_year_start().
+_fy_start_month = FY_START_MONTH
+
+
+def set_fiscal_year_start(month: int) -> None:
+    """Set the fiscal-year start month used to resolve FY labels."""
+    global _fy_start_month
+    if 1 <= int(month) <= 12:
+        _fy_start_month = int(month)
+
+
+def get_fiscal_year_start() -> int:
+    return _fy_start_month
+
+
+# Phrases that reveal where a document's financial year ends. Whichever appears
+# most often wins, so one stray mention does not flip the whole document.
+_FY_END_PATTERNS = [
+    (re.compile(r"year\s+end(?:ed|ing)\s+(?:on\s+)?(?:\d{1,2}\s+)?([A-Za-z]{3,9})", re.I), 1),
+    (re.compile(r"(?:financial|fiscal)\s+year\s+end(?:s|ed|ing)?\s+(?:in\s+|on\s+)?([A-Za-z]{3,9})", re.I), 1),
+    (re.compile(r"as\s+at\s+(?:\d{1,2}\s+)?([A-Za-z]{3,9})\s+\d{1,2},?\s*\d{4}", re.I), 1),
+]
+
+
+def detect_fiscal_year_start(text: str, default: int = FY_START_MONTH) -> int:
+    """Infer a document's fiscal-year start month from how it names its year end.
+
+    "the year ended March 31, 2024" implies a year starting in April; "year ended
+    December 31, 2024" implies January. Without this, "FY2024" in a US or European
+    filing is shifted by a quarter and every period comparison against it is
+    quietly wrong.
+    """
+    from collections import Counter
+
+    votes: Counter[int] = Counter()
+    for pattern, group in _FY_END_PATTERNS:
+        for match in pattern.finditer(text or ""):
+            month = MONTHS.get(match.group(group).lower())
+            if month:
+                votes[month % 12 + 1] += 1   # the year starts the month after it ends
+    if not votes:
+        return default
+    return votes.most_common(1)[0][0]
+
+
+def _fy_bounds(end_year: int, start_month: int | None = None) -> tuple[date, date]:
     """FY labelled by its ending year -> (start, end)."""
-    return date(end_year - 1, FY_START_MONTH, 1), date(end_year, FY_START_MONTH - 1, 31)
+    start_month = start_month or _fy_start_month
+    if start_month == 1:                     # calendar-aligned fiscal year
+        return date(end_year, 1, 1), date(end_year, 12, 31)
+    end_month = start_month - 1
+    return date(end_year - 1, start_month, 1), date(end_year, end_month, _last_day(end_year, end_month))
 
 
-def _quarter_bounds(end_year: int, q: int) -> tuple[date, date]:
+def _quarter_bounds(end_year: int, q: int, fy_start: int | None = None) -> tuple[date, date]:
     """Fiscal quarter within the FY labelled by ``end_year``."""
-    start_month = FY_START_MONTH + 3 * (q - 1)
-    start_year = end_year - 1 + (start_month - 1) // 12
+    fy_start = fy_start or _fy_start_month
+    start_month = fy_start + 3 * (q - 1)
+    start_year = (end_year if fy_start == 1 else end_year - 1) + (start_month - 1) // 12
     start_month = (start_month - 1) % 12 + 1
     end_month_abs = start_month + 2
     end_year_actual = start_year + (end_month_abs - 1) // 12
@@ -103,10 +157,17 @@ _P_MONTH_YEAR = re.compile(r"\b([A-Za-z]{3,9})\s+(\d{4})\b")
 _P_BARE_YEAR = re.compile(r"\b(19\d{2}|20\d{2})\b")
 
 
-def parse_period(text: str | None) -> PeriodSpec:
-    """Parse the first recognizable period expression in ``text``."""
+def parse_period(text: str | None, fy_start: int | None = None) -> PeriodSpec:
+    """Parse the first recognizable period expression in ``text``.
+
+    ``fy_start`` is the document's fiscal-year start month, from
+    ``detect_fiscal_year_start``. Passing it explicitly rather than reading a
+    global keeps two documents with different conventions from interfering when
+    they are ingested at the same time.
+    """
     if not text:
         return PeriodSpec(kind="UNKNOWN", start=None, end=None, label="", canonical="")
+    fy_start = fy_start or _fy_start_month
     raw = str(text).strip()
 
     if m := _P_QUARTER_FY.search(raw):
@@ -114,13 +175,13 @@ def parse_period(text: str | None) -> PeriodSpec:
         year = _expand_two_digit_year(m.group(3) or m.group(2))
         if m.group(3) is None and len(m.group(2)) == 4:
             year = int(m.group(2))
-        s, e = _quarter_bounds(year, q)
+        s, e = _quarter_bounds(year, q, fy_start)
         return PeriodSpec("QUARTER", s.isoformat(), e.isoformat(), m.group(0), f"Q{q} FY{year}")
 
     if m := _P_QUARTER_ORD.search(raw):
         q = ORDINAL_QUARTERS[m.group(1).lower()]
         year = _expand_two_digit_year(m.group(2))
-        s, e = _quarter_bounds(year, q)
+        s, e = _quarter_bounds(year, q, fy_start)
         return PeriodSpec("QUARTER", s.isoformat(), e.isoformat(), m.group(0), f"Q{q} FY{year}")
 
     if m := _P_HALF_FY.search(raw):
@@ -132,8 +193,8 @@ def parse_period(text: str | None) -> PeriodSpec:
 
     if m := _P_NINE_MONTH.search(raw):
         year = _expand_two_digit_year(m.group(1))
-        s = _quarter_bounds(year, 1)[0]
-        e = _quarter_bounds(year, 3)[1]
+        s = _quarter_bounds(year, 1, fy_start)[0]
+        e = _quarter_bounds(year, 3, fy_start)[1]
         return PeriodSpec("HALF", s.isoformat(), e.isoformat(), m.group(0), f"9M FY{year}")
 
     if m := _P_FY_RANGE.search(raw):
@@ -142,12 +203,12 @@ def parse_period(text: str | None) -> PeriodSpec:
         year = _expand_two_digit_year(second) if len(second) == 2 else int(second)
         if len(second) == 2:
             year = int(m.group(1)[:2] + second) if int(second) >= int(m.group(1)[2:]) else int(m.group(1)) + 1
-        s, e = _fy_bounds(year)
+        s, e = _fy_bounds(year, fy_start)
         return PeriodSpec("FY", s.isoformat(), e.isoformat(), m.group(0), f"FY{year}")
 
     if m := _P_FY_SIMPLE.search(raw):
         year = _expand_two_digit_year(m.group(1))
-        s, e = _fy_bounds(year)
+        s, e = _fy_bounds(year, fy_start)
         return PeriodSpec("FY", s.isoformat(), e.isoformat(), m.group(0), f"FY{year}")
 
     if m := _P_YEAR_ENDED.search(raw):
@@ -156,7 +217,7 @@ def parse_period(text: str | None) -> PeriodSpec:
             month, day, year = spec
             end = date(year, month, day)
             start = date(year - 1, month, day) + __import__("datetime").timedelta(days=1)
-            kind = "FY" if month == FY_START_MONTH - 1 else "CY"
+            kind = "FY" if month == (fy_start - 1 or 12) else "CY"
             canonical = f"FY{year}" if kind == "FY" else f"12M to {end.isoformat()}"
             return PeriodSpec(kind, start.isoformat(), end.isoformat(), m.group(0), canonical)
 
@@ -179,7 +240,7 @@ def parse_period(text: str | None) -> PeriodSpec:
         start_year = int(m.group(1) + m.group(2))
         end_year = int(m.group(1) + m.group(3)) if int(m.group(3)) >= int(m.group(2)) else start_year + 1
         if end_year - start_year == 1:
-            s, e = _fy_bounds(end_year)
+            s, e = _fy_bounds(end_year, fy_start)
             return PeriodSpec("FY", s.isoformat(), e.isoformat(), m.group(0), f"FY{end_year}")
 
     if m := _P_MONTH_YEAR.search(raw):

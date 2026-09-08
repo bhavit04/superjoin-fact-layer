@@ -27,7 +27,7 @@ from .db import Store, new_id
 from .extract import extract_chunk, heuristic_extract, normalize_fact
 from .index import Candidate, FactIndex, generate_pairs
 from .llm import LLMClient, LLMUnavailable
-from .normalize import entities, metrics
+from .normalize import entities, metrics, periods
 from .pdf import PdfDocument, file_sha256
 from .reconcile import (
     CONTRADICTS, CORROBORATES, RECONCILED, RELATED, UNRELATED,
@@ -130,8 +130,18 @@ async def ingest(
                 emit("entity", f"primary entity resolved to “{primary_entity}”", doc_id=doc_id)
 
             # --- grounding ---------------------------------------------------
-            stored = _ground_and_store(store, pdf, chunks, raw_facts, doc_id, primary_entity, result)
-            store.update_document(doc_id, primary_entity=primary_entity or "", status="clustering")
+            # A document's fiscal-year convention is a property of the document.
+            # Read it from how the document names its own year end, so a filing
+            # with a December year end is not silently shifted by a quarter.
+            fy_start = periods.detect_fiscal_year_start(front_matter + " " + chunks[0].text)
+            if fy_start != periods.FY_START_MONTH:
+                emit("calendar", f"fiscal year detected as starting in month {fy_start}", doc_id=doc_id)
+
+            stored = _ground_and_store(
+                store, pdf, chunks, raw_facts, doc_id, primary_entity, result, fy_start
+            )
+            store.update_document(doc_id, primary_entity=primary_entity or "", status="clustering",
+                                  meta_json=json.dumps({"fiscal_year_start_month": fy_start}))
             emit("grounded",
                  f"{result.facts_stored} facts grounded, {result.quarantined} quarantined",
                  doc_id=doc_id)
@@ -224,7 +234,7 @@ async def _extract_all(
 
 def _ground_and_store(
     store: Store, pdf: PdfDocument, chunks: Sequence, raw_facts: dict[int, list[dict]],
-    doc_id: str, primary_entity: str | None, result: IngestResult,
+    doc_id: str, primary_entity: str | None, result: IngestResult, fy_start: int | None = None,
 ) -> list[dict]:
     by_ordinal = {c.ordinal: c for c in chunks}
     rows: list[dict] = []
@@ -238,7 +248,7 @@ def _ground_and_store(
             extractor = raw.get("_extractor", "llm")
             row, reason = normalize_fact(
                 raw, doc_id=doc_id, chunk=chunk, pdf=pdf,
-                primary_entity=primary_entity, extractor=extractor,
+                primary_entity=primary_entity, extractor=extractor, fy_start=fy_start,
             )
             if row is None:
                 result.quarantined += 1
