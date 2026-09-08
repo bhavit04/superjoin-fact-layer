@@ -291,7 +291,7 @@ class Store:
                 conn.execute(
                     "INSERT INTO schema_registry (kind, key, canonical, count, examples_json, first_doc, first_seen)"
                     " VALUES (?, ?, ?, 1, ?, ?, ?)",
-                    (kind, key, (example or key).strip().lower()[:120],
+                    (kind, key, ((example if kind == "metric" else key) or key).strip().lower()[:120],
                      json.dumps([example] if example else []), doc_id, time.time()),
                 )
             else:

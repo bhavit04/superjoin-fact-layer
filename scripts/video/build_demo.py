@@ -42,7 +42,14 @@ def _font(name: str, size: int) -> ImageFont.FreeTypeFont:
     for directory in FONT_DIRS:
         candidate = directory / name
         if candidate.exists():
-            return ImageFont.truetype(str(candidate), size)
+            font = ImageFont.truetype(str(candidate), size)
+            # Arial has no rupee glyph and draws a tofu box for it, which looks
+            # broken in a demo full of Indian financial figures.
+            if font.getlength("₹") <= font.getlength("A") * 0.9:
+                fallback = FONT_DIRS[0] / "Arial Unicode.ttf"
+                if fallback.exists():
+                    return ImageFont.truetype(str(fallback), size)
+            return font
     return ImageFont.load_default()
 
 
@@ -165,49 +172,71 @@ def _callout(canvas, draw, box, text, title="", colour=ACCENT):
 
 
 def screen_frame(item: dict) -> Image.Image:
+    """A captured screen in its own column, with the explanation beside it.
+
+    Earlier revisions floated callouts over the screenshot, which meant the text
+    and the thing it described competed for the same pixels. Reserving a column
+    for the commentary keeps both readable at video bitrates.
+    """
     source = FRAMES / item["image"]
     shot = Image.open(source).convert("RGB")
-    placed, origin, _ = _place(shot, item.get("crop"))
-    size = placed.size
+
+    panel_w = int(W * 0.30)
+    gutter = 46
+    view_x0 = panel_w + gutter
+    view_w = W - view_x0 - 46
+    view_h = H - 150
+
+    if item.get("crop"):
+        c = item["crop"]
+        shot = shot.crop((int(c[0] * shot.width), int(c[1] * shot.height),
+                          int(c[2] * shot.width), int(c[3] * shot.height)))
+    scale = min(view_w / shot.width, view_h / shot.height)
+    size = (max(1, int(shot.width * scale)), max(1, int(shot.height * scale)))
+    placed = shot.resize(size, Image.LANCZOS)
+    origin = (view_x0 + (view_w - size[0]) // 2, (H - size[1]) // 2)
 
     canvas = Image.new("RGB", (W, H), BG)
     canvas.paste(placed, origin)
+    draw = ImageDraw.Draw(canvas)
+    draw.rounded_rectangle([origin[0] - 2, origin[1] - 2,
+                            origin[0] + size[0] + 2, origin[1] + size[1] + 2],
+                           10, outline=(48, 46, 38), width=2)
 
-    # Spotlight: dim everything but the region being discussed.
     spots = item.get("spotlight") or []
     if spots:
-        veil = Image.new("RGBA", (W, H), (10, 9, 7, 165))
+        veil = Image.new("RGBA", (W, H), (10, 9, 7, 120))
         mask = ImageDraw.Draw(veil)
+        mask.rectangle([0, 0, view_x0 - 1, H], fill=(0, 0, 0, 0))
         for spot in spots:
             a = _to_canvas((spot[0], spot[1]), origin, size)
             b = _to_canvas((spot[2], spot[3]), origin, size)
-            mask.rounded_rectangle([a[0] - 10, a[1] - 10, b[0] + 10, b[1] + 10], 16, fill=(0, 0, 0, 0))
+            mask.rounded_rectangle([a[0] - 8, a[1] - 8, b[0] + 8, b[1] + 8], 14, fill=(0, 0, 0, 0))
         canvas = Image.alpha_composite(canvas.convert("RGBA"), veil).convert("RGB")
+        draw = ImageDraw.Draw(canvas)
+        for spot in spots:
+            a = _to_canvas((spot[0], spot[1]), origin, size)
+            b = _to_canvas((spot[2], spot[3]), origin, size)
+            draw.rounded_rectangle([a[0] - 8, a[1] - 8, b[0] + 8, b[1] + 8], 14,
+                                   outline=ACCENT, width=4)
 
-    draw = ImageDraw.Draw(canvas)
-
-    for spot in spots:
-        a = _to_canvas((spot[0], spot[1]), origin, size)
-        b = _to_canvas((spot[2], spot[3]), origin, size)
-        draw.rounded_rectangle([a[0] - 10, a[1] - 10, b[0] + 10, b[1] + 10], 16,
-                               outline=ACCENT, width=4)
+    y = 96
+    if item.get("step"):
+        label = item["step"].upper()
+        width = draw.textlength(label, font=F_STEP) + 40
+        draw.rounded_rectangle([56, y, 56 + width, y + 46], 23, fill=ACCENT_DK)
+        draw.text((76, y + 13), label, font=F_STEP, fill=ACCENT)
+        y += 84
 
     for note in item.get("callouts", []):
         colour = {"warn": WARN, "good": GOOD}.get(note.get("tone", ""), ACCENT)
-        px = int(note.get("x", 0.04) * W)
-        py = int(note.get("y", 0.06) * H)
-        width = int(note.get("w", 0.32) * W)
-        height = _callout(canvas, draw, (px, py, width), note.get("body", ""),
+        height = _callout(canvas, draw, (56, y, panel_w - 40), note.get("body", ""),
                           note.get("title", ""), colour)
         if note.get("arrow_to"):
             target = _to_canvas(tuple(note["arrow_to"]), origin, size)
-            anchor = (px + width, py + height // 2) if target[0] > px + width else (px, py + height // 2)
-            _arrow(draw, anchor, target, colour)
+            _arrow(draw, (56 + panel_w - 40, y + height // 2), target, colour)
+        y += height + 34
 
-    if item.get("step"):
-        draw.rounded_rectangle([64, 52, 64 + 46 + draw.textlength(item["step"], font=F_STEP), 100],
-                               20, fill=ACCENT_DK)
-        draw.text((88, 66), item["step"], font=F_STEP, fill=ACCENT)
     return canvas
 
 

@@ -182,9 +182,10 @@ const loaders = {
             <span class="meta">${data[kind].length} distinct</span></div>
           <div style="padding:11px 15px"><p class="muted" style="font-size:12.5px;margin:0 0 10px">${blurb[kind] || ""}</p></div>
           <div class="scroll" style="border:0;border-radius:0;max-height:330px;overflow-y:auto">
-            <table><thead><tr><th>key</th><th>canonical</th><th>n</th></tr></thead>
+            <table><thead><tr><th>key</th>${kind === "metric" ? "<th>canonical</th>" : ""}<th>n</th></tr></thead>
             <tbody>${data[kind].slice(0, 120).map((r) => `
-              <tr><td>${esc(r.key)}</td><td class="muted">${esc(r.canonical !== r.key ? r.canonical : "")}</td>
+              <tr><td>${esc(r.key)}</td>${kind === "metric"
+                ? `<td class="muted">${esc(r.canonical !== r.key ? r.canonical : "")}</td>` : ""}
               <td class="num">${r.count}</td></tr>`).join("")}</tbody></table>
           </div>
         </section>`).join("")}</div>`;

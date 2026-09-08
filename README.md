@@ -138,10 +138,17 @@ database and exits non-zero if any of it stops being true.
 
 ## Video demo
 
-**<< add your link here >>**
+**<< paste your upload link here >>**
 
-The video should show a PDF being processed and the four cases below.
-`DEMO_SCRIPT.md` has a shot-by-shot script naming the specific examples to click.
+A rendered walkthrough is committed at
+[`build/fact-knowledge-layer-demo.mp4`](build/fact-knowledge-layer-demo.mp4) — 1m44s,
+covering a PDF being ingested and all four required cases with their real evidence and
+reasoning. Upload it (YouTube unlisted, Drive, Loom) and put the link above.
+
+It is built from captured UI frames by `scripts/video/build_demo.py`, driven by
+`scripts/video/storyboard.json`, so re-running the pipeline and re-capturing
+regenerates it. `DEMO_SCRIPT.md` has a shot-by-shot script if you would rather record
+it by hand.
 
 ---
 
