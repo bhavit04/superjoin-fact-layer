@@ -8,25 +8,25 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 
 | document | pages | facts | primary entity |
 |---|---:|---:|---|
-| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | Delhivery Limited |
 | `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 964 | Delhivery Limited |
 | `01-delhivery-prospectus-2022-excerpt.pdf` | 100 | 712 | Delhivery Corp Limited |
 | `01-india-economic-survey-2024-25-excerpt.pdf` | 89 | 329 | India |
 | `02-rbi-annual-report-2024-25-excerpt.pdf` | 100 | 622 | India |
 | `03-imf-india-2025-article-iv-excerpt.pdf` | 95 | 367 | India |
+| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | Delhivery Limited |
 
 | metric | value |
 |---|---:|
 | documents | 6 |
 | facts | 3,112 |
 | facts grounded | 2,833 |
-| relations | 2,783 |
-| relations cross doc | 634 |
-| relations · CONTRADICTS | 44 |
+| relations | 2,755 |
+| relations cross doc | 629 |
+| relations · CONTRADICTS | 43 |
 | relations · CORROBORATES | 283 |
-| relations · RECONCILED | 417 |
-| relations · RELATED | 2,039 |
-| quarantined | 97 |
+| relations · RECONCILED | 410 |
+| relations · RELATED | 2,019 |
+| quarantined | 122 |
 | distinct metrics | 1,322 |
 | distinct qualifiers | 107 |
 | distinct entities | 671 |
@@ -189,45 +189,7 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 </details>
 
-### 2. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `llm`  ·  explained by **unit**
-
-**Fact A — Delhivery Limited · PTL freight tonnage**
-
-- Value as printed: `1.4 Mn Tons`
-- Normalized: `1.40 mn tonnes`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 6
-
-> 1.4 Mn Tons PTL freight tonnage in FY24
-
-**Fact B — Delhivery Limited · PTL freight tonnage**
-
-- Value as printed: `1,517`
-- Normalized: `1,517 tonnes`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 9
-
-> 1,705 1,157 1,517 FY22 FY23 FY24 PTL freight tonnage(2)
-
-**System reasoning.** While the mechanical observation suggests a scale mismatch, the values (1.4 million vs 1,517) are too far apart to be a simple unit conversion error (e.g., tons vs kg). Fact A claims 1.4 million tons, while Fact B claims 1,517 tons for the same metric and period in the same document, representing a material, unexplained discrepancy.
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover FY2024 |
-| units | `tonnes` ↔ `tonnes` (comparable) |
-| values compared | `1.4e+06` vs `1,517` |
-| relative difference | `99.8916%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `3.5714%` (from how precisely each figure is written) |
-| ratio A/B | `922.874` |
-| hypothesis 1 | values differ by approximately a factor of 10^3, suggesting a scale or unit mismatch, suggesting a unit or scale mismatch |
-| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
-
-</details>
-
-### 3. CONTRADICTS  ·  confidence 0.95  ·  same document  ·  decided by `hybrid`  ·  explained by **value**
+### 2. CONTRADICTS  ·  confidence 0.95  ·  same document  ·  decided by `hybrid`  ·  explained by **value**
 
 **Fact A — India · net FDI**
 
@@ -260,6 +222,43 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `0.5882%` (from how precisely each figure is written) |
 | ratio A/B | `1.18824` |
+| rule-based verdict | `CONTRADICTS` — confirmed by the adjudicator |
+
+</details>
+
+### 3. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `hybrid`  ·  explained by **definition**
+
+**Fact A — Delhivery Limited · adjusted ebitda**
+
+- Value as printed: `(2,532)`
+- Normalized: `INR -253.20 crore`
+- Period: `FY21` → `FY2021`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 6
+
+> Adjusted EBITDA (₹ million) and adjusted EBITDA margin (%)* FY20 FY21 FY22 FY23 FY24 Net working capital days 73 47 37 3
+
+**Fact B — Delhivery Limited · adjusted ebitda**
+
+- Value as printed: `(2,258)`
+- Normalized: `INR -225.80 crore`
+- Period: `FY21` → `FY2021`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 7
+
+> In FY22, when our express parcel volumes more than doubled and part truckload tonnage grew by around 40% on a pro forma basis, our adjusted EBITDA swung from negative ₹2,258 million in FY21 to positive ₹715 million on a pro forma basis.
+
+**System reasoning.** Both facts report Adjusted EBITDA for Delhivery Limited for FY2021, but provide materially different figures (-2,532 million vs -2,258 million). As both appear in the same document, this represents an internal inconsistency in the reporting rather than a difference in scope or period.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover FY2021 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `-2.532e+09` vs `-2.258e+09` |
+| relative difference | `10.8215%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `1.12135` |
 | rule-based verdict | `CONTRADICTS` — confirmed by the adjudicator |
 
 </details>
@@ -308,85 +307,77 @@ The numbers disagree, but a stated difference in period, basis, scope, unit or c
 
 </details>
 
-### 2. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `hybrid`  ·  explained by **basis**
+### 2. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **period**
 
-**Fact A — Delhivery Limited · revenue from services growth**
+**Fact A — Delhivery Limited · share based payment**
 
-- Value as printed: `(5.4%)`
-- Normalized: `-5.40 %`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Qualifiers: `basis=QoQ`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+- Value as printed: `₹597.58 million`
+- Normalized: `INR 59.76 crore`
+- Period: `period ended December 31, 2021` → `12M to 2021-12-31`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 8
 
-> YoY: 11.6% / QoQ: (5.4%) (2)
+> Share based payment amounting to ₹597.58 million (December 31, 2020: ₹131.87 million, March 31, 2021: ₹268.30 million, March 31, 2020: ₹142.60 million, March 31, 2019: ₹152.70 million) has been charged to restated consolidated summary statement of profit and loss.
 
-**Fact B — Delhivery Limited · revenue from services growth**
+**Fact B — Delhivery Limited · share based payment**
 
-- Value as printed: `11.6%`
-- Normalized: `11.60 %`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Qualifiers: `basis=YoY`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+- Value as printed: `₹268.30 million`
+- Normalized: `INR 26.83 crore`
+- Period: `2021` → `2021`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 8
 
-> YoY: 11.6% / QoQ: (5.4%) (2)
+> March 31, 2021: ₹268.30 million
 
-**System reasoning.** The two figures represent the same metric for the same period but use different comparison bases: Fact A is a Quarter-on-Quarter (QoQ) decline, while Fact B is a Year-on-Year (YoY) increase. Supporting words: “YoY: 11.6% / QoQ: (5.4%)”
+**System reasoning.** Fact A reports the share-based payment for the period ended December 31, 2021. Fact B reports the figure for the period ended March 31, 2021. These are distinct reporting periods, not conflicting values for the same period. Supporting words: “Fact A: 'Share based payment amounting to ₹597.58 million (December 31, 2020: ₹131.87 million, March 31, 2021: ₹268.30 million...)' Fact B: 'March 31, 2021: ₹268.30 million'”
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `EQUAL` — both cover Q4 FY2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `-5.4` vs `11.6` |
-| relative difference | `146.5517%` |
+| period relation | `EQUAL` — both cover 12M to 2021-12-31 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `5.9758e+08` vs `2.683e+08` |
+| relative difference | `55.1022%` |
 | verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.9259%` (from how precisely each figure is written) |
-| ratio A/B | `-0.465517` |
-| qualifier `basis` | A=`QoQ` · B=`YoY` |
-| hypothesis 1 | stated basis differs (QoQ vs YoY), a basis difference |
-| rule-based verdict | `RECONCILED` — confirmed by the adjudicator |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `2.22728` |
+| rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
 
 </details>
 
-### 3. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `hybrid`  ·  explained by **basis**
+### 3. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **period**
 
-**Fact A — Delhivery Limited · Express parcel shipments growth**
+**Fact A — FPIs · net inflows**
 
-- Value as printed: `(12.8%)`
-- Normalized: `-12.80 %`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Qualifiers: `basis=QoQ`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+- Value as printed: `USD 3.1 billion`
+- Normalized: `USD 3.10 bn`
+- Period: `December 2024` → `Dec 2024`
+- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 68
 
-> YoY: (2.2%) / QoQ: (12.8%)
+> with net inflows amounting to USD 3.1 billion in December 2024.
 
-**Fact B — Delhivery Limited · Express parcel shipments growth**
+**Fact B — FPIs · net inflows**
 
-- Value as printed: `(2.2%)`
-- Normalized: `-2.20 %`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Qualifiers: `basis=YoY`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+- Value as printed: `USD 10.6 billion`
+- Normalized: `USD 10.60 bn`
+- Period: `December 2024` → `Dec 2024`
+- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 68
 
-> YoY: (2.2%) / QoQ: (12.8%)
+> t FPI inflows97 into India slowed to USD 10.6 billion from April to December 2024 from USD 31.7 billi
 
-**System reasoning.** The two facts report the same metric for the same period but use different comparison bases: Fact A reports a Quarter-on-Quarter (QoQ) decline, while Fact B reports a Year-on-Year (YoY) decline. Supporting words: “YoY: (2.2%) / QoQ: (12.8%)”
+**System reasoning.** The facts are not in conflict; they describe different timeframes. Fact A reports net inflows for the single month of December 2024, while Fact B reports the cumulative inflows for the nine-month period from April to December 2024. Supporting words: “Fact A: 'in December 2024'; Fact B: 'from April to December 2024'”
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `EQUAL` — both cover Q4 FY2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `-12.8` vs `-2.2` |
-| relative difference | `82.8125%` |
+| period relation | `EQUAL` — both cover Dec 2024 |
+| units | `USD` ↔ `USD` (comparable) |
+| values compared | `3.1e+09` vs `1.06e+10` |
+| relative difference | `70.7547%` |
 | verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `2.2727%` (from how precisely each figure is written) |
-| ratio A/B | `5.81818` |
-| qualifier `basis` | A=`QoQ` · B=`YoY` |
-| hypothesis 1 | stated basis differs (QoQ vs YoY), a basis difference |
-| rule-based verdict | `RECONCILED` — confirmed by the adjudicator |
+| rounding tolerance | `1.6129%` (from how precisely each figure is written) |
+| ratio A/B | `0.292453` |
+| rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
 
 </details>
 
@@ -401,7 +392,7 @@ storage; failures are written to a quarantine table with a reason instead of bei
 | measure | value |
 |---|---:|
 | facts stored | 3112 |
-| quarantined | 97 |
+| quarantined | 122 |
 | ungrounded stored | 279 |
 | fuzzy grounded | 510 |
 | unresolved period | 634 |
@@ -412,7 +403,7 @@ storage; failures are written to a quarantine table with a reason instead of bei
 
 | reason | count |
 |---|---:|
-| `table_association_unverifiable` | 76 |
+| `table_association_unverifiable` | 101 |
 | `evidence_too_short` | 20 |
 | `value_present_but_quote_unverifiable` | 1 |
 
@@ -420,48 +411,7 @@ storage; failures are written to a quarantine table with a reason instead of bei
 
 The most useful place to look for reasoning errors on either side.
 
-### 1. RELATED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **basis**
-
-**Fact A — Delhivery Limited · PTL freight tonnage growth**
-
-- Value as printed: `20.8%`
-- Normalized: `20.80 %`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Qualifiers: `basis=YoY`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
-
-> YoY: 20.8% / QoQ: 8.6%
-
-**Fact B — Delhivery Limited · PTL freight tonnage growth**
-
-- Value as printed: `8.6%`
-- Normalized: `8.60 %`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Qualifiers: `basis=QoQ`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
-
-> YoY: 20.8% / QoQ: 8.6%
-
-**System reasoning.** The facts represent the same metric for the same period but measured against different baselines: Fact A is Year-over-Year growth, while Fact B is Quarter-over-Quarter growth. They are complementary data points in a time series. Supporting words: “YoY: 20.8% / QoQ: 8.6%”
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover Q4 FY2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `20.8` vs `8.6` |
-| relative difference | `58.6538%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.5814%` (from how precisely each figure is written) |
-| ratio A/B | `2.4186` |
-| qualifier `basis` | A=`YoY` · B=`QoQ` |
-| hypothesis 1 | stated basis differs (YoY vs QoQ), a basis difference |
-| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
-
-</details>
-
-### 2. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **definition**
+### 1. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **definition**
 
 **Fact A — Delhivery Limited · net working capital cycle**
 
@@ -494,6 +444,36 @@ The most useful place to look for reasoning errors on either side.
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `1.6129%` (from how precisely each figure is written) |
 | ratio A/B | `1.22581` |
+| rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
+
+</details>
+
+### 2. CORROBORATES  ·  confidence 1.00  ·  cross-document  ·  decided by `llm`  ·  explained by **definition**
+
+**Fact A — Deepak Kapoor · board role**
+
+- Value as printed: `Chairman and Non-Executive Independent Director`
+- Qualifiers: `organisation=Delhivery Limited`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 30
+
+> Deepak Kapoor Chairman and Non-Executive Independent Director
+
+**Fact B — Deepak Kapoor · board role**
+
+- Value as printed: `Chairperson & Non-Executive Independent Director`
+- Qualifiers: `organisation=Delhivery Limited`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 29
+
+> utive Officer Chairperson & Non-Executive Independent Director DIN: 05131571 DIN:
+
+**System reasoning.** The terms 'Chairman' and 'Chairperson' are synonymous titles for the same board role. The slight variation in terminology does not constitute a factual disagreement.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `UNKNOWN` — at least one period could not be resolved |
+| units | `` vs `` — **not directly comparable** |
 | rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
 
 </details>
