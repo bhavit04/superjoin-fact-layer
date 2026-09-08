@@ -121,6 +121,16 @@ class Verdict:
 _WRITTEN_NUMBER = re.compile(r"\d[\d,]*(?:\.(\d+))?")
 
 
+def _pct(value: float | None, places: int = 1) -> str:
+    """Format a ratio as a percentage, tolerating an absent value.
+
+    Rationales are user-facing strings assembled from optional observations; a
+    missing number should read as "unknown", never take down the ingest."""
+    if value is None:
+        return "an unknown amount"
+    return f"{value * 100:.{places}f}%"
+
+
 def implied_tolerance(raw: str | None, value: float | None) -> float:
     """How much two figures may differ and still be the same number.
 
@@ -222,6 +232,12 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
             obs.rel_diff = abs(a_val - b_val) / scale
             if b_val != 0:
                 obs.ratio = a_val / b_val
+        else:
+            # Both figures are zero, which is agreement, not an undefined
+            # comparison. Leaving rel_diff unset here crashed every rationale
+            # that formats it as a percentage.
+            obs.rel_diff = 0.0
+            obs.ratio = 1.0
         obs.tolerance = max(
             implied_tolerance(value_a.raw, a_val), implied_tolerance(value_b.raw, b_val)
         )
@@ -338,7 +354,7 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
                 else (
                     f"{units.humanize(obs.value_a, obs.units_a)} and "
                     f"{units.humanize(obs.value_b, obs.units_b)} agree to within "
-                    f"{obs.rel_diff:.2%} for {obs.period_a}, inside the {obs.tolerance:.2%} "
+                    f"{_pct(obs.rel_diff, 2)} for {obs.period_a}, inside the {_pct(obs.tolerance, 2)} "
                     f"tolerance implied by how precisely each figure is written"
                 )
             )
@@ -347,21 +363,21 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
             dimension = sorted(explanatory)[0]
             return Verdict(
                 RECONCILED, 0.6, "deterministic",
-                f"The figures differ by {obs.rel_diff:.1%} for the same period, but the sources "
+                f"The figures differ by {_pct(obs.rel_diff)} for the same period, but the sources "
                 f"state a different {dimension}, which would account for it.",
                 dimension=dimension, needs_llm=True,
             )
         if obs.hypotheses:
             return Verdict(
                 RECONCILED, 0.55, "deterministic",
-                f"The figures differ by {obs.rel_diff:.1%} for {obs.period_a}; "
+                f"The figures differ by {_pct(obs.rel_diff)} for {obs.period_a}; "
                 f"{obs.hypotheses[0]}.",
                 dimension="unit", needs_llm=True,
             )
         return Verdict(
             CONTRADICTS, 0.65, "deterministic",
             f"Both sources report this metric for {obs.period_a}, with no stated difference in "
-            f"basis, scope or units, yet the figures differ by {obs.rel_diff:.1%} "
+            f"basis, scope or units, yet the figures differ by {_pct(obs.rel_diff)} "
             f"({units.humanize(obs.value_a, obs.units_a)} vs {units.humanize(obs.value_b, obs.units_b)}).",
             needs_llm=True,
         )
@@ -410,7 +426,7 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
     if obs.within_tolerance:
         return Verdict(
             CORROBORATES, 0.62, "deterministic",
-            f"The figures agree to within {obs.rel_diff:.2%}, though at least one source does not "
+            f"The figures agree to within {_pct(obs.rel_diff, 2)}, though at least one source does not "
             "state a period that could be resolved.",
             needs_llm=False,
         )

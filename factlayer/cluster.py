@@ -12,12 +12,14 @@ the vocabulary built so far, which keeps the cost of document N independent of N
 """
 from __future__ import annotations
 
+import re
+
 from .db import Store
-from .llm import LLMClient
+from .llm import LLMClient, LLMError
 from .normalize import metrics
 from .prompts import CLUSTER_SYSTEM
 
-MAX_LABELS_PER_CALL = 120
+MAX_LABELS_PER_CALL = 60
 
 
 async def assign_clusters(
@@ -67,13 +69,18 @@ async def _assign_batch(client: LLMClient, batch: list[str], existing: list[str]
     )
     prompt_parts.append("\nReturn only the JSON object, with one assignment per new label.")
 
-    payload = await client.complete_json(
-        system=CLUSTER_SYSTEM,
-        prompt="\n".join(prompt_parts),
-        task="cluster_metrics",
-        max_output_tokens=8192,
-        default={"assignments": []},
-    )
+    try:
+        payload = await client.complete_json(
+            system=CLUSTER_SYSTEM,
+            prompt="\n".join(prompt_parts),
+            task="cluster_metrics",
+            max_output_tokens=16384,
+        )
+    except LLMError as exc:
+        # A response cut off by the output budget still contains most of its
+        # assignments. Losing the whole batch over a missing closing brace would
+        # send every label to the lexical fallback for no reason.
+        payload = {"assignments": _salvage_assignments(str(exc))}
 
     out: dict[str, str] = {}
     items = payload.get("assignments") if isinstance(payload, dict) else payload
@@ -93,6 +100,19 @@ async def _assign_batch(client: LLMClient, batch: list[str], existing: list[str]
         if label not in out:
             out[label] = _lexical_fallback(label, existing)
     return out
+
+
+_ASSIGNMENT_RE = re.compile(
+    r'\{\s*"index"\s*:\s*(\d+)\s*,\s*"canonical"\s*:\s*"([^"]{1,120})"\s*\}'
+)
+
+
+def _salvage_assignments(text: str) -> list[dict]:
+    """Recover whole assignment objects from a response that was cut short."""
+    return [
+        {"index": int(index), "canonical": canonical}
+        for index, canonical in _ASSIGNMENT_RE.findall(text or "")
+    ]
 
 
 def _lexical_fallback(label: str, existing: list[str], threshold: float = 0.72) -> str:

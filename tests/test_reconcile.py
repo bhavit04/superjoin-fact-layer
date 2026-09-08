@@ -162,3 +162,27 @@ def test_differing_categorical_values_are_escalated_not_auto_contradicted():
                   value_raw="resigned", value_num=None, value_unit="", value_kind="other")
     verdict, _ = decide(a, b)
     assert verdict.needs_llm is True
+
+
+# --- regression: a whole document's linking once died here --------------------
+
+def test_two_zero_values_do_not_crash_the_linker():
+    """Both figures zero means the scale is zero, which left the relative
+    difference undefined while every rationale formatted it as a percentage.
+    That took down linking for an entire 941-fact document."""
+    a = make_fact(id="a", value_raw="0", value_num=0.0)
+    b = make_fact(id="b", doc_id="doc_b", value_raw="0", value_num=0.0,
+                  qualifiers={"basis": "standalone"})
+    verdict, obs = decide(a, b)
+    assert obs.rel_diff == 0.0
+    assert verdict.kind == CORROBORATES
+    assert verdict.rationale and "0.00" in verdict.rationale
+
+
+def test_rationales_never_crash_on_an_absent_difference():
+    from factlayer.reconcile import Observation, classify as _classify
+    a, b = make_fact(id="a"), make_fact(id="b", doc_id="doc_b")
+    obs = Observation(metric_similarity=1.0, both_numeric=True, units_comparable=True,
+                      value_a=1.0, value_b=2.0, rel_diff=None, period_relation="EQUAL")
+    verdict = _classify(a, b, obs)
+    assert isinstance(verdict.rationale, str) and verdict.rationale
