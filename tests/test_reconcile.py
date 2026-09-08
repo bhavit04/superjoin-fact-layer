@@ -295,3 +295,35 @@ def test_a_textual_value_changing_between_periods_is_a_change_not_a_conflict():
     verdict, _ = decide(old, new)
     assert verdict.kind == RELATED
     assert verdict.dimension == "period"
+
+
+def test_a_number_whose_evidence_does_not_say_what_it_measures_cannot_contradict():
+    """From the RBI report: 'Oils and Fats 3.6' is a weight within all of CPI,
+    while 7.8 per cent is the weight within CPI-food. The bare table cell says
+    neither, so the extractor attached the wrong metric to it and the system
+    reported the same underlying fact contradicting itself."""
+    supported = make_fact(
+        id="a", metric_raw="weight in cpi-food and beverages",
+        metric_cluster="beverag cpi food weight", value_raw="7.8 per cent",
+        value_num=7.8, value_unit="%", value_kind="percent", metric_support=1.0,
+        evidence_text="Prices of oils and fats (weight of 7.8 per cent in CPI-food and beverages)",
+    )
+    bare_cell = make_fact(
+        id="b", metric_raw="weight in cpi-food and beverages",
+        metric_cluster="beverag cpi food weight", value_raw="3.6",
+        value_num=3.6, value_unit="%", value_kind="percent", metric_support=0.0,
+        evidence_text="Oils and Fats 3.6",
+    )
+    verdict, obs = decide(supported, bare_cell)
+    assert obs.weak_attribution is True
+    assert verdict.kind != CONTRADICTS
+    assert verdict.dimension == "attribution"
+
+
+def test_well_attributed_facts_can_still_contradict():
+    a = make_fact(id="a", value_num=8_142_000_000.0, metric_support=1.0)
+    b = make_fact(id="b", doc_id="doc_b", value_raw="9,010",
+                  value_num=9_010_000_000.0, metric_support=1.0)
+    verdict, obs = decide(a, b)
+    assert obs.weak_attribution is False
+    assert verdict.kind == CONTRADICTS

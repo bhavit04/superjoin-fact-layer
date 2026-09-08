@@ -94,6 +94,7 @@ class Observation:
     period_relation: str = periods.UNKNOWN
     period_note: str = ""
 
+    weak_attribution: bool = False
     text_a: str = ""
     text_b: str = ""
     text_equal: bool | None = None
@@ -241,6 +242,12 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
     value_a, value_b = _value_spec(fact_a), _value_spec(fact_b)
     obs.units_a, obs.units_b = value_a.unit, value_b.unit
     obs.both_numeric = value_a.number is not None and value_b.number is not None
+    # Either side's evidence failing to mention what it measures means the metric
+    # was attributed from context, and the pair cannot support a conflict.
+    obs.weak_attribution = min(
+        float(fact_a.get("metric_support") if fact_a.get("metric_support") is not None else 1.0),
+        float(fact_b.get("metric_support") if fact_b.get("metric_support") is not None else 1.0),
+    ) < 0.34
 
     common = units.to_common_unit(value_a, value_b)
     if common:
@@ -405,6 +412,14 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
                 f"The figures differ by {_pct(obs.rel_diff)} for {obs.period_a}; "
                 f"{obs.hypotheses[0]}.",
                 dimension="unit", needs_llm=True,
+            )
+        if obs.weak_attribution:
+            return Verdict(
+                RELATED, 0.3, "deterministic",
+                "The figures differ, but at least one source's evidence does not say what its "
+                "number measures -- the metric was inferred from surrounding context. There is "
+                "not enough here to claim the two describe the same quantity.",
+                dimension="attribution",
             )
         return Verdict(
             CONTRADICTS, 0.65, "deterministic",
@@ -576,6 +591,12 @@ def build_adjudication_prompt(
             observations.append(f"- qualifier {key!r} differs: A={left or '(unstated)'!r} B={right or '(unstated)'!r}")
     else:
         observations.append("- the two facts state no conflicting qualifiers")
+    if obs.weak_attribution:
+        observations.append(
+            "- WARNING: at least one evidence quote does not state what its number measures, so "
+            "the metric was inferred from surrounding context. Do not call this a contradiction "
+            "unless both quotes independently establish they measure the same quantity."
+        )
     for hypothesis in obs.hypotheses:
         observations.append(f"- possible explanation: {hypothesis}")
     observations.append(f"- both facts come from {'the same document' if obs.same_document else 'different documents'}")

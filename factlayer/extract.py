@@ -75,6 +75,26 @@ def _pick_period_text(qualifiers: dict, evidence: str, fy_start: int | None = No
     return "", "none"
 
 
+def metric_support(metric_raw: str, evidence: str) -> float:
+    """How much of the metric's own wording appears in its evidence.
+
+    Grounding proves the quote is real; this asks whether the quote actually
+    supports the claim being attached to it. A table cell quoted as "Oils and
+    Fats 3.6" is real text, but it says nothing about *what* 3.6 measures -- the
+    extractor took "weight in CPI-food and beverages" from elsewhere on the page.
+    That fact then contradicted the genuine figure, because one number is a
+    weight within the food sub-index and the other a weight within all of CPI.
+
+    Returns the fraction of the metric's content words present in the evidence.
+    """
+    tokens = [t for t in metrics.metric_tokens(metric_raw) if len(t) > 2]
+    if not tokens:
+        return 1.0
+    haystack = " ".join(metrics.metric_tokens(evidence))
+    found = sum(1 for t in tokens if t in haystack)
+    return round(found / len(tokens), 3)
+
+
 def _clean_qualifiers(raw: Any) -> dict:
     if not isinstance(raw, dict):
         return {}
@@ -143,6 +163,8 @@ def normalize_fact(
     if fact_type not in VALID_FACT_TYPES:
         fact_type = "numeric" if value.number is not None else "textual"
 
+    support = metric_support(metric_raw, location.matched_text or evidence)
+
     try:
         confidence = float(raw.get("confidence", 0.6))
     except (TypeError, ValueError):
@@ -153,6 +175,7 @@ def normalize_fact(
     confidence *= 0.6 + 0.4 * location.match_ratio
     if location.mode == "fragments":
         confidence *= 0.85
+    confidence *= 0.55 + 0.45 * support
 
     page_label = ""
     try:
@@ -162,6 +185,7 @@ def normalize_fact(
 
     return {
         "id": new_id("f"),
+        "metric_support": support,
         "doc_id": doc_id,
         "chunk_ordinal": chunk.ordinal,
         "subject_raw": subject_display[:200],
