@@ -199,6 +199,15 @@ def _scale_hypothesis(ratio: float) -> str | None:
         for candidate in (factor, 1.0 / factor):
             if candidate and abs(ratio / candidate - 1.0) < 0.02:
                 return label
+    # A looser check for the common case where a scale mismatch is compounded by
+    # rounding: "1,517" in thousands against "1.4 Mn Tons" is 1/923, not a clean
+    # 1/1000, but two figures for one metric and period differing by roughly a
+    # power of ten are a units problem, not a factual disagreement.
+    magnitude = abs(ratio)
+    if magnitude > 0:
+        exponent = round(math.log10(magnitude))
+        if exponent != 0 and abs(magnitude / (10.0 ** exponent) - 1.0) < 0.18:
+            return f"approximately a factor of 10^{exponent}, suggesting a scale or unit mismatch"
     return None
 
 

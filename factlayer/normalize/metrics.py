@@ -34,10 +34,14 @@ DERIVATIVE_MARKERS = {
     "estimate": "projection", "target": "projection", "outlook": "projection",
 }
 
+# Ordered longest-first. The set matters more than it looks: metric labels are
+# compared by their stemmed token sets, so "operations" and "operating" must
+# reduce to the same stem or "revenue from operations" will not match "operating
+# revenue", and "revenue"/"revenues" must agree or plural variants split apart.
 _SUFFIXES = [
-    "ational", "isation", "ization", "ations", "ation", "ings", "ing", "ences",
-    "ence", "ances", "ance", "ments", "ment", "ives", "ive", "ies", "ers", "er",
-    "es", "s",
+    "ational", "isation", "ization", "ations", "ating", "ation", "ates", "ate",
+    "ings", "ing", "ences", "ence", "ances", "ance", "ments", "ment",
+    "ives", "ive", "ies", "ers", "er", "es", "s",
 ]
 
 _PUNCT = re.compile(r"[^\w\s%]")
@@ -45,13 +49,23 @@ _WS = re.compile(r"\s+")
 
 
 def _stem(token: str) -> str:
-    """Crude but sufficient suffix stripping. Real stemming is a dependency we
-    do not need for matching a few hundred metric labels."""
+    """Crude but sufficient suffix stripping.
+
+    Real stemming would be a heavyweight dependency for matching a few hundred
+    metric labels. What matters is *consistency*: every surface form of a word
+    must land on one stem, or two labels naming the same quantity will be judged
+    different. The trailing-vowel strip at the end exists for exactly that --
+    without it "revenue" and "revenues" reduce to different stems.
+    """
     if token.endswith("ies") and len(token) > 4:
-        return token[:-3] + "y"
-    for suffix in _SUFFIXES:
-        if token.endswith(suffix) and len(token) - len(suffix) >= 4:
-            return token[: -len(suffix)]
+        token = token[:-3] + "y"
+    else:
+        for suffix in _SUFFIXES:
+            if token.endswith(suffix) and len(token) - len(suffix) >= 4:
+                token = token[: -len(suffix)]
+                break
+    if len(token) >= 5 and token.endswith("e"):
+        token = token[:-1]
     return token
 
 
@@ -78,6 +92,31 @@ def derivative_kind(label: str | None) -> str | None:
         if word in raw_tokens or _stem(word) in tokens:
             return kind
     return None
+
+
+def same_quantity(label_a: str | None, label_b: str | None) -> bool:
+    """Do two labels name the same measured quantity by their words alone?
+
+    This is deliberately strict: the stemmed, stopword-stripped token sets must be
+    equal. Similarity is not enough, because the labels that matter most here
+    differ by exactly one word --
+
+        net cash from (used in) OPERATING activities
+        net cash from (used in) INVESTING activities
+        net cash from (used in) FINANCING activities
+
+    -- which share five of six tokens and score 0.67, yet are three unrelated line
+    items. Comparing them produced confident, well-evidenced, completely false
+    contradictions. The same applies to "EBITDA margin" against "Adj. EBITDA
+    margin", where the one differing word is the whole point.
+
+    Genuine synonyms whose words differ ("CPI inflation" / "consumer price
+    inflation") are handled by the clustering pass instead, which asks a model.
+    Missing a link costs a little recall; inventing a contradiction costs the
+    system its credibility.
+    """
+    ta, tb = set(metric_tokens(label_a)), set(metric_tokens(label_b))
+    return bool(ta) and ta == tb
 
 
 def jaccard(a: set[str], b: set[str]) -> float:

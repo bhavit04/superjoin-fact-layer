@@ -203,3 +203,49 @@ def test_a_scale_suffix_attached_to_the_digits_is_not_lost():
     assert parse_value("\u20b992 Cr").number == 920_000_000.0
     # ...without matching the "cr" buried inside an ordinary word.
     assert parse_value("an increase of 12%").number == 12.0
+
+
+# --- guarding against invented contradictions --------------------------------
+
+def test_metrics_differing_by_one_word_are_not_the_same_claim():
+    """The system's worst failure mode was confident, well-evidenced, false
+    contradictions between cash-flow line items whose labels differ by a single
+    word and overlap on five of six tokens."""
+    from factlayer.normalize.metrics import same_quantity
+    assert not same_quantity(
+        "net cash from / (used in) investing activities",
+        "net cash from / (used in) operating activities",
+    )
+    assert not same_quantity("EBITDA margin", "Adj. EBITDA margin")
+    assert not same_quantity("gross revenue", "net revenue")
+
+
+def test_wording_variants_of_one_metric_still_match():
+    from factlayer.normalize.metrics import same_quantity
+    assert same_quantity("revenue from operations", "operating revenue")
+    assert same_quantity("revenue from operations", "revenues from operation")
+    assert same_quantity("real GDP growth rate", "real GDP growth rates")
+
+
+def test_the_stemmer_is_consistent_across_surface_forms():
+    """Inconsistent stems silently split one metric into two, which loses links
+    rather than announcing a problem."""
+    from factlayer.normalize.metrics import _stem
+    for group in (("revenue", "revenues"), ("operations", "operating", "operate"),
+                  ("estimate", "estimates", "estimating"), ("expense", "expenses")):
+        assert len({_stem(w) for w in group}) == 1, group
+
+
+def test_a_thousandfold_gap_reads_as_a_unit_problem():
+    """'1,517' in thousands against '1.4 Mn Tons' is a units artifact, not a
+    disagreement -- and the ratio is 1/923, not a clean 1/1000."""
+    a = make_fact(id="a", metric_raw="freight tonnage", metric_key="freight tonnag",
+                  metric_cluster="freight tonnag", value_raw="1,517", value_num=1517.0,
+                  value_unit="tonnes", value_kind="count")
+    b = make_fact(id="b", doc_id="doc_b", metric_raw="freight tonnage",
+                  metric_key="freight tonnag", metric_cluster="freight tonnag",
+                  value_raw="1.4 Mn Tons", value_num=1_400_000.0,
+                  value_unit="tonnes", value_kind="count")
+    verdict, obs = decide(a, b)
+    assert verdict.kind == RECONCILED
+    assert any("factor of 10" in h for h in obs.hypotheses)

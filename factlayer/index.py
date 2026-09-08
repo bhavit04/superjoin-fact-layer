@@ -113,6 +113,14 @@ class FactIndex:
             if not entities.entities_match(subject_key, other.get("subject_key") or ""):
                 continue
             same_cluster = bool(my_cluster) and my_cluster == (other.get("metric_cluster") or "")
+            # Two facts are only the same claim if a model put their metrics in one
+            # cluster, or their metric names are token-for-token equivalent.
+            # Mere similarity is not enough -- see metrics.same_quantity.
+            comparable = same_cluster or metrics.same_quantity(
+                fact.get("metric_raw"), other.get("metric_raw")
+            )
+            if not comparable:
+                continue
             similarity = 1.0 if same_cluster else metrics.metric_similarity(
                 fact.get("metric_raw"), other.get("metric_raw")
             )
