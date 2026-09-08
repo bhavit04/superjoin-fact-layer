@@ -88,6 +88,49 @@ def extract_json(text: str) -> Any:
     raise LLMError(f"could not parse JSON from response: {cleaned[:300]!r}")
 
 
+class RateLimiter:
+    """A token bucket that paces requests to a requests-per-minute budget.
+
+    Free-tier quotas are per-minute, and the natural approach -- fire everything
+    and retry on 429 -- is actively counterproductive against them: the rejected
+    requests still count, so bursting turns a 20/min budget into far less than
+    20/min of useful work. Pacing to just under the limit is both faster overall
+    and kinder to the quota.
+    """
+
+    def __init__(self, per_minute: float):
+        self.interval = 60.0 / max(per_minute, 0.1)
+        self._lock = asyncio.Lock()
+        self._next_slot = 0.0
+
+    async def acquire(self) -> None:
+        async with self._lock:
+            now = time.monotonic()
+            wait = max(0.0, self._next_slot - now)
+            self._next_slot = max(now, self._next_slot) + self.interval
+        if wait:
+            await asyncio.sleep(wait)
+
+    async def pause_for(self, seconds: float) -> None:
+        """Push every queued request back, after the server tells us to wait."""
+        async with self._lock:
+            self._next_slot = max(self._next_slot, time.monotonic() + seconds)
+
+
+_RETRY_HINT = re.compile(r"retry in ([\d.]+)\s*s", re.IGNORECASE)
+
+
+def parse_retry_hint(body: str) -> float | None:
+    """Gemini puts its backoff advice in the error body, not in Retry-After."""
+    match = _RETRY_HINT.search(body or "")
+    if not match:
+        return None
+    try:
+        return float(match.group(1))
+    except ValueError:
+        return None
+
+
 class DiskCache:
     """Content-addressed JSON cache, sharded so directories stay small."""
 
@@ -130,6 +173,8 @@ class LLMClient:
         self.cache = DiskCache(self.settings.cache_dir)
         self.usage = Usage()
         self._semaphore = asyncio.Semaphore(max(1, self.settings.max_concurrency))
+        self._limiter = RateLimiter(self.settings.requests_per_minute)
+        self.failures: list[dict[str, str]] = []
         self._client: httpx.AsyncClient | None = None
         self._no_cache = os.getenv("FACTLAYER_NO_CACHE", "").lower() in {"1", "true", "yes"}
         # Which Gemini API this key can actually reach; resolved on first call.
@@ -195,12 +240,12 @@ class LLMClient:
         async with self._semaphore:
             started = time.time()
             try:
+                await self._limiter.acquire()
                 text, usage = await self._call_with_retry(system, prompt, max_output_tokens, temperature)
             except Exception as exc:
                 self.usage.errors += 1
-                if default is not None:
-                    return default
-                raise LLMError(str(exc)) from exc
+                self.failures.append({"task": task, "error": f"{type(exc).__name__}: {exc}"[:300]})
+                raise LLMError(f"{task}: {exc}") from exc
             finally:
                 self.usage.seconds += time.time() - started
 
@@ -213,9 +258,9 @@ class LLMClient:
         )
         try:
             return extract_json(text)
-        except LLMError:
-            if default is not None:
-                return default
+        except LLMError as exc:
+            self.usage.errors += 1
+            self.failures.append({"task": task, "error": f"unparseable response: {exc}"[:300]})
             raise
 
     async def _call_with_retry(
@@ -233,8 +278,17 @@ class LLMClient:
                     raise
                 last = exc
                 retry_after = exc.response.headers.get("retry-after")
-                wait = float(retry_after) if retry_after and retry_after.isdigit() else delay
+                hinted = parse_retry_hint(exc.response.text)
+                if retry_after and retry_after.isdigit():
+                    wait = float(retry_after)
+                elif hinted is not None:
+                    wait = hinted
+                else:
+                    wait = delay
                 wait += random.uniform(0, 1.5)  # jitter, so parallel workers don't resynchronize
+                if status == 429:
+                    # Hold every other in-flight request too: the budget is shared.
+                    await self._limiter.pause_for(wait)
             except (httpx.TimeoutException, httpx.TransportError) as exc:
                 last = exc
                 wait = delay + random.uniform(0, 1.0)

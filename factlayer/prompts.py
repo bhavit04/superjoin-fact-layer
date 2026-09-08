@@ -71,7 +71,7 @@ label into the metric and the column header into the qualifiers (usually period)
 legal boilerplate, and cross-references.
 9. Do not invent, extrapolate, or compute. Only report what is printed.
 
-Return at most 40 facts for this excerpt, chosen for how comparable they are.\
+Return at most 60 facts for this excerpt, chosen for how comparable they are.\
 """
 
 EXTRACT_EXAMPLE = """\

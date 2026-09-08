@@ -52,8 +52,11 @@ class Settings:
 
     # Ingestion tuning.
     max_concurrency: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_MAX_CONCURRENCY", "4")))
-    pages_per_chunk: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_PAGES_PER_CHUNK", "4")))
-    chunk_char_budget: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_CHUNK_CHARS", "14000")))
+    # Free tiers meter per minute. Pacing to just under the limit beats bursting
+    # and retrying, because rejected requests still consume the budget.
+    requests_per_minute: float = field(default_factory=lambda: float(os.getenv("FACTLAYER_RPM", "18")))
+    pages_per_chunk: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_PAGES_PER_CHUNK", "8")))
+    chunk_char_budget: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_CHUNK_CHARS", "30000")))
 
     # Linking tuning.
     candidate_top_k: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_TOP_K", "12")))
