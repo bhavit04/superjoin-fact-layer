@@ -29,7 +29,7 @@ _load_dotenv()
 # Default model per provider. All are cheap, high-throughput models with a large
 # context window, which is what this workload wants: many medium-sized prompts.
 DEFAULT_MODELS = {
-    "gemini": "gemini-2.5-flash",
+    "gemini": "gemini-3.6-flash",
     "anthropic": "claude-sonnet-5",
     "openai": "gpt-4.1-mini",
     "replay": "replay",

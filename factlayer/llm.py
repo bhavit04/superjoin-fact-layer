@@ -132,6 +132,9 @@ class LLMClient:
         self._semaphore = asyncio.Semaphore(max(1, self.settings.max_concurrency))
         self._client: httpx.AsyncClient | None = None
         self._no_cache = os.getenv("FACTLAYER_NO_CACHE", "").lower() in {"1", "true", "yes"}
+        # Which Gemini API this key can actually reach; resolved on first call.
+        self._gemini_api: str | None = os.getenv("FACTLAYER_GEMINI_API") or None
+        self._gemini_probed = False
 
     async def __aenter__(self) -> "LLMClient":
         self._client = httpx.AsyncClient(timeout=httpx.Timeout(180.0, connect=20.0))
@@ -257,6 +260,66 @@ class LLMClient:
         raise LLMError(f"unknown provider {provider!r}")
 
     async def _call_gemini(self, system, prompt, max_output_tokens, temperature):
+        """Google now serves two incompatible APIs and which one a key can reach
+        depends on when the key was issued: newer keys get the Interactions API
+        and are refused by ``generateContent`` with a 404 on every model, while
+        older keys are the other way round. Rather than make the user work out
+        which they have, the first call probes and the answer is reused."""
+        if self._gemini_api is None:
+            self._gemini_api = "interactions"
+        try:
+            if self._gemini_api == "interactions":
+                return await self._call_gemini_interactions(system, prompt, max_output_tokens, temperature)
+            return await self._call_gemini_generate(system, prompt, max_output_tokens, temperature)
+        except httpx.HTTPStatusError as exc:
+            if exc.response.status_code != 404 or self._gemini_probed:
+                raise
+            self._gemini_probed = True
+            self._gemini_api = "generate" if self._gemini_api == "interactions" else "interactions"
+            if self._gemini_api == "interactions":
+                return await self._call_gemini_interactions(system, prompt, max_output_tokens, temperature)
+            return await self._call_gemini_generate(system, prompt, max_output_tokens, temperature)
+
+    async def _call_gemini_interactions(self, system, prompt, max_output_tokens, temperature):
+        """The current API. Note there is no JSON response-mime setting here: the
+        only structured-output control is a full JSON schema, and supplying a bare
+        object type makes the model return an empty object. The prompts ask for
+        JSON and ``extract_json`` cleans up whatever comes back."""
+        resp = await self._client.post(
+            "https://generativelanguage.googleapis.com/v1beta/interactions",
+            params={"key": self.settings.api_key},
+            json={
+                "model": self.settings.model,
+                "input": prompt,
+                "system_instruction": system,
+                "generation_config": {
+                    "temperature": temperature,
+                    "max_output_tokens": max_output_tokens,
+                    # Extraction is transcription-shaped work; deep reasoning here
+                    # burns tokens and latency without improving the output.
+                    "thinking_level": "low",
+                },
+            },
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        text = ""
+        for step in data.get("steps", []):
+            if step.get("type") == "model_output":
+                text += "".join(
+                    part.get("text", "") for part in step.get("content", [])
+                    if part.get("type") == "text"
+                )
+        if not text:
+            raise LLMError(f"gemini returned no model output: {json.dumps(data)[:300]}")
+        usage = data.get("usage", {})
+        return text, {
+            "input": usage.get("total_input_tokens", 0),
+            "output": usage.get("total_output_tokens", 0),
+        }
+
+    async def _call_gemini_generate(self, system, prompt, max_output_tokens, temperature):
+        """The older generateContent API, kept for keys that only reach that one."""
         model = self.settings.model
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
         body = {
@@ -266,15 +329,9 @@ class LLMClient:
                 "temperature": temperature,
                 "maxOutputTokens": max_output_tokens,
                 "responseMimeType": "application/json",
-                # Thinking is off: these are structured-extraction calls where it
-                # mostly consumes the output budget without improving the result.
-                "thinkingConfig": {"thinkingBudget": 0},
             },
         }
         resp = await self._client.post(url, params={"key": self.settings.api_key}, json=body)
-        if resp.status_code == 400 and "thinkingConfig" in resp.text:
-            body["generationConfig"].pop("thinkingConfig", None)
-            resp = await self._client.post(url, params={"key": self.settings.api_key}, json=body)
         resp.raise_for_status()
         data = resp.json()
         candidates = data.get("candidates") or []

@@ -182,10 +182,12 @@ async def _extract_all(
         nonlocal done
         try:
             facts = await extract_chunk(client, chunk, title)
+            for fact in facts:
+                fact["_extractor"] = "llm"
             if not facts and not client.available:
-                facts = heuristic_extract(chunk)
+                facts = [{**f, "_extractor": "heuristic"} for f in heuristic_extract(chunk)]
         except LLMUnavailable:
-            facts = heuristic_extract(chunk)
+            facts = [{**f, "_extractor": "heuristic"} for f in heuristic_extract(chunk)]
         except Exception as exc:
             emit("warn", f"chunk {chunk.ordinal} (pages {chunk.page_start}-{chunk.page_end}) failed: {exc}")
             result.notes.append(f"Chunk {chunk.ordinal} failed during extraction: {exc}")
@@ -212,7 +214,7 @@ def _ground_and_store(
         if chunk is None:
             continue
         for raw in items:
-            extractor = "heuristic" if raw.get("confidence", 1.0) <= 0.35 and not raw.get("qualifiers") else "llm"
+            extractor = raw.get("_extractor", "llm")
             row, reason = normalize_fact(
                 raw, doc_id=doc_id, chunk=chunk, pdf=pdf,
                 primary_entity=primary_entity, extractor=extractor,
