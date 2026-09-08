@@ -386,3 +386,28 @@ def test_a_component_is_not_its_whole():
     assert entities_match("wpi", "wpi")
     assert not entities_match("wpi", "wpi primary articles")
     assert not entities_match("india", "indian economy")
+
+
+def test_a_qualifier_the_system_has_never_seen_still_counts_as_context():
+    """The prospectus distinguished two import programmes by `partner`. Because
+    that key was not on the hardcoded allowlist of explanatory qualifiers, the
+    two were reported as contradicting each other -- defeating the point of
+    letting documents introduce their own dimensions."""
+    a = make_fact(id="a", metric_raw="oxygen concentrators imported",
+                  metric_cluster="concentr import oxygen", value_raw="35,875",
+                  value_num=35875.0, value_unit="count", value_kind="count",
+                  qualifiers={"partner": "ACT grants"}, evidence_text="with ACT grants, 35,875 units")
+    b = make_fact(id="b", metric_raw="oxygen concentrators imported",
+                  metric_cluster="concentr import oxygen", value_raw="8,419",
+                  value_num=8419.0, value_unit="count", value_kind="count",
+                  qualifiers={"partner": "Hunger Heroes"}, evidence_text="with Hunger Heroes, 8,419 units")
+    verdict, _ = decide(a, b)
+    assert verdict.kind == RECONCILED
+    assert verdict.dimension == "partner"
+
+
+def test_with_nothing_stated_to_explain_it_a_conflict_is_still_a_conflict():
+    a = make_fact(id="a", value_num=8_142_000_000.0, evidence_text="Revenue was 8,142")
+    b = make_fact(id="b", doc_id="doc_b", value_raw="9,010", value_num=9_010_000_000.0,
+                  evidence_text="Revenue was 9,010")
+    assert decide(a, b)[0].kind == CONTRADICTS

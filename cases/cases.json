@@ -3,7 +3,7 @@
     "title": "A fact corroborated across documents, expressed differently",
     "examples": [
       {
-        "id": "rel_f7cde7538f85",
+        "id": "rel_ea0f2a0ec96b",
         "fact_a": "f_2f833f071c43",
         "fact_b": "f_88ff430d4429",
         "kind": "CORROBORATES",
@@ -12,7 +12,7 @@
         "rationale": "INR 127.00 crore and INR 126.60 crore agree to within 0.31% for FY2024, inside the 0.39% tolerance implied by how precisely each figure is written.",
         "dimension": "",
         "cross_doc": 1,
-        "created_at": 1788899572.3419058,
+        "created_at": 1788899655.182594,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -135,7 +135,7 @@
         "case_score": 4.44
       },
       {
-        "id": "rel_15f4dd813995",
+        "id": "rel_5e4880ac7127",
         "fact_a": "f_6cab3f7f457e",
         "fact_b": "f_88ff430d4429",
         "kind": "CORROBORATES",
@@ -144,7 +144,7 @@
         "rationale": "INR 127.00 crore and INR 126.60 crore agree to within 0.31% for FY2024, inside the 0.39% tolerance implied by how precisely each figure is written.",
         "dimension": "",
         "cross_doc": 1,
-        "created_at": 1788899572.3419259,
+        "created_at": 1788899655.182613,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -267,7 +267,7 @@
         "case_score": 4.44
       },
       {
-        "id": "rel_f39bdc2fd6ae",
+        "id": "rel_a0080c57ba5b",
         "fact_a": "f_208ff3fb3ec6",
         "fact_b": "f_50aa20da98e6",
         "kind": "CORROBORATES",
@@ -276,7 +276,7 @@
         "rationale": "INR 8,142.00 crore and INR 8,141.50 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.",
         "dimension": "",
         "cross_doc": 1,
-        "created_at": 1788899572.3420842,
+        "created_at": 1788899655.182762,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -404,147 +404,7 @@
     "title": "A genuine or likely contradiction",
     "examples": [
       {
-        "id": "rel_43d2c2060afa",
-        "fact_a": "f_15fd19cf6209",
-        "fact_b": "f_3ba16adb1d1d",
-        "kind": "CONTRADICTS",
-        "score": 0.65,
-        "method": "deterministic",
-        "rationale": "Both sources report this metric for Apr 2021 \u2013 Jun 2021, with no stated difference in basis, scope or units, yet the figures differ by 76.5% (35,875 vs 8,419).",
-        "dimension": "",
-        "cross_doc": 0,
-        "created_at": 1788899572.3640451,
-        "detail": {
-          "observation": {
-            "metric_similarity": 1.0,
-            "same_cluster": true,
-            "same_document": true,
-            "derivative_match": true,
-            "units_a": "count",
-            "units_b": "count",
-            "both_numeric": true,
-            "units_comparable": true,
-            "value_a": 35875.0,
-            "value_b": 8419.0,
-            "ratio": 4.2611949162608385,
-            "rel_diff": 0.7653240418118467,
-            "tolerance": 0.0005,
-            "within_tolerance": false,
-            "range_contains": null,
-            "period_a": "Apr 2021 \u2013 Jun 2021",
-            "period_b": "Apr 2021 \u2013 Jun 2021",
-            "period_relation": "EQUAL",
-            "period_note": "both cover Apr 2021 \u2013 Jun 2021",
-            "weak_attribution": false,
-            "shared_evidence": false,
-            "sign_convention": false,
-            "text_a": "",
-            "text_b": "",
-            "text_equal": null,
-            "text_similarity": null,
-            "kind_mismatch": false,
-            "qualifier_deltas": {
-              "partner": [
-                "ACT grants",
-                "Hunger Heroes"
-              ]
-            },
-            "hypotheses": []
-          },
-          "adjudicated": false
-        },
-        "a": {
-          "id": "f_15fd19cf6209",
-          "doc_id": "doc_718d2bdac9b6",
-          "chunk_ordinal": 16,
-          "subject_raw": "Delhivery Limited",
-          "subject_key": "delhivery",
-          "metric_raw": "oxygen concentrators imported",
-          "metric_key": "concentrator imported oxygen",
-          "metric_cluster": "concentrator imported oxygen",
-          "derivative_kind": null,
-          "fact_type": "numeric",
-          "polarity": "affirmed",
-          "value_raw": "35,875",
-          "value_text": null,
-          "value_num": 35875.0,
-          "value_low": null,
-          "value_high": null,
-          "value_unit": "count",
-          "value_kind": "count",
-          "is_range": 0,
-          "is_approximate": 0,
-          "period_label": "April to June 2021",
-          "period_canonical": "Apr 2021 \u2013 Jun 2021",
-          "period_kind": "RANGE",
-          "period_start": "2021-04-01",
-          "period_end": "2021-06-30",
-          "period_is_point": 0,
-          "evidence_text": "We partnered with \u201cACT grants\u201d and others to import 35,875 oxygen concentrators",
-          "page": 70,
-          "page_label": "70",
-          "match_ratio": 1.0,
-          "grounding_mode": "verbatim",
-          "metric_support": 0.667,
-          "grounded": 1,
-          "confidence": 0.85,
-          "extractor": "llm",
-          "created_at": 1788894906.0539799,
-          "qualifiers": {
-            "period": "April to June 2021",
-            "partner": "ACT grants"
-          },
-          "doc_filename": "01-delhivery-prospectus-2022-excerpt.pdf",
-          "doc_title": "DELHIVERY LIMITED CORPORATE IDENTITY NUMBER: U63090DL2011PLC221234"
-        },
-        "b": {
-          "id": "f_3ba16adb1d1d",
-          "doc_id": "doc_718d2bdac9b6",
-          "chunk_ordinal": 16,
-          "subject_raw": "Delhivery Limited",
-          "subject_key": "delhivery",
-          "metric_raw": "oxygen concentrators imported",
-          "metric_key": "concentrator imported oxygen",
-          "metric_cluster": "concentrator imported oxygen",
-          "derivative_kind": null,
-          "fact_type": "numeric",
-          "polarity": "affirmed",
-          "value_raw": "8,419",
-          "value_text": null,
-          "value_num": 8419.0,
-          "value_low": null,
-          "value_high": null,
-          "value_unit": "count",
-          "value_kind": "count",
-          "is_range": 0,
-          "is_approximate": 0,
-          "period_label": "April to June 2021",
-          "period_canonical": "Apr 2021 \u2013 Jun 2021",
-          "period_kind": "RANGE",
-          "period_start": "2021-04-01",
-          "period_end": "2021-06-30",
-          "period_is_point": 0,
-          "evidence_text": "During the period of April to June 2021, we partnered with Hunger Heroes to import 8,419 oxygen concentrators.",
-          "page": 70,
-          "page_label": "70",
-          "match_ratio": 1.0,
-          "grounding_mode": "verbatim",
-          "metric_support": 0.667,
-          "grounded": 1,
-          "confidence": 0.85,
-          "extractor": "llm",
-          "created_at": 1788894906.051024,
-          "qualifiers": {
-            "period": "April to June 2021",
-            "partner": "Hunger Heroes"
-          },
-          "doc_filename": "01-delhivery-prospectus-2022-excerpt.pdf",
-          "doc_title": "DELHIVERY LIMITED CORPORATE IDENTITY NUMBER: U63090DL2011PLC221234"
-        },
-        "case_score": 5.1
-      },
-      {
-        "id": "rel_a8c685c5f2cb",
+        "id": "rel_e22bcc1978f7",
         "fact_a": "f_4e0caf23ed45",
         "fact_b": "f_b37eeee49a33",
         "kind": "CONTRADICTS",
@@ -553,7 +413,7 @@
         "rationale": "Both sources report this metric for FY2021, with no stated difference in basis, scope or units, yet the figures differ by 10.8% (-2,532 vs -2,258).",
         "dimension": "",
         "cross_doc": 0,
-        "created_at": 1788899572.3639581,
+        "created_at": 1788899655.204237,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -677,7 +537,7 @@
         "case_score": 4.87
       },
       {
-        "id": "rel_9f23e59465f4",
+        "id": "rel_d1d38b948116",
         "fact_a": "f_050e4382e09e",
         "fact_b": "f_cef85f4ea51b",
         "kind": "CONTRADICTS",
@@ -686,7 +546,7 @@
         "rationale": "Both sources report this metric for 12M to 2021-12-31, with no stated difference in basis, scope or units, yet the figures differ by 0.1% (5,533 vs 5,541).",
         "dimension": "",
         "cross_doc": 0,
-        "created_at": 1788899572.364034,
+        "created_at": 1788899655.204306,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -808,6 +668,156 @@
           "doc_title": "DELHIVERY LIMITED CORPORATE IDENTITY NUMBER: U63090DL2011PLC221234"
         },
         "case_score": 4.424
+      },
+      {
+        "id": "rel_654d079590d9",
+        "fact_a": "f_278d4c4a20d1",
+        "fact_b": "f_b38ddd73e768",
+        "kind": "CONTRADICTS",
+        "score": 0.4,
+        "method": "deterministic",
+        "rationale": "The two sources state different values for the same claim.",
+        "dimension": "",
+        "cross_doc": 0,
+        "created_at": 1788899655.2042491,
+        "detail": {
+          "observation": {
+            "metric_similarity": 1.0,
+            "same_cluster": true,
+            "same_document": true,
+            "derivative_match": true,
+            "units_a": "",
+            "units_b": "",
+            "both_numeric": false,
+            "units_comparable": false,
+            "value_a": null,
+            "value_b": null,
+            "ratio": null,
+            "rel_diff": null,
+            "tolerance": 0.01,
+            "within_tolerance": null,
+            "range_contains": null,
+            "period_a": "2023",
+            "period_b": "2023",
+            "period_relation": "EQUAL",
+            "period_note": "both cover 2023",
+            "weak_attribution": true,
+            "shared_evidence": false,
+            "sign_convention": false,
+            "text_a": "non executive independent director",
+            "text_b": "committee",
+            "text_equal": false,
+            "text_similarity": 0.14,
+            "kind_mismatch": false,
+            "qualifier_deltas": {
+              "effective_date": [
+                "August 04, 2023",
+                "November 04, 2023"
+              ],
+              "term": [
+                "five years",
+                ""
+              ],
+              "committee": [
+                "",
+                "Risk Management Committee"
+              ]
+            },
+            "hypotheses": []
+          },
+          "adjudicated": false
+        },
+        "a": {
+          "id": "f_278d4c4a20d1",
+          "doc_id": "doc_e561922a5a0f",
+          "chunk_ordinal": 5,
+          "subject_raw": "Mr. Anindya Ghose",
+          "subject_key": "mr anindya ghose",
+          "metric_raw": "board role",
+          "metric_key": "board role",
+          "metric_cluster": "board role",
+          "derivative_kind": null,
+          "fact_type": "categorical",
+          "polarity": "affirmed",
+          "value_raw": "Non-Executive Independent Director",
+          "value_text": "Non-Executive Independent Director",
+          "value_num": null,
+          "value_low": null,
+          "value_high": null,
+          "value_unit": "",
+          "value_kind": "other",
+          "is_range": 0,
+          "is_approximate": 0,
+          "period_label": "2023",
+          "period_canonical": "2023",
+          "period_kind": "CY",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "period_is_point": 0,
+          "evidence_text": "Appointment of Mr. Anindya Ghose as a Non-Executive Independent Director (DIN: 10243913) for a term of five years with effect from August 04, 2023",
+          "page": 24,
+          "page_label": "24",
+          "match_ratio": 1.0,
+          "grounding_mode": "verbatim",
+          "metric_support": 0.0,
+          "grounded": 1,
+          "confidence": 0.55,
+          "extractor": "llm",
+          "created_at": 1788894243.3592541,
+          "qualifiers": {
+            "effective_date": "August 04, 2023",
+            "term": "five years",
+            "period": "August 04, 2023"
+          },
+          "doc_filename": "02-delhivery-annual-report-fy24-excerpt.pdf",
+          "doc_title": "What\u2019s inside From India,"
+        },
+        "b": {
+          "id": "f_b38ddd73e768",
+          "doc_id": "doc_e561922a5a0f",
+          "chunk_ordinal": 15,
+          "subject_raw": "Mr. Anindya Ghose",
+          "subject_key": "mr anindya ghose",
+          "metric_raw": "board role",
+          "metric_key": "board role",
+          "metric_cluster": "board role",
+          "derivative_kind": null,
+          "fact_type": "categorical",
+          "polarity": "affirmed",
+          "value_raw": "member of the Committee",
+          "value_text": "member of the Committee",
+          "value_num": null,
+          "value_low": null,
+          "value_high": null,
+          "value_unit": "",
+          "value_kind": "other",
+          "is_range": 0,
+          "is_approximate": 0,
+          "period_label": "2023",
+          "period_canonical": "2023",
+          "period_kind": "CY",
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31",
+          "period_is_point": 0,
+          "evidence_text": "Mr. Anindya Ghose has been appointed as member of the Committee with effect from November 04, 2023.",
+          "page": 44,
+          "page_label": "44",
+          "match_ratio": 1.0,
+          "grounding_mode": "verbatim",
+          "metric_support": 0.0,
+          "grounded": 1,
+          "confidence": 0.55,
+          "extractor": "llm",
+          "created_at": 1788894246.4656372,
+          "qualifiers": {
+            "committee": "Risk Management Committee",
+            "effective_date": "November 04, 2023",
+            "period": "November 04, 2023"
+          },
+          "doc_filename": "02-delhivery-annual-report-fy24-excerpt.pdf",
+          "doc_title": "What\u2019s inside From India,"
+        },
+        "case_score": 3.075
       }
     ]
   },
@@ -815,7 +825,7 @@
     "title": "An apparent contradiction explained by context",
     "examples": [
       {
-        "id": "rel_41c7575f1d3f",
+        "id": "rel_e1f64ab7f82a",
         "fact_a": "f_443ee2cc6659",
         "fact_b": "f_e2cb0567ac45",
         "kind": "RECONCILED",
@@ -824,7 +834,7 @@
         "rationale": "The facts refer to different timeframes: Fact A covers the first half of the fiscal year 2025 (April to September 2024), while Fact B covers the calendar year 2024. Because the periods are not identical, the difference in values does not constitute a contradiction. Supporting words: \u201cFact A: \"In H1 of FY25\"; Fact B: \"in 2024\"\u201d",
         "dimension": "period",
         "cross_doc": 0,
-        "created_at": 1788899572.365876,
+        "created_at": 1788899655.206112,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -952,7 +962,7 @@
         "case_score": 5.4
       },
       {
-        "id": "rel_3fe0bef716dd",
+        "id": "rel_0c64b0cfc3ed",
         "fact_a": "f_26a36cb1bb33",
         "fact_b": "f_50aa20da98e6",
         "kind": "RECONCILED",
@@ -961,7 +971,7 @@
         "rationale": "These are the same metric over nested periods: Q4 FY2024 falls inside FY2024. The difference is one of reporting window, not a disagreement.",
         "dimension": "period",
         "cross_doc": 1,
-        "created_at": 1788899572.3420942,
+        "created_at": 1788899655.182772,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,
@@ -1086,7 +1096,7 @@
         "case_score": 5.0
       },
       {
-        "id": "rel_d18aae255ad0",
+        "id": "rel_b5524971ff84",
         "fact_a": "f_0a2cdc7dc888",
         "fact_b": "f_50aa20da98e6",
         "kind": "RECONCILED",
@@ -1095,7 +1105,7 @@
         "rationale": "These are the same metric over nested periods: Q3 FY2024 falls inside FY2024. The difference is one of reporting window, not a disagreement.",
         "dimension": "period",
         "cross_doc": 1,
-        "created_at": 1788899572.342116,
+        "created_at": 1788899655.182792,
         "detail": {
           "observation": {
             "metric_similarity": 1.0,

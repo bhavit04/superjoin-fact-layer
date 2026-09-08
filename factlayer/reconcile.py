@@ -392,6 +392,14 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
     explanatory = {
         EXPLANATORY_QUALIFIERS[k] for k in obs.qualifier_deltas if k in EXPLANATORY_QUALIFIERS
     }
+    # A fixed allowlist of "explanatory" qualifiers contradicts the whole point of
+    # letting documents introduce their own dimensions. The prospectus recorded
+    # `partner: ACT grants` against `partner: Hunger Heroes` for two separate
+    # import programmes -- a difference the document states plainly -- and because
+    # "partner" was not on the list, the two were reported as contradicting.
+    # Any stated difference is now treated as a candidate explanation, named by
+    # its own key, and sent for adjudication rather than asserted as a conflict.
+    unrecognized = [k for k in obs.qualifier_deltas if k not in EXPLANATORY_QUALIFIERS]
 
     # --- non-numeric facts ---------------------------------------------------
     if obs.kind_mismatch:
@@ -489,6 +497,16 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
                 "number measures -- the metric was inferred from surrounding context. There is "
                 "not enough here to claim the two describe the same quantity.",
                 dimension="attribution",
+            )
+        if unrecognized:
+            key = sorted(unrecognized)[0]
+            left, right = obs.qualifier_deltas[key]
+            return Verdict(
+                RECONCILED, 0.5, "deterministic",
+                f"The figures differ by {_pct(obs.rel_diff)}, but the sources state a different "
+                f"{key.replace('_', ' ')} ({left or 'unstated'} vs {right or 'unstated'}), which "
+                "would account for it.",
+                dimension=key.replace("_", " "), needs_llm=True,
             )
         return Verdict(
             CONTRADICTS, 0.65, "deterministic",

@@ -122,8 +122,8 @@ doctor` reports it directly.
 | relationship | count | |
 |---|---:|---|
 | **CORROBORATES** | 167 | the same claim, agreeing |
-| **RECONCILED** | 326 | disagreeing, but a stated difference in context explains it |
-| **CONTRADICTS** | 10 | disagreeing with nothing to explain it |
+| **RECONCILED** | 327 | disagreeing, but a stated difference in context explains it |
+| **CONTRADICTS** | 9 | disagreeing with nothing to explain it |
 | **RELATED** | 2,182 | same metric, different periods — a time series |
 | _of which cross-document_ | 598 | |
 

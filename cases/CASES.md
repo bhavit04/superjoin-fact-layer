@@ -22,9 +22,9 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 | facts grounded | 2,833 |
 | relations | 2,685 |
 | relations cross doc | 598 |
-| relations · CONTRADICTS | 10 |
+| relations · CONTRADICTS | 9 |
 | relations · CORROBORATES | 167 |
-| relations · RECONCILED | 326 |
+| relations · RECONCILED | 327 |
 | relations · RELATED | 2,182 |
 | quarantined | 155 |
 | distinct metrics | 1,322 |
@@ -154,45 +154,6 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 ### 1. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
 
-**Fact A — Delhivery Limited · oxygen concentrators imported**
-
-- Value as printed: `35,875`
-- Normalized: `35,875`
-- Period: `April to June 2021` → `Apr 2021 – Jun 2021`
-- Qualifiers: `partner=ACT grants`
-- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 70
-
-> We partnered with “ACT grants” and others to import 35,875 oxygen concentrators
-
-**Fact B — Delhivery Limited · oxygen concentrators imported**
-
-- Value as printed: `8,419`
-- Normalized: `8,419`
-- Period: `April to June 2021` → `Apr 2021 – Jun 2021`
-- Qualifiers: `partner=Hunger Heroes`
-- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 70
-
-> During the period of April to June 2021, we partnered with Hunger Heroes to import 8,419 oxygen concentrators.
-
-**System reasoning.** Both sources report this metric for Apr 2021 – Jun 2021, with no stated difference in basis, scope or units, yet the figures differ by 76.5% (35,875 vs 8,419).
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover Apr 2021 – Jun 2021 |
-| units | `count` ↔ `count` (comparable) |
-| values compared | `35,875` vs `8,419` |
-| relative difference | `76.5324%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `4.26119` |
-| qualifier `partner` | A=`ACT grants` · B=`Hunger Heroes` |
-
-</details>
-
-### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
-
 **Fact A — Delhivery Limited · adjusted ebitda**
 
 - Value as printed: `(2,532)`
@@ -227,7 +188,7 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 </details>
 
-### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
 
 **Fact A — Spoton · Active Customers**
 
@@ -260,6 +221,40 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
 | ratio A/B | `0.998556` |
+
+</details>
+
+### 3. CONTRADICTS  ·  confidence 0.40  ·  same document  ·  decided by `deterministic`
+
+**Fact A — Mr. Anindya Ghose · board role**
+
+- Value as printed: `Non-Executive Independent Director`
+- Period: `2023` → `2023`
+- Qualifiers: `effective_date=August 04, 2023`, `term=five years`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 24
+
+> Appointment of Mr. Anindya Ghose as a Non-Executive Independent Director (DIN: 10243913) for a term of five years with effect from August 04, 2023
+
+**Fact B — Mr. Anindya Ghose · board role**
+
+- Value as printed: `member of the Committee`
+- Period: `2023` → `2023`
+- Qualifiers: `committee=Risk Management Committee`, `effective_date=November 04, 2023`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 44
+
+> Mr. Anindya Ghose has been appointed as member of the Committee with effect from November 04, 2023.
+
+**System reasoning.** The two sources state different values for the same claim.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover 2023 |
+| units | `` vs `` — **not directly comparable** |
+| qualifier `effective_date` | A=`August 04, 2023` · B=`November 04, 2023` |
+| qualifier `term` | A=`five years` · B=`(unstated)` |
+| qualifier `committee` | A=`(unstated)` · B=`Risk Management Committee` |
 
 </details>
 
