@@ -309,7 +309,7 @@ async function showEvidence(factId) {
              alt="full source page with evidence highlighted"></details>`
     : `<img src="/api/facts/${factId}/evidence.png" alt="source page">`}
     ${relations.length ? `<h3 style="margin-top:20px">${relations.length} related fact(s)</h3>
-      ${relations.slice(0, 6).map(relationCard).join("")}` : ""}`;
+      ${relations.slice(0, 6).map((r) => relationCard({ ...r, a: fact, b: r.other })).join("")}` : ""}`;
   $("#modal").hidden = false;
 
 }
