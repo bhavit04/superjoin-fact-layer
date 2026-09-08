@@ -27,7 +27,7 @@ from .db import Store, new_id
 from .extract import extract_chunk, heuristic_extract, normalize_fact
 from .index import Candidate, FactIndex, generate_pairs
 from .llm import LLMClient, LLMUnavailable
-from .normalize import entities, metrics, periods
+from .normalize import entities, metrics, periods, units
 from .pdf import PdfDocument, file_sha256
 from .reconcile import (
     CONTRADICTS, CORROBORATES, RECONCILED, RELATED, UNRELATED,
@@ -206,6 +206,88 @@ async def ingest(
         pdf.close()
 
 
+def renormalize(store: Store, progress: ProgressFn | None = None) -> dict[str, int]:
+    """Re-parse stored values and periods in place, without re-reading any PDF.
+
+    Values are normalized at ingest and then frozen in the database, so a fix to
+    the unit or period parser previously required re-extracting an entire corpus
+    to take effect -- paying again for the one stage that had not changed. This
+    re-derives just the parsed columns from the raw text already stored.
+    """
+    facts = store.all_facts(grounded_only=False)
+    updates, changed = [], 0
+    for fact in facts:
+        try:
+            qualifiers = json.loads(fact.get("qualifiers_json") or "{}")
+        except (TypeError, ValueError):
+            qualifiers = {}
+        fy_start = None
+        meta = store.one("SELECT meta_json FROM documents WHERE id = ?", (fact["doc_id"],))
+        if meta:
+            try:
+                fy_start = json.loads(meta.get("meta_json") or "{}").get("fiscal_year_start_month")
+            except (TypeError, ValueError):
+                fy_start = None
+
+        value = units.parse_value(fact.get("value_raw") or "", unit_hint=qualifiers.get("unit_hint"))
+        period = periods.parse_period(fact.get("period_label") or "", fy_start)
+        if (value.number != fact.get("value_num")) or (period.start != fact.get("period_start")):
+            changed += 1
+        updates.append((
+            value.number, value.low, value.high, value.unit or fact.get("value_unit"),
+            value.kind or fact.get("value_kind"), int(value.is_range), int(value.is_approximate),
+            period.canonical or fact.get("period_canonical"), period.kind or fact.get("period_kind"),
+            period.start, period.end, int(period.is_point), fact["id"],
+        ))
+
+    store.executemany(
+        "UPDATE facts SET value_num=?, value_low=?, value_high=?, value_unit=?, value_kind=?, "
+        "is_range=?, is_approximate=?, period_canonical=?, period_kind=?, period_start=?, "
+        "period_end=?, period_is_point=? WHERE id=?", updates)
+    if progress:
+        progress("renormalize", f"re-parsed {len(facts)} facts, {changed} changed", {})
+    return {"facts": len(facts), "changed": changed}
+
+
+async def relink(
+    store: Store,
+    *,
+    settings: Settings | None = None,
+    adjudication_budget: int = 60,
+    progress: ProgressFn | None = None,
+) -> IngestResult:
+    """Recompute every relation from facts already stored, without re-extracting.
+
+    Extraction is the expensive stage and its output does not change when the
+    comparison logic does. Rebuilding a whole corpus to pick up a change in how
+    two facts are judged wastes that work; this re-derives only the stage that
+    actually changed, which takes seconds instead of half an hour.
+    """
+    settings = settings or get_settings()
+    started = time.time()
+    result = IngestResult(doc_id="", filename="(all documents)", title="", pages=0, chunks=0)
+
+    def emit(stage: str, message: str, **detail) -> None:
+        if progress:
+            try:
+                progress(stage, message, detail)
+            except Exception:
+                pass
+
+    facts = store.all_facts(grounded_only=False)
+    result.facts_stored = len(facts)
+    emit("relink", f"re-deriving relations for {len(facts)} stored facts")
+    store.execute("DELETE FROM relations")
+
+    async with LLMClient(settings) as client:
+        await _link(store, client, facts, "", settings, adjudication_budget, emit, result)
+        result.usage = client.usage.to_dict()
+
+    result.duration_s = round(time.time() - started, 2)
+    emit("done", f"{result.relations_written} relations rebuilt in {result.duration_s}s")
+    return result
+
+
 # --- stages ------------------------------------------------------------------
 
 async def _extract_all(
@@ -338,7 +420,7 @@ async def _link(
     all_facts = store.all_facts(grounded_only=False)
     index = FactIndex(all_facts)
     by_id = {f["id"]: f for f in all_facts}
-    probes = [by_id.get(r["id"], r) for r in new_rows]
+    probes = [by_id.get(r["id"], r) for r in new_rows if r["id"] in by_id or r]
 
     candidates = generate_pairs(index, probes, settings.candidate_top_k, settings.metric_sim_threshold)
     result.pairs_considered = len(candidates)

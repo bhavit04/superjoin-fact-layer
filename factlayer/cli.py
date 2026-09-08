@@ -10,7 +10,7 @@ from pathlib import Path
 from .cases import build_cases
 from .config import get_settings
 from .db import Store
-from .pipeline import ingest
+from .pipeline import ingest, relink, renormalize
 
 
 def _progress(stage: str, message: str, detail: dict) -> None:
@@ -62,6 +62,14 @@ def main(argv: list[str] | None = None) -> int:
     p_serve.add_argument("--port", type=int, default=8000)
     p_serve.add_argument("--reload", action="store_true")
 
+    sub.add_parser("renormalize",
+                   help="re-parse stored values and periods in place (no PDFs, no API)")
+
+    p_relink = sub.add_parser(
+        "relink", help="recompute all relations from stored facts (no re-extraction)")
+    p_relink.add_argument("--budget", type=int, default=60,
+                          help="max pairs sent for LLM adjudication")
+
     sub.add_parser("stats", help="print knowledge layer statistics")
 
     p_cases = sub.add_parser("cases", help="print the four required cases")
@@ -78,6 +86,22 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "serve":
         import uvicorn
         uvicorn.run("factlayer.api:app", host=args.host, port=args.port, reload=args.reload)
+        return 0
+
+    if args.command == "renormalize":
+        result = renormalize(Store(settings.db_path), progress=_progress)
+        print(f"  -> {result['changed']} of {result['facts']} facts changed")
+        return 0
+
+    if args.command == "relink":
+        store = Store(settings.db_path)
+        result = asyncio.run(relink(store, settings=settings, adjudication_budget=args.budget,
+                                    progress=_progress))
+        print(f"\n  -> {result.relations_written} relations from {result.facts_stored} facts "
+              f"in {result.duration_s}s")
+        print(f"     {result.by_kind}")
+        for note in result.notes:
+            print(f"     note: {note}")
         return 0
 
     if args.command == "stats":

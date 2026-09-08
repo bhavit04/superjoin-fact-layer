@@ -26,6 +26,7 @@ from __future__ import annotations
 import json
 import math
 import re
+from difflib import SequenceMatcher
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
@@ -98,6 +99,8 @@ class Observation:
     text_a: str = ""
     text_b: str = ""
     text_equal: bool | None = None
+    text_similarity: float | None = None
+    kind_mismatch: bool = False
 
     qualifier_deltas: dict[str, list[str]] = field(default_factory=dict)
     hypotheses: list[str] = field(default_factory=list)
@@ -242,6 +245,10 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
     value_a, value_b = _value_spec(fact_a), _value_spec(fact_b)
     obs.units_a, obs.units_b = value_a.unit, value_b.unit
     obs.both_numeric = value_a.number is not None and value_b.number is not None
+    # One side a quantity and the other a name or status means the metric label was
+    # shared but the claims are not: "number of members = 3" against "member =
+    # Suvir Suren Sujan" is not a disagreement about the same thing.
+    obs.kind_mismatch = (value_a.number is None) != (value_b.number is None)
     # Either side's evidence failing to mention what it measures means the metric
     # was attributed from context, and the pair cannot support a conflict.
     obs.weak_attribution = min(
@@ -284,10 +291,18 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
         obs.text_a = _normalize_text_value(fact_a.get("value_raw"))
         obs.text_b = _normalize_text_value(fact_b.get("value_raw"))
         if obs.text_a and obs.text_b:
+            # "Chairperson & Non-Executive Independent Director" and "Chairman and
+            # Non-Executive Independent Director" are one role. Exact matching, even
+            # after dropping connectives, reported the same person as contradicting
+            # themselves across two filings, so near-identical wording counts as
+            # equal.
+            ratio = SequenceMatcher(None, obs.text_a, obs.text_b, autojunk=False).ratio()
+            obs.text_similarity = round(ratio, 3)
             obs.text_equal = (
                 obs.text_a == obs.text_b
                 or obs.text_a in obs.text_b
                 or obs.text_b in obs.text_a
+                or ratio >= 0.82
             )
 
     # Which stated conditions differ?
@@ -337,6 +352,13 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
     }
 
     # --- non-numeric facts ---------------------------------------------------
+    if obs.kind_mismatch:
+        return Verdict(
+            RELATED, 0.25, "deterministic",
+            "One source states a quantity here and the other states a name or a status, so "
+            "these describe different things despite sharing a metric label.",
+            dimension="definition",
+        )
     if not obs.both_numeric:
         if obs.text_equal is True:
             return Verdict(

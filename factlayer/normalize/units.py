@@ -166,8 +166,11 @@ def parse_value(raw: str, unit_hint: str | None = None) -> ValueSpec:
     negative_parens = False
     if matches:
         token = re.escape(matches[0].group())
+        # A currency symbol commonly sits between the bracket and the digits --
+        # "(₹8,911.39) million" -- and missing it flipped a loss to a profit, so
+        # the same figure written "(8,911.39)" elsewhere came out 200% adrift.
         negative_parens = bool(
-            re.search(r"\(\s*" + token + r"\s*[A-Za-z%$₹.\s]*\)", text)
+            re.search(r"\(\s*[^\d()]{0,8}" + token + r"\s*[^\d()]{0,12}\)", text)
         )
 
     scale_match = _SCALE_RE.search(search_space)

@@ -82,3 +82,10 @@ def test_accounting_negatives_inside_a_longer_string(raw, expected):
 ])
 def test_footnote_markers_are_not_read_as_negatives(raw, expected):
     assert parse_value(raw).number == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("raw", ["(₹8,911.39) million", "(Rs. 8,911.39) million", "(US$ 1,234)"])
+def test_a_currency_symbol_inside_the_brackets_still_reads_as_negative(raw):
+    """'(₹8,911.39) million' flipped to a profit, so the same loss written
+    '(8,911.39)' elsewhere in the document appeared 200% adrift."""
+    assert parse_value(raw).number < 0
