@@ -29,7 +29,7 @@ _load_dotenv()
 # Default model per provider. All are cheap, high-throughput models with a large
 # context window, which is what this workload wants: many medium-sized prompts.
 DEFAULT_MODELS = {
-    "gemini": "gemini-3.6-flash",
+    "gemini": "gemini-3.1-flash-lite",
     "anthropic": "claude-sonnet-5",
     "openai": "gpt-4.1-mini",
     "replay": "replay",
@@ -46,17 +46,27 @@ API_KEY_ENV = {
 class Settings:
     provider: str = field(default_factory=lambda: os.getenv("FACTLAYER_PROVIDER", "gemini").lower())
     model: str = field(default_factory=lambda: os.getenv("FACTLAYER_MODEL", ""))
+    # Free tiers meter per model, so an exhausted quota on one model does not mean
+    # an exhausted account. The client walks this chain rather than giving up.
+    fallback_models: list[str] = field(default_factory=lambda: [
+        m.strip() for m in os.getenv("FACTLAYER_FALLBACK_MODELS", "").split(",") if m.strip()
+    ])
     db_path: Path = field(default_factory=lambda: Path(os.getenv("FACTLAYER_DB", str(DATA_DIR / "factlayer.db"))))
     cache_dir: Path = field(default_factory=lambda: Path(os.getenv("FACTLAYER_CACHE", str(CACHE_DIR))))
     upload_dir: Path = field(default_factory=lambda: Path(os.getenv("FACTLAYER_UPLOADS", str(UPLOAD_DIR))))
 
     # Ingestion tuning.
-    max_concurrency: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_MAX_CONCURRENCY", "4")))
-    # Free tiers meter per minute. Pacing to just under the limit beats bursting
-    # and retrying, because rejected requests still consume the budget.
+    # These two settings do different jobs and are easy to confuse. The provider
+    # meters *requests per minute*, but each request takes tens of seconds, so a
+    # low concurrency leaves most of the budget unused: at 45s per call, four in
+    # flight is only ~5 requests/min against a budget of 20. Concurrency exists to
+    # cover latency; the rate limiter is what protects the quota.
+    max_concurrency: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_MAX_CONCURRENCY", "10")))
     requests_per_minute: float = field(default_factory=lambda: float(os.getenv("FACTLAYER_RPM", "18")))
-    pages_per_chunk: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_PAGES_PER_CHUNK", "8")))
-    chunk_char_budget: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_CHUNK_CHARS", "30000")))
+    # Smaller chunks finish faster and parallelize better, which matters more than
+    # call count once requests are paced.
+    pages_per_chunk: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_PAGES_PER_CHUNK", "5")))
+    chunk_char_budget: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_CHUNK_CHARS", "18000")))
 
     # Linking tuning.
     candidate_top_k: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_TOP_K", "12")))
@@ -71,6 +81,9 @@ class Settings:
             self.offline = True
         if not self.model:
             self.model = DEFAULT_MODELS.get(self.provider, DEFAULT_MODELS["gemini"])
+        if not self.fallback_models and self.provider == "gemini":
+            self.fallback_models = ["gemini-3-flash-preview", "gemini-3.6-flash"]
+        self.fallback_models = [m for m in self.fallback_models if m != self.model]
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.upload_dir.mkdir(parents=True, exist_ok=True)

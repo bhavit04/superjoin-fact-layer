@@ -180,6 +180,30 @@ class LLMClient:
         # Which Gemini API this key can actually reach; resolved on first call.
         self._gemini_api: str | None = os.getenv("FACTLAYER_GEMINI_API") or None
         self._gemini_probed = False
+        # Free-tier quotas are per model and per day. A 429 that persists is not
+        # something backoff can fix, so exhausting one model rotates to the next
+        # and exhausting all of them trips a breaker instead of making every
+        # remaining call pay for six pointless retries.
+        self._models = [self.settings.model, *self.settings.fallback_models]
+        self._model_index = 0
+        self._quota_strikes = 0
+        self.exhausted = False
+
+    @property
+    def model(self) -> str:
+        return self._models[min(self._model_index, len(self._models) - 1)]
+
+    def _rotate_model(self) -> bool:
+        """Move to the next model. Returns False when there are none left."""
+        self._quota_strikes = 0
+        if self._model_index + 1 >= len(self._models):
+            self.exhausted = True
+            return False
+        self._model_index += 1
+        self.failures.append({
+            "task": "quota", "error": f"quota exhausted, switching to {self.model}"
+        })
+        return True
 
     async def __aenter__(self) -> "LLMClient":
         self._client = httpx.AsyncClient(timeout=httpx.Timeout(180.0, connect=20.0))
@@ -198,6 +222,7 @@ class LLMClient:
         return {
             "provider": self.settings.provider,
             "model": self.settings.model,
+            "fallback_models": self.settings.fallback_models,
             "live": self.available,
             "cache_entries": self.cache.size(),
             "usage": self.usage.to_dict(),
@@ -227,6 +252,12 @@ class LLMClient:
                     return extract_json(cached)
                 except LLMError:
                     pass  # A poisoned cache entry should not be fatal; re-fetch below.
+
+        if self.exhausted:
+            raise LLMError(
+                f"every configured model is out of quota ({', '.join(self._models)}). "
+                "Responses already cached are still replayable; re-run later to continue."
+            )
 
         if not self.available:
             if default is not None:
@@ -287,6 +318,16 @@ class LLMClient:
                     wait = delay
                 wait += random.uniform(0, 1.5)  # jitter, so parallel workers don't resynchronize
                 if status == 429:
+                    # A daily quota does not recover by waiting, and the server's
+                    # "retry in Ns" hint does not distinguish the two cases. Treat
+                    # repeated 429s on one model as exhaustion and move on.
+                    self._quota_strikes += 1
+                    if self._quota_strikes >= 3:
+                        if not self._rotate_model():
+                            raise LLMError(
+                                "all models are out of quota: " + ", ".join(self._models)
+                            ) from exc
+                        continue
                     # Hold every other in-flight request too: the budget is shared.
                     await self._limiter.pause_for(wait)
             except (httpx.TimeoutException, httpx.TransportError) as exc:
@@ -343,7 +384,7 @@ class LLMClient:
             "https://generativelanguage.googleapis.com/v1beta/interactions",
             params={"key": self.settings.api_key},
             json={
-                "model": self.settings.model,
+                "model": self.model,
                 "input": prompt,
                 "system_instruction": system,
                 "generation_config": {
@@ -374,8 +415,7 @@ class LLMClient:
 
     async def _call_gemini_generate(self, system, prompt, max_output_tokens, temperature):
         """The older generateContent API, kept for keys that only reach that one."""
-        model = self.settings.model
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model}:generateContent"
         body = {
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
             "systemInstruction": {"parts": [{"text": system}]},
@@ -408,7 +448,7 @@ class LLMClient:
                 "content-type": "application/json",
             },
             json={
-                "model": self.settings.model,
+                "model": self.model,
                 "max_tokens": max_output_tokens,
                 "temperature": temperature,
                 "system": system,
@@ -426,7 +466,7 @@ class LLMClient:
             "https://api.openai.com/v1/chat/completions",
             headers={"Authorization": f"Bearer {self.settings.api_key}"},
             json={
-                "model": self.settings.model,
+                "model": self.model,
                 "temperature": temperature,
                 "max_tokens": max_output_tokens,
                 "response_format": {"type": "json_object"},
