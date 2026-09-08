@@ -376,3 +376,13 @@ def test_genuinely_different_magnitudes_still_conflict():
     b = make_fact(id="b", doc_id="doc_b", value_raw="-9,010", value_num=-9_010_000_000.0,
                   evidence_text="Revenue was (9,010)")
     assert decide(a, b)[0].kind != CORROBORATES
+
+
+def test_a_component_is_not_its_whole():
+    """Overall wholesale inflation (2.3%) was reported as contradicting the rate
+    for one component of the same index (5.1%), because a one-word subject was
+    allowed to match any subject beginning with it."""
+    from factlayer.normalize.entities import entities_match
+    assert entities_match("wpi", "wpi")
+    assert not entities_match("wpi", "wpi primary articles")
+    assert not entities_match("india", "indian economy")

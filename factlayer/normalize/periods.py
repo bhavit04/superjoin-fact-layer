@@ -153,6 +153,12 @@ _P_AS_AT = re.compile(
 )
 _P_YEAR_RANGE = re.compile(r"\b(19|20)(\d{2})\s*[-–]\s*(\d{2})\b")
 _P_CY = re.compile(r"\b(?:CY|calendar\s+year)\s*'?(\d{2,4})\b", re.I)
+# "April to December 2024" is nine months, not December. Without this the range
+# collapsed to its final month and a nine-month figure was compared against a
+# one-month figure as though they covered the same period.
+_P_MONTH_RANGE = re.compile(
+    r"\b([A-Za-z]{3,9})\s*(?:to|through|[-–—])\s*([A-Za-z]{3,9})\s+(\d{4})\b", re.I
+)
 _P_MONTH_YEAR = re.compile(r"\b([A-Za-z]{3,9})\s+(\d{4})\b")
 _P_BARE_YEAR = re.compile(r"\b(19\d{2}|20\d{2})\b")
 
@@ -242,6 +248,16 @@ def parse_period(text: str | None, fy_start: int | None = None) -> PeriodSpec:
         if end_year - start_year == 1:
             s, e = _fy_bounds(end_year, fy_start)
             return PeriodSpec("FY", s.isoformat(), e.isoformat(), m.group(0), f"FY{end_year}")
+
+    if m := _P_MONTH_RANGE.search(raw):
+        first, last = MONTHS.get(m.group(1).lower()), MONTHS.get(m.group(2).lower())
+        if first and last:
+            year = int(m.group(3))
+            start_year = year if last >= first else year - 1
+            start = date(start_year, first, 1)
+            end = date(year, last, _last_day(year, last))
+            label = f"{start:%b %Y} – {end:%b %Y}"
+            return PeriodSpec("RANGE", start.isoformat(), end.isoformat(), m.group(0), label)
 
     if m := _P_MONTH_YEAR.search(raw):
         month = MONTHS.get(m.group(1).lower())

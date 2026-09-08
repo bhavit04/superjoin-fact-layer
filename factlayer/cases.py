@@ -114,6 +114,13 @@ def _contradiction_score(relation: dict) -> float:
         score += 1.2                                   # same period is the strongest case
     if not obs.get("qualifier_deltas"):
         score += 0.8                                   # nothing stated explains it away
+    # If the arithmetic itself suspected a unit or scale problem, this is a weak
+    # example of a contradiction however confident the adjudicator sounded.
+    if any("factor of 10" in h or "scale" in h or "unit" in h
+           for h in (obs.get("hypotheses") or [])):
+        score -= 2.5
+    if obs.get("period_relation") in {"CONTAINS", "CONTAINED_BY"}:
+        score -= 1.5                                   # nested periods rarely conflict
     score += 0.5 * min(relation["a"].get("confidence") or 0, relation["b"].get("confidence") or 0)
     return score
 

@@ -73,3 +73,14 @@ def test_fiscal_year_convention_is_read_from_the_document():
 def test_an_unrecognizable_document_keeps_the_default_convention():
     from factlayer.normalize.periods import detect_fiscal_year_start
     assert detect_fiscal_year_start("no year-end phrasing here at all") == 4
+
+
+def test_a_month_range_is_not_its_final_month():
+    """'April to December 2024' is nine months. Collapsing it to December made a
+    nine-month capital-flow figure look like it contradicted a one-month one."""
+    from factlayer.normalize.periods import CONTAINS, compare_periods, parse_period
+    span = parse_period("April to December 2024")
+    assert (span.start, span.end) == ("2024-04-01", "2024-12-31")
+    assert compare_periods(span, parse_period("December 2024")) == CONTAINS
+    # A range that wraps a year boundary starts in the earlier year.
+    assert parse_period("November to February 2025").start == "2024-11-01"

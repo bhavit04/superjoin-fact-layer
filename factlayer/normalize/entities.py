@@ -135,14 +135,10 @@ def entities_match(key_a: str, key_b: str) -> bool:
     """
     if not key_a or not key_b:
         return False
-    if key_a == key_b:
-        return True
-    ta, tb = key_a.split(), key_b.split()
-    if len(ta) == 1 and len(tb) == 1:
-        return ta[0] == tb[0]
-    # "india" vs "indian economy": share the head token and one side is a single word.
-    if len(ta) == 1 and ta[0] == tb[0]:
-        return True
-    if len(tb) == 1 and tb[0] == ta[0]:
-        return True
-    return False
+    # Exact equality only. Allowing a single-token subject to match any subject
+    # beginning with it seemed harmless -- it was meant to join "india" to "indian
+    # economy" -- but it also joined "WPI" to "WPI primary articles", so overall
+    # wholesale inflation of 2.3 per cent was reported as contradicting the 5.1
+    # per cent for one component of the same index. A component is not its whole,
+    # which is the same principle the metric comparison already enforces.
+    return key_a == key_b

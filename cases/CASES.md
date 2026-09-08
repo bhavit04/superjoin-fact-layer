@@ -20,12 +20,12 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 | documents | 6 |
 | facts | 3,112 |
 | facts grounded | 2,833 |
-| relations | 2,783 |
-| relations cross doc | 629 |
-| relations · CONTRADICTS | 14 |
-| relations · CORROBORATES | 187 |
-| relations · RECONCILED | 364 |
-| relations · RELATED | 2,218 |
+| relations | 2,685 |
+| relations cross doc | 598 |
+| relations · CONTRADICTS | 11 |
+| relations · CORROBORATES | 167 |
+| relations · RECONCILED | 328 |
+| relations · RELATED | 2,179 |
 | quarantined | 155 |
 | distinct metrics | 1,322 |
 | distinct qualifiers | 107 |
@@ -38,42 +38,6 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 Ranked by how *differently* the two sources state the same agreeing fact, so the examples shown are the ones that only match because of normalization.
 
 ### 1. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
-
-**Fact A — Delhivery Limited · revenue for services**
-
-- Value as printed: `8,142`
-- Normalized: `INR 8,142.00 crore`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 17
-
-> Revenue for services (A) 1,860 2,194 2,076 (5.4%) 11.6%
-
-**Fact B — Delhivery Limited · revenue from services**
-
-- Value as printed: `₹81,415Mn`
-- Normalized: `INR 8,141.50 crore`
-- Period: `FY24` → `FY2024`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
-
-> ₹81,415Mn Revenue from services
-
-**System reasoning.** INR 8,142.00 crore and INR 8,141.50 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover FY2024 |
-| units | `INR` ↔ `INR` (comparable) |
-| values compared | `8.142e+10` vs `8.1415e+10` |
-| relative difference | `0.0061%` |
-| verdict on that | within rounding tolerance |
-| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `1.00006` |
-
-</details>
-
-### 2. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
 
 **Fact A — Delhivery Limited · EBITDA**
 
@@ -109,7 +73,7 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 </details>
 
-### 3. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
+### 2. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
 
 **Fact A — Delhivery Limited · EBITDA**
 
@@ -145,6 +109,42 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 </details>
 
+### 3. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
+
+**Fact A — Delhivery Limited · revenue from services**
+
+- Value as printed: `₹8,142 Cr`
+- Normalized: `INR 8,142.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 6
+
+> ₹8,142 Cr FY24 revenue from services
+
+**Fact B — Delhivery Limited · revenue from services**
+
+- Value as printed: `₹81,415Mn`
+- Normalized: `INR 8,141.50 crore`
+- Period: `FY24` → `FY2024`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
+
+> ₹81,415Mn Revenue from services
+
+**System reasoning.** INR 8,142.00 crore and INR 8,141.50 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover FY2024 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `8.142e+10` vs `8.1415e+10` |
+| relative difference | `0.0061%` |
+| verdict on that | within rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `1.00006` |
+
+</details>
+
 
 ---
 
@@ -152,82 +152,7 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 Same metric, same subject, same resolved period, and no stated difference in basis, scope or units — yet the figures disagree by more than rounding can explain.
 
-### 1. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `llm`  ·  explained by **period**
-
-**Fact A — Delhivery Limited · PTL freight tonnage**
-
-- Value as printed: `1,517`
-- Normalized: `1,517 tonnes`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 9
-
-> 1,705 1,157 1,517 FY22 FY23 FY24 PTL freight tonnage(2)
-
-**Fact B — Delhivery Limited · PTL freight tonnage**
-
-- Value as printed: `384K Tons`
-- Normalized: `384,000 tonnes`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
-
-> 384K Tons PTL freight tonnage in Q4 FY24
-
-**System reasoning.** While the periods are nested (FY24 contains Q4 FY24), the reported tonnage for the single quarter (384,000 tonnes) is mathematically impossible to reconcile with the total reported for the full fiscal year (1,517 tonnes). Freight tonnage cannot be negative, so the Q4 figure cannot exceed the annual total.
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `CONTAINS` — FY2024 contains Q4 FY2024 |
-| units | `tonnes` ↔ `tonnes` (comparable) |
-| values compared | `1,517` vs `384,000` |
-| relative difference | `99.6049%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.1302%` (from how precisely each figure is written) |
-| ratio A/B | `0.00395052` |
-| hypothesis 1 | the shorter period reports 384,000 tonnes, which exceeds the 1,517 tonnes reported for the longer period containing it -- consistent only if other sub-periods were negative |
-| hypothesis 2 | periods nest: FY2024 contains Q4 FY2024 |
-| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
-
-</details>
-
-### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
-
-**Fact A — WPI · inflation**
-
-- Value as printed: `2.3 per cent`
-- Normalized: `2.30 %`
-- Period: `2024-25` → `FY2025`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 48
-
-> Inflation measured by the wholesale price index (WPI) increased to 2.3 per cent during 2024-25
-
-**Fact B — WPI primary articles · inflation**
-
-- Value as printed: `5.1 per cent`
-- Normalized: `5.10 %`
-- Period: `2024-25` → `FY2025`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 48
-
-> WPI inflation in primary articles (weight of 22.6 per cent in the WPI basket) increased to 5.1 per cent during 2024-25
-
-**System reasoning.** Both sources report this metric for FY2025, with no stated difference in basis, scope or units, yet the figures differ by 54.9% (2.30 % vs 5.10 %).
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover FY2025 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `2.3` vs `5.1` |
-| relative difference | `54.9020%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `2.1739%` (from how precisely each figure is written) |
-| ratio A/B | `0.45098` |
-
-</details>
-
-### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+### 1. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
 
 **Fact A — FPIs · net inflows**
 
@@ -260,6 +185,81 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `1.6129%` (from how precisely each figure is written) |
 | ratio A/B | `3.41935` |
+
+</details>
+
+### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+
+**Fact A — Delhivery Limited · oxygen concentrators imported**
+
+- Value as printed: `35,875`
+- Normalized: `35,875`
+- Period: `June 2021` → `Jun 2021`
+- Qualifiers: `partner=ACT grants`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 70
+
+> We partnered with “ACT grants” and others to import 35,875 oxygen concentrators
+
+**Fact B — Delhivery Limited · oxygen concentrators imported**
+
+- Value as printed: `8,419`
+- Normalized: `8,419`
+- Period: `June 2021` → `Jun 2021`
+- Qualifiers: `partner=Hunger Heroes`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 70
+
+> During the period of April to June 2021, we partnered with Hunger Heroes to import 8,419 oxygen concentrators.
+
+**System reasoning.** Both sources report this metric for Jun 2021, with no stated difference in basis, scope or units, yet the figures differ by 76.5% (35,875 vs 8,419).
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover Jun 2021 |
+| units | `count` ↔ `count` (comparable) |
+| values compared | `35,875` vs `8,419` |
+| relative difference | `76.5324%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `4.26119` |
+| qualifier `partner` | A=`ACT grants` · B=`Hunger Heroes` |
+
+</details>
+
+### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+
+**Fact A — Delhivery Limited · adjusted ebitda**
+
+- Value as printed: `(2,532)`
+- Normalized: `-2,532`
+- Period: `FY21` → `FY2021`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 6
+
+> Adjusted EBITDA (₹ million) and adjusted EBITDA margin (%)* FY20 FY21 FY22 FY23 FY24 Net working capital days 73 47 37 3
+
+**Fact B — Delhivery Limited · adjusted ebitda**
+
+- Value as printed: `(2,258)`
+- Normalized: `-2,258`
+- Period: `FY21` → `FY2021`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 7
+
+> In FY22, when our express parcel volumes more than doubled and part truckload tonnage grew by around 40% on a pro forma basis, our adjusted EBITDA swung from negative ₹2,258 million in FY21 to positive ₹715 million on a pro forma basis.
+
+**System reasoning.** Both sources report this metric for FY2021, with no stated difference in basis, scope or units, yet the figures differ by 10.8% (-2,532 vs -2,258).
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover FY2021 |
+| units | `count` ↔ `count` (comparable) |
+| values compared | `-2,532` vs `-2,258` |
+| relative difference | `10.8215%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `1.12135` |
 
 </details>
 
@@ -349,7 +349,7 @@ The numbers disagree, but a stated difference in period, basis, scope, unit or c
 **Fact A — Delhivery Limited · revenue for services**
 
 - Value as printed: `2,194`
-- Normalized: `INR 2,194.00 crore`
+- Normalized: `2,194`
 - Period: `Q3 FY24` → `Q3 FY2024`
 - Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 17
 
@@ -371,12 +371,12 @@ The numbers disagree, but a stated difference in period, basis, scope, unit or c
 | observation | value |
 |---|---|
 | period relation | `CONTAINED_BY` — Q3 FY2024 falls inside FY2024 |
-| units | `INR` ↔ `INR` (comparable) |
-| values compared | `2.194e+10` vs `8.1415e+10` |
-| relative difference | `73.0516%` |
+| units | `count` ↔ `INR` (comparable) |
+| values compared | `2,194` vs `8.1415e+10` |
+| relative difference | `100.0000%` |
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `0.269484` |
+| ratio A/B | `2.69484e-08` |
 | hypothesis 1 | periods nest: Q3 FY2024 falls inside FY2024 |
 
 </details>
@@ -397,7 +397,7 @@ storage; failures are written to a quarantine table with a reason instead of bei
 | fuzzy grounded | 510 |
 | unresolved period | 634 |
 | unresolved period pct | 20.4 |
-| rule verdicts overturned | 4 |
+| rule verdicts overturned | 2 |
 
 ### Why facts were rejected
 
