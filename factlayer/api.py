@@ -174,7 +174,7 @@ def get_fact(fact_id: str):
 
 
 @app.get("/api/facts/{fact_id}/evidence.png")
-def fact_evidence_image(fact_id: str):
+def fact_evidence_image(fact_id: str, crop: int = 0):
     fact = store.get_fact(fact_id)
     if not fact:
         raise HTTPException(404, "unknown fact")
@@ -189,7 +189,7 @@ def fact_evidence_image(fact_id: str):
     except (TypeError, ValueError):
         rects = []
     with PdfDocument(path) as pdf:
-        png = pdf.render_page_png(fact["page"], rects)
+        png = pdf.render_page_png(fact["page"], rects, crop=bool(crop))
     return Response(png, media_type="image/png",
                     headers={"Cache-Control": "public, max-age=3600"})
 
@@ -328,4 +328,12 @@ def index():
     page = WEB_DIR / "index.html"
     if not page.exists():
         return HTMLResponse("<h1>Fact Knowledge Layer</h1><p>UI not built. API is at /docs.</p>")
-    return HTMLResponse(page.read_text(encoding="utf-8"))
+    html = page.read_text(encoding="utf-8")
+    # Stamp the asset URLs with each file's mtime. Without this the browser keeps
+    # serving a stale app.js after an edit, which is confusing during development
+    # and worse during a demo.
+    for asset in ("app.js", "style.css"):
+        path = WEB_DIR / asset
+        if path.exists():
+            html = html.replace(f"/static/{asset}", f"/static/{asset}?v={int(path.stat().st_mtime)}")
+    return HTMLResponse(html, headers={"Cache-Control": "no-cache"})

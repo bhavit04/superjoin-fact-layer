@@ -365,18 +365,43 @@ class PdfDocument:
         return rects
 
     def render_page_png(
-        self, page_no: int, rects: Iterable[tuple[float, float, float, float]] = (), zoom: float = 2.0
+        self,
+        page_no: int,
+        rects: Iterable[tuple[float, float, float, float]] = (),
+        zoom: float = 2.0,
+        crop: bool = False,
+        margin: float = 26.0,
     ) -> bytes:
-        """Render a page to PNG with the evidence rectangles highlighted."""
+        """Render a page to PNG with the evidence highlighted.
+
+        With ``crop`` set, the image is clipped to the highlighted region plus a
+        margin, so a reader sees the supporting sentence immediately instead of
+        having to find it on a full page.
+        """
         page = self._doc[page_no - 1]
-        for rect in rects or []:
+        rects = [r for r in (rects or []) if r and len(r) == 4]
+        for rect in rects:
             try:
                 annot = page.add_highlight_annot(fitz.Rect(*rect))
                 annot.set_colors(stroke=(1.0, 0.85, 0.2))
                 annot.update(opacity=0.45)
             except Exception:
                 continue
-        pixmap = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom), alpha=False)
+
+        clip = None
+        if crop and rects:
+            page_rect = page.rect
+            x0 = max(page_rect.x0, min(r[0] for r in rects) - margin)
+            y0 = max(page_rect.y0, min(r[1] for r in rects) - margin)
+            x1 = min(page_rect.x1, max(r[2] for r in rects) + margin)
+            y1 = min(page_rect.y1, max(r[3] for r in rects) + margin)
+            # Widen to most of the page width: a highlight fragment on its own
+            # loses the row and column context that makes it readable.
+            x0, x1 = page_rect.x0 + 4, page_rect.x1 - 4
+            if y1 > y0:
+                clip = fitz.Rect(x0, y0, x1, y1)
+
+        pixmap = page.get_pixmap(matrix=fitz.Matrix(zoom, zoom), alpha=False, clip=clip)
         return pixmap.tobytes("png")
 
 

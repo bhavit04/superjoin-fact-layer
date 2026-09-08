@@ -13,6 +13,9 @@ const api = async (path, options) => {
 
 const state = { tab: "cases", pollTimer: null };
 
+// Must match the zoom used when rendering evidence pages server-side.
+const EVIDENCE_ZOOM = 2.0;
+
 /* ---------- rendering helpers ---------- */
 
 function factSide(fact, label) {
@@ -292,14 +295,23 @@ function pollJob(jobId) {
 async function showEvidence(factId) {
   const { fact, relations } = await api(`/api/facts/${factId}`);
   $("#modal-title").textContent = `${fact.metric_raw} = ${fact.value_raw} — ${fact.doc_filename}, page ${fact.page}`;
+  const mode = fact.grounding_mode && fact.grounding_mode !== "verbatim"
+    ? ` · matched as <b>${esc(fact.grounding_mode)}</b>` : "";
   $("#modal-body").innerHTML = `
     <blockquote>${esc(fact.evidence_text)}</blockquote>
     <p class="muted" style="font-size:12.5px">Highlighted below on the actual page. Grounding match:
-      ${(Number(fact.match_ratio ?? 0) * 100).toFixed(0)}%${fact.grounded ? "" : " (below the verification threshold)"}.</p>
-    <img src="/api/facts/${factId}/evidence.png" alt="source page with evidence highlighted">
+      ${(Number(fact.match_ratio ?? 0) * 100).toFixed(0)}%${fact.grounded ? "" : " (below the verification threshold)"}${mode}.</p>
+    ${(fact.bbox || []).length ? `
+      <img id="evidence-img" src="/api/facts/${factId}/evidence.png?crop=1"
+           alt="the highlighted evidence on its source page">
+      <details style="margin-top:12px"><summary>show the whole page</summary>
+        <img style="margin-top:10px" src="/api/facts/${factId}/evidence.png"
+             alt="full source page with evidence highlighted"></details>`
+    : `<img src="/api/facts/${factId}/evidence.png" alt="source page">`}
     ${relations.length ? `<h3 style="margin-top:20px">${relations.length} related fact(s)</h3>
       ${relations.slice(0, 6).map(relationCard).join("")}` : ""}`;
   $("#modal").hidden = false;
+
 }
 
 /* ---------- shell ---------- */
