@@ -149,6 +149,16 @@ def _failures(store: Store) -> dict[str, Any]:
         "SELECT * FROM quarantine WHERE reason = 'evidence_not_found_in_document' "
         "ORDER BY created_at DESC LIMIT 3"
     )
+    table_samples = store.query(
+        "SELECT * FROM quarantine WHERE reason IN "
+        "('table_association_unverifiable', 'value_present_but_quote_unverifiable') "
+        "ORDER BY created_at DESC LIMIT 3"
+    )
+    for row in table_samples:
+        try:
+            row["payload"] = json.loads(row.pop("payload_json") or "{}")
+        except (TypeError, ValueError):
+            row["payload"] = {}
     for row in samples:
         try:
             row["payload"] = json.loads(row.pop("payload_json") or "{}")
@@ -193,6 +203,7 @@ def _failures(store: Store) -> dict[str, Any]:
         },
         "quarantine_reasons": reasons,
         "hallucinated_evidence_samples": samples,
+        "table_grounding_samples": table_samples,
         "fuzzy_grounding_samples": fuzzy,
         "overturned_examples": overturned_examples,
     }

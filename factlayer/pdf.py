@@ -58,6 +58,7 @@ class EvidenceLocation:
     match_ratio: float
     matched_text: str
     verified: bool
+    mode: str = "verbatim"   # verbatim | fuzzy | fragments
 
 
 class PdfDocument:
@@ -67,6 +68,7 @@ class PdfDocument:
         self.path = Path(path)
         self._doc = fitz.open(self.path)
         self._page_text: dict[int, str] = {}
+        self._page_lines: dict[int, list[tuple[str, tuple[float, float, float, float]]]] = {}
 
     def __enter__(self) -> "PdfDocument":
         return self
@@ -225,10 +227,118 @@ class PdfDocument:
         # the best fuzzy match. PDF extraction reorders and hyphenates text often
         # enough that exact matching alone would reject a lot of true evidence.
         ratio, matched = _best_window_match(quote, page_text)
-        if ratio < 0.62:
+        if ratio >= 0.62:
+            rects = self._rects_for(page, matched)
+            return EvidenceLocation(page_no, rects, round(ratio, 3), matched,
+                                    verified=ratio >= 0.80, mode="fuzzy")
+
+        # An ellipsis is the model telling us it skipped text. Those quotes can
+        # still be verified, but only against a single rendered line.
+        if "..." in quote or "\u2026" in quote:
+            row = self._locate_in_row(page_text, quote, page_no)
+            if row is not None:
+                return row
+
+        # Last resort: shingle verification. Charts and wide tables do not extract
+        # in reading order, so a faithful quote off a bar chart ("1,579 1,101 1,429
+        # FY22 FY23 FY24 PTL freight revenue") is real evidence that simply is not
+        # a contiguous span. Models also stitch table cells with ellipses. Rather
+        # than lose those facts, every short word-run of the quote must appear
+        # verbatim somewhere on the page. That is far stricter than matching a bag
+        # of words -- an invented sentence fails because its runs are not there --
+        # but it tolerates reordering.
+        return self._locate_by_shingles(page, page_text, quote, page_no)
+
+    def page_lines(self, page_no: int) -> list[tuple[str, tuple[float, float, float, float]]]:
+        """Text and bounding box of each rendered line, cached per page."""
+        if page_no in self._page_lines:
+            return self._page_lines[page_no]
+        lines: list[tuple[str, tuple[float, float, float, float]]] = []
+        try:
+            data = self._doc[page_no - 1].get_text("dict")
+        except Exception:
+            data = {}
+        for block in data.get("blocks", []):
+            for line in block.get("lines", []):
+                text = normalize_ws("".join(span.get("text", "") for span in line.get("spans", [])))
+                if text:
+                    bbox = line.get("bbox") or (0, 0, 0, 0)
+                    lines.append((text, tuple(round(v, 2) for v in bbox)))
+        self._page_lines[page_no] = lines
+        return lines
+
+    def _locate_in_row(
+        self, page_text: str, quote: str, page_no: int
+    ) -> EvidenceLocation | None:
+        """Verify an ellipsis-stitched quote against a single rendered line.
+
+        Models routinely quote a table row as "Adjusted EBITDA ... 76 ... FY24".
+        Confirming only that each piece appears *somewhere* on the page would be
+        false confidence: the whole claim is that these cells belong together. But
+        a table row is a rendered line, so if every fragment appears in one line,
+        the association is real and checkable. If they are scattered across
+        different lines, the fact is rejected.
+        """
+        fragments = [normalize_ws(f) for f in re.split(r"\.\.\.|…", quote)]
+        fragments = [f for f in fragments if len(f) >= 2]
+        if len(fragments) < 2:
             return None
-        rects = self._rects_for(page, matched)
-        return EvidenceLocation(page_no, rects, round(ratio, 3), matched, verified=ratio >= 0.80)
+        for text, bbox in self.page_lines(page_no):
+            lowered = text.lower()
+            if all(fragment.lower() in lowered for fragment in fragments):
+                return EvidenceLocation(
+                    page_no, [bbox], 0.9, text, verified=True, mode="row",
+                )
+        return None
+
+    def _locate_by_shingles(
+        self, page: "fitz.Page", page_text: str, quote: str, page_no: int
+    ) -> EvidenceLocation | None:
+        """Verify a quote as a set of short contiguous runs rather than one span."""
+        haystack = page_text.lower()
+        # Ellipses are the model's own marker for "I skipped text here".
+        segments = [seg for seg in re.split(r"\.\.\.|…", quote) if seg.strip()]
+        runs: list[str] = []
+        for segment in segments:
+            words = segment.split()
+            if len(words) <= 4:
+                if len(" ".join(words)) >= 6:
+                    runs.append(" ".join(words))
+                continue
+            for i in range(0, len(words), 3):
+                run = " ".join(words[i : i + 3])
+                if len(run) >= 6:
+                    runs.append(run)
+        if len(runs) < 2:
+            return None
+
+        found, covered_words, total_words = [], 0, 0
+        for run in runs:
+            total_words += len(run.split())
+            if run.lower() in haystack:
+                found.append(run)
+                covered_words += len(run.split())
+        if not total_words:
+            return None
+        coverage = covered_words / total_words
+        # Every run must be present. Partial coverage means the model wrote
+        # something the page does not say.
+        if coverage < 0.999:
+            return None
+
+        rects: list[tuple[float, float, float, float]] = []
+        for run in found:
+            try:
+                hits = page.search_for(run, quads=False)
+            except Exception:
+                hits = []
+            if hits:
+                rects.append(tuple(round(v, 2) for v in hits[0]))
+            if len(rects) >= 10:
+                break
+        return EvidenceLocation(
+            page_no, rects, 0.85, quote, verified=True, mode="fragments",
+        )
 
     @staticmethod
     def _rects_for(page: "fitz.Page", quote: str) -> list[tuple[float, float, float, float]]:

@@ -7,7 +7,6 @@ four cases the brief asks for, rather than relying on anything hard-coded.
 """
 from __future__ import annotations
 
-import asyncio
 import json
 import shutil
 import time
@@ -95,7 +94,7 @@ async def upload_documents(background: BackgroundTasks, files: list[UploadFile] 
         saved.append((target, name))
 
     job_id = _new_job([n for _, n in saved])
-    background.add_task(asyncio.create_task, _run_job(job_id, saved))
+    background.add_task(_run_job, job_id, saved)
     return {"job_id": job_id, "files": [n for _, n in saved]}
 
 

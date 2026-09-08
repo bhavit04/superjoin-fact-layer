@@ -63,14 +63,27 @@ def is_anaphoric(name: str | None) -> bool:
     return cleaned in ANAPHORIC
 
 
-def infer_primary_entity(subject_names: list[str]) -> str | None:
-    """Guess a document's own subject: the most frequent non-anaphoric entity.
+def infer_primary_entity(
+    subject_names: list[str], front_matter: str = "", title: str = ""
+) -> str | None:
+    """Guess the entity a document is *about*, to resolve its "the Company" references.
 
-    Frequency is a weak signal on its own, so ties are broken toward longer
-    (more specific) names.
+    Frequency alone is not enough, and gets this wrong in a characteristic way: in
+    a segment-heavy earnings deck the most-mentioned subject is a business line
+    ("Express Parcel"), not the company that owns it. Resolving "the Company" to a
+    segment would then split one entity across documents and silently prevent any
+    cross-document link from forming.
+
+    So frequency is combined with where a name appears. A document names its own
+    subject on the cover and in the opening pages, whereas segments and
+    counterparties turn up later, in the body. Names carrying a legal suffix get a
+    further nudge, because an organisation is a likelier document subject than a
+    product line.
     """
     counts: Counter[str] = Counter()
     display: dict[str, str] = {}
+    had_suffix: dict[str, bool] = {}
+
     for raw in subject_names:
         if not raw or is_anaphoric(raw):
             continue
@@ -78,13 +91,31 @@ def infer_primary_entity(subject_names: list[str]) -> str | None:
         if not key or len(key) < 3:
             continue
         counts[key] += 1
-        # Keep the longest surface form we saw for this key as the display name.
+        tokens = _WS.sub(" ", _PUNCT.sub(" ", raw.lower())).split()
+        if any(t in LEGAL_SUFFIXES for t in tokens):
+            had_suffix[key] = True
         if key not in display or len(raw) > len(display[key]):
             display[key] = raw.strip()
+
     if not counts:
         return None
-    best = max(counts.items(), key=lambda kv: (kv[1], len(kv[0])))
-    return display.get(best[0], best[0])
+
+    front = _WS.sub(" ", _PUNCT.sub(" ", f"{title} {front_matter}".lower()))
+    total = sum(counts.values()) or 1
+
+    def score(key: str) -> float:
+        # Frequency, but saturating: being mentioned 60 times rather than 30 does
+        # not make something twice as likely to be the document's subject.
+        value = (counts[key] / total) ** 0.5
+        if front and key in front:
+            value += 1.5              # named on the cover or in the opening pages
+        if had_suffix.get(key):
+            value += 0.4              # "... Limited" reads as an organisation
+        value += 0.02 * min(len(key.split()), 4)
+        return value
+
+    best = max(counts, key=score)
+    return display.get(best, best)
 
 
 def resolve_subject(raw: str | None, primary_entity: str | None) -> tuple[str, str]:

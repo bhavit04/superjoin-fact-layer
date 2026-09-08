@@ -101,6 +101,7 @@ async def ingest(
     if existing:
         store.delete_document(existing["id"])  # a previous attempt failed; start clean
 
+    doc_id = ""
     pdf = PdfDocument(path)
     try:
         title = pdf.title_guess()
@@ -121,7 +122,10 @@ async def ingest(
 
             # --- resolve the document's own subject --------------------------
             subjects = [f.get("subject") for items in raw_facts.values() for f in items]
-            primary_entity = entities.infer_primary_entity([s for s in subjects if isinstance(s, str)])
+            front_matter = " ".join(pdf.page_text(p) for p in range(1, min(3, pdf.page_count) + 1))
+            primary_entity = entities.infer_primary_entity(
+                [s for s in subjects if isinstance(s, str)], front_matter=front_matter, title=title,
+            )
             if primary_entity:
                 emit("entity", f"primary entity resolved to “{primary_entity}”", doc_id=doc_id)
 
@@ -160,10 +164,14 @@ async def ingest(
              doc_id=doc_id, **{"duration_s": result.duration_s})
         return result
     except Exception as exc:
-        try:
-            store.update_document(doc_id, status="failed", error=str(exc)[:500])  # noqa: F821
-        except Exception:
-            pass
+        # doc_id is empty when the PDF could not be opened or chunked at all, in
+        # which case there is no row to mark failed.
+        if doc_id:
+            try:
+                store.update_document(doc_id, status="failed", error=str(exc)[:500])
+                store.log_event(doc_id, "ingest", "failed", {"error": str(exc)[:500]})
+            except Exception:
+                pass
         raise
     finally:
         pdf.close()

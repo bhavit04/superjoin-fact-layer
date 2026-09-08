@@ -124,7 +124,7 @@ def normalize_fact(
     hint_page = int(hint_page) if isinstance(hint_page, (int, float, str)) and str(hint_page).strip().isdigit() else None
     location = pdf.locate_evidence(evidence, hint_page=hint_page, candidate_pages=chunk.pages)
     if location is None:
-        return None, "evidence_not_found_in_document"
+        return None, _classify_grounding_failure(pdf, chunk, value_raw, metric_raw, hint_page)
 
     qualifiers = _clean_qualifiers(raw.get("qualifiers"))
     period_text, period_source = _pick_period_text(qualifiers, evidence)
@@ -150,6 +150,8 @@ def normalize_fact(
     # A fact whose evidence only fuzzily matched is less trustworthy than the
     # model's own confidence suggests.
     confidence *= 0.6 + 0.4 * location.match_ratio
+    if location.mode == "fragments":
+        confidence *= 0.85
 
     page_label = ""
     try:
@@ -190,11 +192,41 @@ def normalize_fact(
         "page_label": page_label,
         "bbox_json": json.dumps(location.rects),
         "match_ratio": location.match_ratio,
+        "grounding_mode": location.mode,
         "grounded": int(location.verified),
         "confidence": round(confidence, 3),
         "extractor": extractor,
         "created_at": time.time(),
     }, None
+
+
+def _classify_grounding_failure(
+    pdf: PdfDocument, chunk: Chunk, value_raw: str, metric_raw: str, hint_page: int | None
+) -> str:
+    """Say *why* a fact failed to ground, not just that it did.
+
+    The distinction matters. If neither the value nor the metric appears anywhere
+    near the cited page, the model very likely invented the fact. If both appear
+    but the quote is not a verifiable span, the model read a table or chart whose
+    cells do not extract in reading order -- the fact is probably true, and it is
+    the extractor's spatial understanding that failed, not its honesty. Lumping
+    those together would hide a fixable engineering problem behind a scary word.
+    """
+    pages = [p for p in ([hint_page] if hint_page else []) + list(chunk.pages) if p]
+    haystack = " ".join(pdf.page_text(p) for p in dict.fromkeys(pages) if 1 <= p <= pdf.page_count)
+    haystack = normalize_ws(haystack).lower()
+    if not haystack:
+        return "evidence_not_found_in_document"
+
+    value_present = bool(value_raw) and value_raw.strip().lower() in haystack
+    metric_words = [w for w in re.split(r"[^\w]+", metric_raw.lower()) if len(w) > 3]
+    metric_present = bool(metric_words) and all(w in haystack for w in metric_words[:4])
+
+    if value_present and metric_present:
+        return "table_association_unverifiable"
+    if value_present:
+        return "value_present_but_quote_unverifiable"
+    return "evidence_not_found_in_document"
 
 
 # --- credential-free fallback ------------------------------------------------

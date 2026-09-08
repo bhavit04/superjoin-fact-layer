@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS facts (
     page_label       TEXT,
     bbox_json        TEXT DEFAULT '[]',
     match_ratio      REAL,
+    grounding_mode   TEXT DEFAULT 'verbatim',
     grounded         INTEGER DEFAULT 0,
 
     confidence       REAL,
@@ -230,7 +231,7 @@ class Store:
         "value_raw", "value_text", "value_num", "value_low", "value_high", "value_unit",
         "value_kind", "is_range", "is_approximate", "qualifiers_json", "period_label",
         "period_canonical", "period_kind", "period_start", "period_end", "period_is_point",
-        "evidence_text", "page", "page_label", "bbox_json", "match_ratio", "grounded",
+        "evidence_text", "page", "page_label", "bbox_json", "match_ratio", "grounding_mode", "grounded",
         "confidence", "extractor", "created_at",
     ]
 
