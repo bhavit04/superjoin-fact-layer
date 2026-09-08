@@ -20,6 +20,7 @@ sys.path.insert(0, str(ROOT))
 from factlayer.cases import build_cases          # noqa: E402
 from factlayer.config import get_settings        # noqa: E402
 from factlayer.db import Store                   # noqa: E402
+from factlayer.normalize.units import humanize    # noqa: E402
 
 OUT = ROOT / "cases"
 
@@ -28,7 +29,7 @@ def fact_block(fact: dict, label: str) -> str:
     lines = [f"**{label} — {fact['subject_raw']} · {fact['metric_raw']}**", ""]
     lines.append(f"- Value as printed: `{fact['value_raw']}`")
     if fact.get("value_num") is not None:
-        lines.append(f"- Normalized: `{fact['value_num']:,.4g} {fact.get('value_unit') or ''}`".rstrip() + "`"[:0])
+        lines.append(f"- Normalized: `{humanize(fact['value_num'], fact.get('value_unit') or '')}`")
     if fact.get("period_label"):
         resolved = fact.get("period_canonical") or "unresolved"
         lines.append(f"- Period: `{fact['period_label']}` → `{resolved}`")
@@ -54,6 +55,9 @@ def observation_block(detail: dict) -> str:
         add("values compared", f"`{obs.get('value_a'):,.6g}` vs `{obs.get('value_b'):,.6g}`")
         if obs.get("rel_diff") is not None:
             add("relative difference", f"`{obs['rel_diff'] * 100:.4f}%`")
+        if obs.get("within_tolerance") is not None:
+            add("verdict on that", "within rounding tolerance" if obs["within_tolerance"]
+                else "**outside** rounding tolerance")
         add("rounding tolerance", f"`{obs.get('tolerance', 0) * 100:.4f}%` (from how precisely each figure is written)")
         if obs.get("ratio") is not None:
             add("ratio A/B", f"`{obs['ratio']:.6g}`")

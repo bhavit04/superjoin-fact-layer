@@ -253,10 +253,21 @@ def humanize(value: float | None, unit: str) -> str:
     if unit in {"%", "pp", "bps", "x"}:
         return f"{value:,.2f}{'' if unit == 'x' else ''} {unit}".strip()
     magnitude = abs(value)
-    if unit in {"INR"} and magnitude >= 1e7:
-        return f"{unit} {value / 1e7:,.2f} crore"
+    # Currencies read naturally with the code in front ("INR 814.20 crore");
+    # everything else reads better with the unit trailing ("1,517 tonnes").
+    is_currency = unit in {"INR", "USD", "EUR", "GBP", "JPY"}
+    if unit == "INR" and magnitude >= 1e7:
+        return f"INR {value / 1e7:,.2f} crore"
+
     if magnitude >= 1e9:
-        return f"{unit} {value / 1e9:,.2f} bn".strip()
-    if magnitude >= 1e6:
-        return f"{unit} {value / 1e6:,.2f} mn".strip()
-    return f"{value:,.2f} {unit}".strip()
+        number = f"{value / 1e9:,.2f} bn"
+    elif magnitude >= 1e6:
+        number = f"{value / 1e6:,.2f} mn"
+    elif magnitude >= 1e3:
+        number = f"{value:,.0f}"
+    else:
+        number = f"{value:,.2f}"
+
+    if not unit or unit == "count":
+        return number
+    return f"{unit} {number}" if is_currency else f"{number} {unit}"
