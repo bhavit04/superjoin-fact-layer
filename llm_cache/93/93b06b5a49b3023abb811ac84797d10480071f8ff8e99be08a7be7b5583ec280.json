@@ -1,0 +1,12 @@
+{
+ "key": "93b06b5a49b3023abb811ac84797d10480071f8ff8e99be08a7be7b5583ec280",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.98,\n  \"dimension\": \"basis\",\n  \"explanation\": \"Fact A measures year-over-year (YoY) growth, whereas Fact B measures quarter-over-quarter (QoQ) growth for the same period.\",\n  \"reconciling_evidence\": \"YoY: 20.8% / QoQ: 8.6%\"\n}\n```",
+ "created_at": 1788893885.331578,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1065,
+  "output": 107
+ }
+}

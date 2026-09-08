@@ -86,23 +86,23 @@ either way; only the transport differs.
 <!--STATS-->
 | document | pages | facts | grounded |
 |---|---:|---:|---:|
-| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | 79% |
 | `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 964 | 93% |
 | `01-delhivery-prospectus-2022-excerpt.pdf` | 100 | 712 | 88% |
 | `01-india-economic-survey-2024-25-excerpt.pdf` | 89 | 329 | 100% |
 | `02-rbi-annual-report-2024-25-excerpt.pdf` | 100 | 622 | 94% |
 | `03-imf-india-2025-article-iv-excerpt.pdf` | 95 | 367 | 82% |
+| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | 79% |
 | **6 documents** | **511** | **3,112** | **91%** |
 
 | relationship | count | |
 |---|---:|---|
-| **CORROBORATES** | 242 | the same claim, agreeing |
-| **RECONCILED** | 453 | disagreeing, but a stated difference in context explains it |
-| **CONTRADICTS** | 24 | disagreeing with nothing to explain it |
-| **RELATED** | 2,064 | same metric, different periods — a time series |
-| _of which cross-document_ | 634 | |
+| **CORROBORATES** | 248 | the same claim, agreeing |
+| **RECONCILED** | 451 | disagreeing, but a stated difference in context explains it |
+| **CONTRADICTS** | 26 | disagreeing with nothing to explain it |
+| **RELATED** | 2,058 | same metric, different periods — a time series |
+| _of which cross-document_ | 629 | |
 
-The fact schema grew to **1,322 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **97** proposed facts were rejected for failing to ground.
+The fact schema grew to **1,322 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **130** proposed facts were rejected for failing to ground.
 <!--/STATS-->
 
 Full output, with evidence and reasoning for every example, is in

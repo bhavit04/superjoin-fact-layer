@@ -1,0 +1,12 @@
+{
+ "key": "35b2b2ccc1a9236433be7bcf6a0c3cde1396bd1e00442054ca94eab5a2cbd413",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A represents the full fiscal year (FY23) EBITDA, while Fact B represents only the fourth quarter (Q4 FY23). The full-year loss of ₹452 Cr is consistent with a profitable fourth quarter of ₹13 Cr, implying significant losses in the preceding three quarters.\",\n  \"reconciling_evidence\": \"FY23: ₹(452) Cr / (6.3%) ... Q4 FY23: ₹13 Cr / 0.7%\"\n}",
+ "created_at": 1788893834.9096708,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1116,
+  "output": 145
+ }
+}
