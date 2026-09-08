@@ -31,6 +31,7 @@ from dataclasses import dataclass, field, asdict
 from typing import Any
 
 from .llm import LLMClient
+from .pdf import normalize_ws
 from .normalize import metrics, periods, units
 from .prompts import ADJUDICATE_SYSTEM
 
@@ -96,6 +97,8 @@ class Observation:
     period_note: str = ""
 
     weak_attribution: bool = False
+    shared_evidence: bool = False
+    sign_convention: bool = False
     text_a: str = ""
     text_b: str = ""
     text_equal: bool | None = None
@@ -249,6 +252,19 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
     # shared but the claims are not: "number of members = 3" against "member =
     # Suvir Suren Sujan" is not a disagreement about the same thing.
     obs.kind_mismatch = (value_a.number is None) != (value_b.number is None)
+
+    # Two facts quoting the same span are two readings of one statement, not two
+    # sources. "we reduced net working capital days from 38 to 31" yields facts
+    # for 38 and for 31, and comparing them reports the sentence as contradicting
+    # itself. The same applies to a table row read once per column.
+    ev_a = normalize_ws(fact_a.get("evidence_text") or "").lower()
+    ev_b = normalize_ws(fact_b.get("evidence_text") or "").lower()
+    if ev_a and ev_b and fact_a.get("doc_id") == fact_b.get("doc_id"):
+        obs.shared_evidence = (
+            ev_a == ev_b
+            or (len(ev_a) > 40 and len(ev_b) > 40 and (ev_a in ev_b or ev_b in ev_a))
+            or SequenceMatcher(None, ev_a[:220], ev_b[:220], autojunk=False).ratio() >= 0.90
+        )
     # Either side's evidence failing to mention what it measures means the metric
     # was attributed from context, and the pair cannot support a conflict.
     obs.weak_attribution = min(
@@ -279,6 +295,13 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
             obs.tolerance = max(obs.tolerance, 0.05)
         if obs.rel_diff is not None:
             obs.within_tolerance = obs.rel_diff <= obs.tolerance
+
+        # Equal magnitude, opposite sign: a loss shown as "(17,833.04)" in a table
+        # and described in prose as "restated losses of ₹17,833.04 million" is one
+        # figure under two sign conventions, not two claims about a quantity.
+        if a_val and b_val and a_val * b_val < 0:
+            magnitude_gap = abs(abs(a_val) - abs(b_val)) / max(abs(a_val), abs(b_val))
+            obs.sign_convention = magnitude_gap <= max(obs.tolerance, 0.01)
 
         # A stated range that brackets the other figure is agreement, not conflict.
         for ranged, point in ((value_a, b_val), (value_b, a_val)):
@@ -340,6 +363,25 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
 
 def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
     """Settle the pair from the observations alone, or mark it for adjudication."""
+    if obs.sign_convention:
+        return Verdict(
+            RECONCILED, 0.7, "deterministic",
+            f"The two figures have the same magnitude but opposite signs "
+            f"({units.humanize(obs.value_a, obs.units_a)} and {units.humanize(obs.value_b, obs.units_b)}). "
+            "One source states the amount in accounting notation and the other describes it in "
+            "prose, so this is a sign convention rather than a disagreement.",
+            dimension="sign convention",
+        )
+
+    if obs.shared_evidence:
+        return Verdict(
+            RELATED, 0.3, "deterministic",
+            "Both facts were read from the same span of text, so they are two values drawn from "
+            "one statement -- such as a change from one figure to another, or two columns of a "
+            "single table row -- rather than two sources making competing claims.",
+            dimension="same evidence",
+        )
+
     if not obs.derivative_match:
         return Verdict(
             RELATED, 0.3, "deterministic",
@@ -429,11 +471,16 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
                 dimension=dimension, needs_llm=True,
             )
         if obs.hypotheses:
+            # When the ratio is itself the explanation, this is arithmetic rather
+            # than a judgement call. Escalating it invited the adjudicator to
+            # overturn a correct reconciliation on reasoning it is worse at than
+            # the calculation already performed.
+            scale_explained = any("factor of 10" in h or "scale" in h for h in obs.hypotheses)
             return Verdict(
-                RECONCILED, 0.55, "deterministic",
+                RECONCILED, 0.6 if scale_explained else 0.55, "deterministic",
                 f"The figures differ by {_pct(obs.rel_diff)} for {obs.period_a}; "
                 f"{obs.hypotheses[0]}.",
-                dimension="unit", needs_llm=True,
+                dimension="unit", needs_llm=not scale_explained,
             )
         if obs.weak_attribution:
             return Verdict(

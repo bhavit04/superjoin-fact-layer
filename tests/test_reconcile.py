@@ -327,3 +327,52 @@ def test_well_attributed_facts_can_still_contradict():
     verdict, obs = decide(a, b)
     assert obs.weak_attribution is False
     assert verdict.kind == CONTRADICTS
+
+
+def test_two_values_from_one_sentence_are_not_two_sources():
+    """'we reduced net working capital days from 38 to 31' produced a fact for 38
+    and a fact for 31, and the system reported the sentence as contradicting
+    itself."""
+    span = "In FY24, we shrunk our receivables days by 11 days, reducing our net working capital cycle from 38 to 31 days"
+    a = make_fact(id="a", metric_raw="net working capital cycle", metric_cluster="capit cycl net work",
+                  value_raw="31", value_num=31.0, value_unit="days", value_kind="duration",
+                  evidence_text=span)
+    b = make_fact(id="b", metric_raw="net working capital cycle", metric_cluster="capit cycl net work",
+                  value_raw="38", value_num=38.0, value_unit="days", value_kind="duration",
+                  evidence_text=span)
+    verdict, obs = decide(a, b)
+    assert obs.shared_evidence is True
+    assert verdict.kind == RELATED
+
+
+def test_facts_from_different_documents_are_never_treated_as_one_span():
+    """The guard must not silence genuine cross-document disagreement."""
+    a = make_fact(id="a", value_num=8_142_000_000.0, evidence_text="Revenue was 8,142")
+    b = make_fact(id="b", doc_id="doc_b", value_raw="9,010", value_num=9_010_000_000.0,
+                  evidence_text="Revenue was 8,142")
+    verdict, obs = decide(a, b)
+    assert obs.shared_evidence is False
+    assert verdict.kind == CONTRADICTS
+
+
+def test_a_loss_in_brackets_and_the_same_loss_in_prose_agree():
+    """'(₹17,833.04) million' in a table and 'restated losses of ₹17,833.04
+    million' in prose are one figure under two sign conventions."""
+    table = make_fact(id="a", metric_raw="restated loss for the year",
+                      metric_cluster="loss restat year", value_raw="(₹17,833.04) million",
+                      value_num=-17_833_040_000.0, evidence_text="Restated loss for the year (17,833.04)")
+    prose = make_fact(id="b", metric_raw="restated loss for the year",
+                      metric_cluster="loss restat year", value_raw="₹17,833.04 million",
+                      value_num=17_833_040_000.0,
+                      evidence_text="We incurred restated losses for the year of ₹17,833.04 million")
+    verdict, obs = decide(table, prose)
+    assert obs.sign_convention is True
+    assert verdict.kind == RECONCILED
+    assert verdict.dimension == "sign convention"
+
+
+def test_genuinely_different_magnitudes_still_conflict():
+    a = make_fact(id="a", value_num=8_142_000_000.0, evidence_text="Revenue was 8,142")
+    b = make_fact(id="b", doc_id="doc_b", value_raw="-9,010", value_num=-9_010_000_000.0,
+                  evidence_text="Revenue was (9,010)")
+    assert decide(a, b)[0].kind != CORROBORATES
