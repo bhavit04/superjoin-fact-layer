@@ -1,4 +1,4 @@
-.PHONY: help install demo ingest serve test cases stats reset clean
+.PHONY: help install demo ingest serve test cases stats verify export-cases reset clean
 
 VENV ?= .venv
 PY   := $(VENV)/bin/python
@@ -11,6 +11,7 @@ help:
 	@echo "make ingest    ingest the starter corpus using your configured provider"
 	@echo "make test      run the test suite (no API key needed)"
 	@echo "make cases     print the four required cases"
+	@echo "make verify    check the submission is complete (exits non-zero if not)"
 	@echo "make reset     delete the database"
 
 install:
@@ -42,6 +43,9 @@ stats:
 
 export-cases:
 	$(PY) scripts/export_cases.py
+
+verify:
+	$(PY) scripts/verify_submission.py
 
 reset:
 	@$(PY) -m factlayer.cli reset || true
