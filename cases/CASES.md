@@ -22,10 +22,10 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 | facts grounded | 2,833 |
 | relations | 2,685 |
 | relations cross doc | 598 |
-| relations · CONTRADICTS | 11 |
+| relations · CONTRADICTS | 10 |
 | relations · CORROBORATES | 167 |
-| relations · RECONCILED | 328 |
-| relations · RELATED | 2,179 |
+| relations · RECONCILED | 326 |
+| relations · RELATED | 2,182 |
 | quarantined | 155 |
 | distinct metrics | 1,322 |
 | distinct qualifiers | 107 |
@@ -154,47 +154,11 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 ### 1. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
 
-**Fact A — FPIs · net inflows**
-
-- Value as printed: `USD 10.6 billion`
-- Normalized: `USD 10.60 bn`
-- Period: `December 2024` → `Dec 2024`
-- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 68
-
-> t FPI inflows97 into India slowed to USD 10.6 billion from April to December 2024 from USD 31.7 billi
-
-**Fact B — FPIs · net inflows**
-
-- Value as printed: `USD 3.1 billion`
-- Normalized: `USD 3.10 bn`
-- Period: `December 2024` → `Dec 2024`
-- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 68
-
-> with net inflows amounting to USD 3.1 billion in December 2024.
-
-**System reasoning.** Both sources report this metric for Dec 2024, with no stated difference in basis, scope or units, yet the figures differ by 70.8% (USD 10.60 bn vs USD 3.10 bn).
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover Dec 2024 |
-| units | `USD` ↔ `USD` (comparable) |
-| values compared | `1.06e+10` vs `3.1e+09` |
-| relative difference | `70.7547%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `1.6129%` (from how precisely each figure is written) |
-| ratio A/B | `3.41935` |
-
-</details>
-
-### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
-
 **Fact A — Delhivery Limited · oxygen concentrators imported**
 
 - Value as printed: `35,875`
 - Normalized: `35,875`
-- Period: `June 2021` → `Jun 2021`
+- Period: `April to June 2021` → `Apr 2021 – Jun 2021`
 - Qualifiers: `partner=ACT grants`
 - Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 70
 
@@ -204,19 +168,19 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 - Value as printed: `8,419`
 - Normalized: `8,419`
-- Period: `June 2021` → `Jun 2021`
+- Period: `April to June 2021` → `Apr 2021 – Jun 2021`
 - Qualifiers: `partner=Hunger Heroes`
 - Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 70
 
 > During the period of April to June 2021, we partnered with Hunger Heroes to import 8,419 oxygen concentrators.
 
-**System reasoning.** Both sources report this metric for Jun 2021, with no stated difference in basis, scope or units, yet the figures differ by 76.5% (35,875 vs 8,419).
+**System reasoning.** Both sources report this metric for Apr 2021 – Jun 2021, with no stated difference in basis, scope or units, yet the figures differ by 76.5% (35,875 vs 8,419).
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `EQUAL` — both cover Jun 2021 |
+| period relation | `EQUAL` — both cover Apr 2021 – Jun 2021 |
 | units | `count` ↔ `count` (comparable) |
 | values compared | `35,875` vs `8,419` |
 | relative difference | `76.5324%` |
@@ -227,7 +191,7 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 </details>
 
-### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
 
 **Fact A — Delhivery Limited · adjusted ebitda**
 
@@ -260,6 +224,42 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
 | ratio A/B | `1.12135` |
+
+</details>
+
+### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+
+**Fact A — Spoton · Active Customers**
+
+- Value as printed: `5,533`
+- Normalized: `5,533`
+- Period: `period ended December 31, 2021` → `12M to 2021-12-31`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 59
+
+> In addition, Spoton offers PTL freight services to 5,533 Active Customers across industry verticals.
+
+**Fact B — Spoton · number of active customers**
+
+- Value as printed: `5,541`
+- Normalized: `5,541`
+- Period: `2021` → `2021`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 45
+
+> No. of Active Customers 5,234 5,541 (1) Includes permanent
+
+**System reasoning.** Both sources report this metric for 12M to 2021-12-31, with no stated difference in basis, scope or units, yet the figures differ by 0.1% (5,533 vs 5,541).
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover 12M to 2021-12-31 |
+| units | `count` ↔ `count` (comparable) |
+| values compared | `5,533` vs `5,541` |
+| relative difference | `0.1444%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `0.998556` |
 
 </details>
 
@@ -395,9 +395,9 @@ storage; failures are written to a quarantine table with a reason instead of bei
 | quarantined | 155 |
 | ungrounded stored | 279 |
 | fuzzy grounded | 510 |
-| unresolved period | 634 |
-| unresolved period pct | 20.4 |
-| rule verdicts overturned | 2 |
+| unresolved period | 647 |
+| unresolved period pct | 20.8 |
+| rule verdicts overturned | 0 |
 
 ### Why facts were rejected
 
@@ -406,82 +406,3 @@ storage; failures are written to a quarantine table with a reason instead of bei
 | `table_association_unverifiable` | 130 |
 | `evidence_too_short` | 24 |
 | `value_present_but_quote_unverifiable` | 1 |
-
-### Where the adjudicator overturned the deterministic verdict
-
-The most useful place to look for reasoning errors on either side.
-
-### 1. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **period**
-
-**Fact A — Global economy · growth rate**
-
-- Value as printed: `3.3 per cent`
-- Normalized: `3.30 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 7
-
-> global growth at 3.3 per cent in 2024
-
-**Fact B — Global economy · growth rate**
-
-- Value as printed: `3.5 per cent`
-- Normalized: `3.50 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 7
-
-> global growth at 3.3 per cent in 2024 (3.5 per cent a year ago)
-
-**System reasoning.** Fact A refers to the 2024 growth projection. Fact B clarifies that the 3.5 per cent figure refers to the growth rate from 'a year ago' (2023), not 2024. The document is consistent; the extraction for Fact B misattributed the prior-year figure to the current year. Supporting words: “3.5 per cent a year ago”
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover 2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `3.3` vs `3.5` |
-| relative difference | `5.7143%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `1.5152%` (from how precisely each figure is written) |
-| ratio A/B | `0.942857` |
-| rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
-
-</details>
-
-### 2. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **period**
-
-**Fact A — Global economy · GDP growth**
-
-- Value as printed: `3.5 per cent`
-- Normalized: `3.50 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 22
-
-> Global GDP grew by 3.3 per cent in 2024 (3.5 per cent a year ago)
-
-**Fact B — Global economy · GDP growth**
-
-- Value as printed: `3.3 per cent`
-- Normalized: `3.30 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 22
-
-> Global GDP grew by 3.3 per cent in 2024
-
-**System reasoning.** Fact A reports 3.5% as the growth rate for 'a year ago' (2023), while Fact B correctly identifies 3.3% as the growth rate for 2024. The document text in Fact A clarifies that the 3.5% figure refers to the prior year, not 2024. Supporting words: “Fact A: "3.5 per cent a year ago"; Fact B: "Global GDP grew by 3.3 per cent in 2024"”
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover 2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `3.5` vs `3.3` |
-| relative difference | `5.7143%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `1.5152%` (from how precisely each figure is written) |
-| ratio A/B | `1.06061` |
-| rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
-
-</details>
-

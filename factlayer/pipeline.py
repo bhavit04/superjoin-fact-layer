@@ -230,20 +230,26 @@ def renormalize(store: Store, progress: ProgressFn | None = None) -> dict[str, i
                 fy_start = None
 
         value = units.parse_value(fact.get("value_raw") or "", unit_hint=qualifiers.get("unit_hint"))
-        period = periods.parse_period(fact.get("period_label") or "", fy_start)
+        # Re-parse from the period text the document actually gave, not from the
+        # span a previous parser matched inside it: "April to December 2024" was
+        # stored with the label "December 2024", and re-reading the label could
+        # never recover the nine months the document meant.
+        period_text = qualifiers.get("period") or fact.get("period_label") or ""
+        period = periods.parse_period(period_text, fy_start)
         if (value.number != fact.get("value_num")) or (period.start != fact.get("period_start")):
             changed += 1
         updates.append((
             value.number, value.low, value.high, value.unit or fact.get("value_unit"),
             value.kind or fact.get("value_kind"), int(value.is_range), int(value.is_approximate),
             period.canonical or fact.get("period_canonical"), period.kind or fact.get("period_kind"),
-            period.start, period.end, int(period.is_point), fact["id"],
+            period.start, period.end, int(period.is_point),
+            period.label or fact.get("period_label"), fact["id"],
         ))
 
     store.executemany(
         "UPDATE facts SET value_num=?, value_low=?, value_high=?, value_unit=?, value_kind=?, "
         "is_range=?, is_approximate=?, period_canonical=?, period_kind=?, period_start=?, "
-        "period_end=?, period_is_point=? WHERE id=?", updates)
+        "period_end=?, period_is_point=?, period_label=? WHERE id=?", updates)
     if progress:
         progress("renormalize", f"re-parsed {len(facts)} facts, {changed} changed", {})
     return {"facts": len(facts), "changed": changed}
