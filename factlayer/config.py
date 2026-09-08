@@ -76,9 +76,15 @@ class Settings:
     # When true, never call a live API; only replay from the on-disk cache.
     offline: bool = field(default_factory=lambda: os.getenv("FACTLAYER_OFFLINE", "").lower() in {"1", "true", "yes"})
 
+    # The regex extractor is a last resort for running with no credential at all.
+    # It must never stand in for a missing cache entry during an offline replay,
+    # because that would present guessed facts as reproduced ones.
+    allow_heuristic_fallback: bool = True
+
     def __post_init__(self) -> None:
         if self.provider == "replay":
             self.offline = True
+            self.allow_heuristic_fallback = False
         if not self.model:
             self.model = DEFAULT_MODELS.get(self.provider, DEFAULT_MODELS["gemini"])
         if not self.fallback_models and self.provider == "gemini":

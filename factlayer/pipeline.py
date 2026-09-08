@@ -186,6 +186,19 @@ async def _extract_all(
     done = 0
     total = len(chunks)
 
+    allow_heuristic = getattr(client.settings, "allow_heuristic_fallback", True)
+
+    def _degraded(chunk) -> list[dict]:
+        if not allow_heuristic:
+            emit("warn", f"no cached response for chunk {chunk.ordinal} "
+                         f"(pages {chunk.page_start}-{chunk.page_end}); skipping")
+            result.notes.append(
+                f"Chunk {chunk.ordinal} had no cached response and was skipped "
+                "(replay mode does not substitute heuristic facts)."
+            )
+            return []
+        return [{**f, "_extractor": "heuristic"} for f in heuristic_extract(chunk)]
+
     async def one(chunk) -> tuple[int, list[dict]]:
         nonlocal done
         try:
@@ -193,9 +206,9 @@ async def _extract_all(
             for fact in facts:
                 fact["_extractor"] = "llm"
             if not facts and not client.available:
-                facts = [{**f, "_extractor": "heuristic"} for f in heuristic_extract(chunk)]
+                facts = _degraded(chunk)
         except LLMUnavailable:
-            facts = [{**f, "_extractor": "heuristic"} for f in heuristic_extract(chunk)]
+            facts = _degraded(chunk)
         except Exception as exc:
             emit("warn", f"chunk {chunk.ordinal} (pages {chunk.page_start}-{chunk.page_end}) failed: {exc}")
             result.notes.append(f"Chunk {chunk.ordinal} failed during extraction: {exc}")
