@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fact Knowledge Layer</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🔗</text></svg>">
+</head>
+<body>
+  <header>
+    <div class="hbar">
+      <h1 class="brand">Fact Knowledge Layer <span>— grounded facts, compared across documents</span></h1>
+      <div class="pills" id="pills"></div>
+    </div>
+    <nav role="tablist">
+      <button data-tab="cases"     aria-selected="true">Four cases</button>
+      <button data-tab="relations" aria-selected="false">Relations</button>
+      <button data-tab="facts"     aria-selected="false">Facts</button>
+      <button data-tab="schema"    aria-selected="false">Schema</button>
+      <button data-tab="failures"  aria-selected="false">Failures</button>
+      <button data-tab="documents" aria-selected="false">Documents &amp; upload</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="panel" id="panel-cases"></section>
+
+    <section class="panel" id="panel-relations" hidden>
+      <h2>Relations</h2>
+      <p class="lede">Every link carries the reasoning that produced it, and the mechanical observations that
+        reasoning rests on. Deterministic rules settle most pairs; only the ambiguous ones are sent to a model.</p>
+      <div class="controls">
+        <select id="rel-kind">
+          <option value="">all kinds</option>
+          <option value="CONTRADICTS">contradicts</option>
+          <option value="RECONCILED">reconciled by context</option>
+          <option value="CORROBORATES">corroborates</option>
+          <option value="RELATED">related</option>
+        </select>
+        <select id="rel-cross">
+          <option value="">any scope</option>
+          <option value="1">cross-document only</option>
+        </select>
+        <input type="search" id="rel-q" placeholder="search metric or reasoning…">
+        <span class="meta" id="rel-count"></span>
+      </div>
+      <div id="rel-list"></div>
+    </section>
+
+    <section class="panel" id="panel-facts" hidden>
+      <h2>Facts</h2>
+      <p class="lede">Every row is a claim tied to a verbatim span in a source PDF. Click any row to see it
+        highlighted on the actual page.</p>
+      <div class="controls">
+        <input type="search" id="fact-q" placeholder="search subject, metric, value or evidence…">
+        <select id="fact-doc"><option value="">all documents</option></select>
+        <select id="fact-type">
+          <option value="">all types</option>
+          <option value="numeric">numeric</option>
+          <option value="categorical">categorical</option>
+          <option value="temporal">temporal</option>
+          <option value="textual">textual</option>
+        </select>
+        <span class="meta" id="fact-count"></span>
+      </div>
+      <div id="fact-list"></div>
+    </section>
+
+    <section class="panel" id="panel-schema" hidden></section>
+    <section class="panel" id="panel-failures" hidden></section>
+
+    <section class="panel" id="panel-documents" hidden>
+      <h2>Documents</h2>
+      <p class="lede">Drop in any PDF. Ingestion is incremental: a new document is linked against everything already
+        stored, and existing facts and relations are never recomputed. Re-uploading identical content is a no-op.</p>
+      <div class="drop" id="drop">
+        <p>Drop PDFs here, or</p>
+        <button class="btn primary" id="pick">Choose files</button>
+        <input type="file" id="file-input" accept="application/pdf" multiple hidden>
+      </div>
+      <div class="log" id="upload-log"><div><span class="t"></span><span class="stage">idle</span><span>Waiting for a document.</span></div></div>
+      <div id="doc-list"></div>
+    </section>
+  </main>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-inner">
+      <div class="modal-head">
+        <h3 id="modal-title"></h3>
+        <button class="btn" id="modal-close">close</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
