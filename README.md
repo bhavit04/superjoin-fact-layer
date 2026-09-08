@@ -59,7 +59,7 @@ Open <http://127.0.0.1:8000> and drop PDFs onto the page. Or use the CLI:
 factlayer ingest path/to/*.pdf     # incremental: links against what is already stored
 factlayer cases                    # print the four cases
 factlayer stats                    # corpus statistics
-pytest -q                          # 48 tests, no API key needed
+pytest -q                          # 55 tests, no API key needed
 ```
 
 Set `FACTLAYER_PROVIDER` to `gemini`, `anthropic`, or `openai`. The code is the same
@@ -207,6 +207,29 @@ Deterministic rules then settle most pairs:
 | a level versus its growth rate / margin / share | **RELATED** — different claims |
 | **same period, same scope, no explanation, values differ** | **CONTRADICTS** |
 
+**Before any of that runs, the pair has to earn a comparison.** Two facts are only
+compared when a model has explicitly clustered their metric names, or the names are
+token-for-token equivalent after stemming. Plain similarity is not enough, and this
+is the single most consequential rule in the system. An earlier version compared
+anything scoring above a threshold, and produced this:
+
+```
+net cash from / (used in) OPERATING activities   =  (30)     FY23
+net cash from / (used in) INVESTING activities   =  (3,411)  FY23
+net cash from / (used in) FINANCING activities   =   3,538   FY23
+```
+
+Five of six tokens shared, similarity 0.67 — and three unrelated line items, each
+pair reported as a confident, fully-evidenced, completely false contradiction. One
+document alone produced 33 of them. Under the equality rule it produces none, which
+for a single source is the right answer.
+
+The cost is real: synonyms whose words differ ("CPI inflation" / "consumer price
+inflation") now depend entirely on the clustering pass, and some true links are
+lost when it does not fire. That trade is deliberate. A missed link is invisible
+and recoverable; an invented contradiction discredits every other claim the system
+makes.
+
 Only pairs the rules cannot settle go to a model, and they arrive with the
 observations attached, so it is arbitrating a judgement rather than doing arithmetic
 it is bad at. Every relation records which path produced it (`deterministic`,
@@ -272,6 +295,14 @@ throttled ingest resumable.
 that are not in the documents. The clustering prompt and the lexical fallback
 threshold both bias hard toward leaving names separate.
 
+**Pacing rather than retrying.** Free-tier quotas are metered per model and per day,
+and a rejected request still consumes budget — so retrying into a limit makes things
+strictly worse. Requests are paced by a token bucket below the limit; three
+consecutive 429s on a model are treated as exhaustion and the client rotates to the
+next model in the chain; when all are spent a breaker fails fast instead of making
+every remaining call pay for six pointless retries. Because responses are cached by
+prompt, an interrupted run resumes rather than restarts.
+
 ### AI tools used
 
 Built with **Claude Code** (Opus 5) — architecture, implementation, and the test
@@ -280,8 +311,10 @@ also wrote: a float-keyed lookup table that silently dropped entries because
 `10_000_000/1_000_000 == 10` collided with an existing key, and a currency mismatch
 that fell through to the text-comparison branch and read as a contradiction.
 
-The runtime system uses **Gemini** (`gemini-3.6-flash`) by default, behind a
-provider-agnostic interface that also speaks Anthropic and OpenAI.
+The runtime system uses **Gemini** (`gemini-3.1-flash-lite`) by default, behind a
+provider-agnostic interface that also speaks Anthropic and OpenAI. That model was
+not the first choice — it was picked after measuring: on the same chunk it extracted
+more facts than the larger `gemini-3.6-flash` (46 against 37) in a third of the time.
 
 ---
 
@@ -313,6 +346,16 @@ Written honestly; several of these are visible in the "Failures" tab of the UI.
   but should not be read as a probability.
 - **Single-hop only.** If A corroborates B and B contradicts C, nothing notices that A
   and C are in tension.
+- **Recall depends on the clustering pass.** Because comparison requires metric-name
+  equality or an explicit cluster, a metric the clustering pass fails to merge simply
+  never gets compared. That failure is silent — there is no signal distinguishing
+  "these documents agree on nothing" from "the vocabulary never joined them up".
+- **Segments sometimes land in the subject.** The extractor occasionally records a
+  business segment ("Express Parcel") as the fact's subject rather than as
+  `qualifiers.scope`. Those facts then cannot link to another document that attributes
+  the same quantity to the parent company. The fix is a prompt change, deliberately
+  not made late in the build because it would invalidate the response cache the
+  offline demo depends on.
 
 **What I would build next, in order**
 
