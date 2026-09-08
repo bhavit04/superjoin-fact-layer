@@ -12,3 +12,5 @@ assignment.pdf
 .DS_Store
 build/frames/
 build/stage/
+build/rec/
+build/work/
