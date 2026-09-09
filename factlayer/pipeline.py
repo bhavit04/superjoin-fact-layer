@@ -105,6 +105,7 @@ async def ingest(
     pdf = PdfDocument(path)
     try:
         title = pdf.title_guess()
+        text_layer = pdf.text_layer_report()
         chunks = pdf.chunks(settings.pages_per_chunk, settings.chunk_char_budget)
         doc_id = store.insert_document(
             sha256=digest, filename=filename, title=title, n_pages=pdf.page_count,
@@ -113,6 +114,30 @@ async def ingest(
         result = IngestResult(doc_id=doc_id, filename=filename, title=title,
                               pages=pdf.page_count, chunks=len(chunks))
         emit("start", f"{filename}: {pdf.page_count} pages, {len(chunks)} chunks", doc_id=doc_id)
+
+        if not text_layer["has_text_layer"]:
+            detail = (
+                f"{text_layer['chars_per_page']:.0f} characters per page across the first "
+                f"{text_layer['pages_sampled']}"
+            )
+            note = (
+                f"This PDF carries no extractable text ({detail}), so nothing can be read from "
+                "it. It appears to be a scan: the pages contain images but no text layer. "
+                "Running it through OCR first would make it ingestible — this system reads a "
+                "PDF's text layer and does not perform OCR itself."
+                if text_layer["looks_scanned"] else
+                f"This PDF carries almost no extractable text ({detail}). If it is a scanned "
+                "document it needs OCR first; if it is genuinely near-empty there is nothing "
+                "to extract."
+            )
+            emit("warn", "no text layer — this document needs OCR before it can be read",
+                 doc_id=doc_id, **text_layer)
+            result.notes.append(note)
+            store.update_document(doc_id, status="ready", duration_s=time.time() - started,
+                                  meta_json=json.dumps({"text_layer": text_layer}))
+            store.log_event(doc_id, "ingest", "no text layer", text_layer)
+            result.duration_s = round(time.time() - started, 2)
+            return result
 
         async with LLMClient(settings) as client:
             # --- extraction -------------------------------------------------

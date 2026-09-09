@@ -59,3 +59,31 @@ def test_chunking_respects_both_bounds(pdf):
         assert f"[[page {chunk.page_start}]]" in chunk.text
     covered = [p for chunk in chunks for p in chunk.pages]
     assert covered == sorted(set(covered)), "pages must be covered once, in order"
+
+
+def test_a_scanned_pdf_is_reported_as_needing_ocr(tmp_path):
+    """A scan extracts nothing, and the pipeline would otherwise report 'no facts
+    found' as though the pages were blank. The reader should be told the document
+    has no text layer, not sent looking for a fault in the extractor."""
+    import pymupdf
+    from PIL import Image, ImageDraw
+
+    image = Image.new("RGB", (1240, 1754), "white")
+    ImageDraw.Draw(image).text((90, 120), "Revenue was Rs. 4,120 million", fill="black")
+    picture = tmp_path / "page.png"
+    image.save(picture)
+
+    scanned = tmp_path / "scanned.pdf"
+    doc = pymupdf.open()
+    page = doc.new_page(width=595, height=842)
+    page.insert_image(pymupdf.Rect(0, 0, 595, 842), filename=str(picture))
+    doc.save(str(scanned))
+    doc.close()
+
+    with PdfDocument(scanned) as report_pdf:
+        report = report_pdf.text_layer_report()
+    assert report["has_text_layer"] is False
+    assert report["looks_scanned"] is True
+
+    with PdfDocument(SAMPLE) as real_pdf:
+        assert real_pdf.text_layer_report()["has_text_layer"] is True

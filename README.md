@@ -396,8 +396,13 @@ Written honestly; several of these are visible in the "Failures" tab of the UI.
 
 **What does not work well yet**
 
-- **No OCR.** Text comes from the PDF's text layer, so a scanned or image-only
-  document yields nothing at all.
+- **No OCR.** Text comes from the PDF's text layer, so a scanned document yields
+  nothing. Ingest detects this and says so rather than reporting an empty document,
+  because the two look identical from the outside. OCR was left out deliberately
+  rather than overlooked: every fact here is verified by finding its quote verbatim
+  in the page, and OCR's character-level errors would break those matches and
+  quarantine facts that are actually correct. Running a scan through OCR first, then
+  ingesting the result, is the right order of operations.
 - **English only.** The prompts, stopword lists and period vocabulary are English.
 
 - **Tables are read as prose.** Text is extracted linearly, so a wide financial table

@@ -117,6 +117,35 @@ class PdfDocument:
             self._page_text[index] = self._doc[index - 1].get_text("text")
         return self._page_text[index]
 
+    def text_layer_report(self) -> dict:
+        """Whether this PDF actually carries extractable text.
+
+        A scanned document is images all the way down: extraction returns nothing
+        and the pipeline would truthfully but unhelpfully report that no facts
+        were found, as though the pages were blank. Distinguishing "no text" from
+        "no facts" tells the reader the document needs OCR rather than sending
+        them looking for a fault in the extractor.
+        """
+        chars = images = 0
+        sampled = min(self.page_count, 12)
+        for i in range(sampled):
+            page = self._doc[i]
+            chars += len(normalize_ws(page.get_text("text")))
+            try:
+                images += len(page.get_images(full=False))
+            except Exception:
+                pass
+        per_page = chars / max(sampled, 1)
+        return {
+            "pages_sampled": sampled,
+            "chars_per_page": round(per_page, 1),
+            "images": images,
+            # A page with almost no text but pictures on it is a scan; one with
+            # neither is simply empty, which is a different problem.
+            "has_text_layer": per_page >= 40,
+            "looks_scanned": per_page < 40 and images > 0,
+        }
+
     def pages(self) -> Iterator[Page]:
         for i in range(self.page_count):
             page = self._doc[i]
