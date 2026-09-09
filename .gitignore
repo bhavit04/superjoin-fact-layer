@@ -15,3 +15,5 @@ build/stage/
 build/rec/
 build/work/
 scripts/video/__pycache__/
+build/frames/*
+!build/frames/09_claims.jpg
