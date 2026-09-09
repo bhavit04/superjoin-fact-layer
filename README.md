@@ -145,11 +145,17 @@ A screencast is committed at
 being ingested, then all four required cases with their real evidence and reasoning.
 Upload it (YouTube unlisted, Drive, Loom) and put the link above.
 
-It is a real recording of the running app, annotated in place: `scripts/video/record.sh`
-captures, `scripts/video/analyze.py` finds where the capture holds still, and
-`scripts/video/annotate.py` trims those holds and draws the commentary onto the frame
-beside whatever it is describing. Re-running it after a change regenerates the video
-rather than requiring a re-record.
+It is a real recording of the running app, annotated in place, and it is generated
+rather than edited by hand:
+
+| | |
+|---|---|
+| `scripts/video/record.sh` | captures the screen while the UI is driven |
+| `scripts/video/analyze.py` | separates movement from the motionless holds between actions |
+| `scripts/video/annotate.py` | trims each hold to what it has to say, measures the highlight box off the frame, and draws the caption beside it |
+
+The beat list at the top of `annotate.py` is the script: reordering it reorders the
+video, and editing a caption re-renders in about a minute without re-recording.
 
 ---
 
