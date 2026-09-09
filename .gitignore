@@ -11,9 +11,10 @@ assignment.pdf
 .pytest_cache/
 .DS_Store
 
+# The recording under build/ is the deliverable; everything that produces it --
+# raw captures, intermediate frames, the compositor -- is local build tooling.
 build/stage/
 build/rec/
 build/work/
-scripts/video/__pycache__/
-build/frames/*
-!build/frames/09_claims.jpg
+build/frames/
+scripts/video/

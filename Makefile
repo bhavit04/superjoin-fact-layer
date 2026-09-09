@@ -1,4 +1,4 @@
-.PHONY: help install demo ingest serve test cases stats verify export-cases reset clean
+.PHONY: help install demo ingest serve test cases stats verify export-cases readme-stats reset clean
 
 VENV ?= .venv
 PY   := $(VENV)/bin/python
@@ -43,6 +43,9 @@ stats:
 
 export-cases:
 	$(PY) scripts/export_cases.py
+
+readme-stats:
+	$(PY) scripts/update_readme_stats.py
 
 verify:
 	$(PY) scripts/verify_submission.py

@@ -138,7 +138,8 @@ doctor` reports it directly.
 The fact schema grew to **1,325 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **77** proposed facts were rejected for failing to ground.
 <!--/STATS-->
 
-Full output, with evidence and reasoning for every example, is in
+Every number in those two tables is read out of the database by `make readme-stats`,
+not typed. Full output, with evidence and reasoning for every example, is in
 **[`cases/CASES.md`](cases/CASES.md)**. `make verify` re-checks all of this against the
 database and exits non-zero if any of it stops being true.
 
@@ -153,17 +154,8 @@ A screencast of the running system: a PDF being ingested, then all four required
 cases with their real evidence and reasoning. Nothing in it is staged — every number
 on screen comes from the API responses shown.
 
-It is a real recording of the running app, annotated in place, and it is generated
-rather than edited by hand:
-
-| | |
-|---|---|
-| `scripts/video/record.sh` | captures the screen while the UI is driven |
-| `scripts/video/analyze.py` | separates movement from the motionless holds between actions |
-| `scripts/video/annotate.py` | trims each hold to what it has to say, measures the highlight box off the frame, and draws the caption beside it |
-
-The beat list at the top of `annotate.py` is the script: reordering it reorders the
-video, and editing a caption re-renders in about a minute without re-recording.
+It is a real recording of the running app with the captions drawn on afterwards —
+no slides, and no narration over a mockup.
 
 ---
 
