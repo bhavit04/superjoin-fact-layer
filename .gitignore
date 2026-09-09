@@ -10,7 +10,7 @@ data_raw/
 assignment.pdf
 .pytest_cache/
 .DS_Store
-build/frames/
+
 build/stage/
 build/rec/
 build/work/

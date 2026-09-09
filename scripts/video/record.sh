@@ -5,6 +5,9 @@ set -euo pipefail
 case "$1" in
   start)
     out="$2"
+    # The capture records whatever is frontmost, so put the browser there first.
+    osascript -e 'tell application "Google Chrome" to activate' >/dev/null 2>&1 || true
+    sleep 1.5
     ffmpeg -y -f avfoundation -capture_cursor 1 -framerate 25 -i "4" \
       -vf "scale=1920:1080" -pix_fmt yuv420p -c:v libx264 -preset ultrafast -crf 18 \
       -loglevel error "$out" >/dev/null 2>&1 &

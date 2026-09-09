@@ -28,6 +28,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 REC, WORK = ROOT / "build" / "rec", ROOT / "build" / "work"
+FRAMES = ROOT / "build" / "frames"
 OUT = ROOT / "build" / "fact-knowledge-layer-demo.mp4"
 
 W, H = 1920, 1080
@@ -116,9 +117,17 @@ def card_bounds(frame: np.ndarray, seed: tuple[float, float]) -> tuple[int, int,
     return x0, y0, x1, y1
 
 
-def to_frame(box: tuple[int, int, int, int]) -> tuple[float, float, float, float]:
+def placement(src_w: int, src_h: int) -> tuple[float, int]:
+    """Scale and vertical padding for a source of this size in a 16:9 frame."""
+    scale = min(W / src_w, H / src_h)
+    return scale, int((H - src_h * scale) / 2)
+
+
+def to_frame(box: tuple[int, int, int, int], src_w: int = CROP_W,
+             src_h: int = CROP_H) -> tuple[float, float, float, float]:
+    scale, pad = placement(src_w, src_h)
     x0, y0, x1, y1 = box
-    return (x0 * SCALE, PAD_Y + y0 * SCALE, x1 * SCALE, PAD_Y + y1 * SCALE)
+    return (x0 * scale, pad + y0 * scale, x1 * scale, pad + y1 * scale)
 
 
 # --- drawing -----------------------------------------------------------------
@@ -241,6 +250,10 @@ BEATS = [
      "title": "Case 4 — failures, measured",
      "body": "Rejected facts are kept with a reason. “Table association unverifiable” is a column-major table the extractor could not resolve, not a fabrication."},
 
+    {"still": "09_claims.jpg", "seed": [0.5, 0.45], "seconds": 12.0, "tone": "warn",
+     "title": "Above the pairwise view: claims",
+     "body": "A relation asks whether two facts agree. A claim asks what every source says about one quantity — here two institutions on India's FY2025 current account deficit, 1.2 per cent against 0.6."},
+
     {"src": "02_cases", "hold": 13, "seed": [0.62, 0.55],
      "title": "A schema grown from documents",
      "body": "107 qualifier keys, none declared up front. A document that introduces a new dimension registers it, and it takes part in comparison immediately."},
@@ -269,7 +282,40 @@ def grab(src: str, t: float) -> np.ndarray:
     return np.frombuffer(raw, dtype=np.uint8).reshape(CROP_H, CROP_W, 3).astype(int)
 
 
+def render_still(beat: dict, index: int) -> Path:
+    """A beat built from a captured tab rather than a screen recording.
+
+    Chrome can sit on a Space the screen recorder cannot reach; capturing the tab
+    directly always works, and every other beat is a motionless hold anyway.
+    """
+    image = Image.open(FRAMES / beat["still"]).convert("RGB")
+    frame = np.asarray(image).astype(int)
+    box = to_frame(card_bounds(frame, beat["seed"]), image.width, image.height)
+
+    png = WORK / f"beat{index:02d}.png"
+    png.parent.mkdir(parents=True, exist_ok=True)
+    overlay(beat, box).save(png)
+
+    duration = beat.get("seconds", HOLD)
+    out = WORK / f"beat{index:02d}.mp4"
+    subprocess.run([
+        "ffmpeg", "-y", "-loglevel", "error",
+        "-loop", "1", "-t", f"{duration}", "-i", str(FRAMES / beat["still"]),
+        "-loop", "1", "-t", f"{duration}", "-i", str(png),
+        "-filter_complex",
+        f"[0:v]scale={W}:{H}:force_original_aspect_ratio=decrease,"
+        f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color=0x12110d,fps=30[base];"
+        f"[1:v]format=rgba,fade=in:st=0.2:d=0.35:alpha=1[note];"
+        f"[base][note]overlay=0:0:format=auto,format=yuv420p[out]",
+        "-map", "[out]", "-c:v", "libx264", "-preset", "medium", "-crf", "20", str(out),
+    ], check=True)
+    print(f"  {index:2}. {beat['title'][:46]:48} {duration:5.1f}s   still")
+    return out
+
+
 def render_beat(beat: dict, index: int, cache: dict) -> Path:
+    if beat.get("still"):
+        return render_still(beat, index)
     src = beat["src"]
     data = cache.setdefault(src, probe(src))
     holds, segments = data["holds"], data["segments"]
