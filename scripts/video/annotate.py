@@ -32,8 +32,8 @@ PAD_Y = (H - CONTENT_H) // 2
 # A hold carrying an annotation has to stay up long enough to read; one that
 # carries nothing is dead air and should go. Trimming both to the same length
 # either rushes the commentary or pads the gaps.
-HOLD_ANNOTATED = 6.4
-HOLD_PLAIN = 1.6
+HOLD_ANNOTATED = 10.0
+HOLD_PLAIN = 2.0
 SPEED = 1.0
 
 INK, MUTED = (245, 242, 235), (176, 170, 158)
@@ -150,34 +150,46 @@ PLAN = [
          "body": "Extract, verify every quote against the real page, resolve the entity, fold new metric names into the vocabulary, then link against everything already stored."},
     ]},
     {"src": "02_cases.mp4", "notes": [
-        {"hold": 2, "box": [0.18, 0.42, 0.82, 0.67], "point": True,
-         "x": 0.05, "y": 0.74, "w": 0.42,
+        # Pinned to the longest holds: a caption needs time on screen, and the
+        # short holds are transitions rather than moments worth explaining.
+        {"hold": 4, "box": [0.18, 0.60, 0.82, 0.97], "point": True,
+         "x": 0.05, "y": 0.08, "w": 0.44,
          "title": "Case 1 — corroborated across documents",
-         "body": "The same figure in two filings two years apart: one writes crore, the other million."},
-        {"hold": 4, "box": [0.18, 0.60, 0.82, 0.97], "point": True, "tone": "good",
-         "x": 0.05, "y": 0.10, "w": 0.42,
-         "title": "Why they agree",
-         "body": "Agreement is judged against a tolerance derived from how precisely each figure was written, not an arbitrary threshold."},
-        {"hold": 5, "box": [0.30, 0.10, 0.70, 0.36], "point": True,
-         "x": 0.05, "y": 0.66, "w": 0.42,
+         "body": "The same figure in two filings two years apart: one writes crore, the other million. They agree to 0.01%, inside a tolerance derived from how precisely each was written."},
+        {"hold": 5, "box": [0.30, 0.10, 0.70, 0.36], "point": True, "tone": "good",
+         "x": 0.05, "y": 0.62, "w": 0.44,
          "title": "Grounded in the source",
-         "body": "The model proposes a quote; the system finds it on the page before storing the fact. A quote it cannot find is rejected."},
-        {"hold": 7, "box": [0.18, 0.55, 0.82, 0.98], "point": True, "tone": "warn",
-         "x": 0.05, "y": 0.10, "w": 0.42,
+         "body": "The model proposes a quote; the system finds it on the page before storing the fact. A quote it cannot find is rejected rather than trusted."},
+        {"hold": 8, "box": [0.18, 0.06, 0.82, 0.45], "point": True, "tone": "warn",
+         "x": 0.05, "y": 0.58, "w": 0.44,
          "title": "Case 2 — a genuine contradiction",
-         "body": "Adjusted EBITDA for FY21, stated twice in one annual report, differing by 10.8 per cent with nothing to explain it."},
+         "body": "Adjusted EBITDA for FY21, stated twice in one annual report and differing by 10.8 per cent, with no difference in basis, scope or period to account for it."},
         {"hold": 10, "box": [0.18, 0.55, 0.82, 0.98], "point": True, "tone": "good",
-         "x": 0.05, "y": 0.10, "w": 0.42,
+         "x": 0.05, "y": 0.08, "w": 0.44,
          "title": "Case 3 — explained by context",
-         "body": "Both figures are right: one covers the first half of FY25, the other calendar 2024. Reconciled on period, not a conflict."},
+         "body": "Both figures are right. One covers the first half of FY25, the other calendar 2024. Reconciled on period rather than reported as a conflict."},
         {"hold": 11, "box": [0.18, 0.30, 0.82, 0.72], "point": True,
-         "x": 0.05, "y": 0.06, "w": 0.42,
+         "x": 0.05, "y": 0.04, "w": 0.44,
          "title": "Case 4 — failures, measured",
-         "body": "Rejected facts are recorded with a reason. “Table association unverifiable” is a column-major table the extractor could not resolve, not a fabrication."},
+         "body": "Rejected facts are kept with a reason. “Table association unverifiable” is a column-major table the extractor could not resolve — not a fabrication."},
         {"hold": 13, "box": [0.36, 0.28, 0.88, 0.95], "point": True,
-         "x": 0.03, "y": 0.12, "w": 0.32,
+         "x": 0.03, "y": 0.14, "w": 0.32,
          "title": "A schema grown from documents",
-         "body": "107 qualifier keys, none declared up front. A document that introduces a new dimension registers it and it takes part in comparison immediately."},
+         "body": "107 qualifier keys, none declared up front. A document that introduces a new dimension registers it, and it takes part in comparison immediately."},
+    ]},
+    {"src": "03_detail.mp4", "notes": [
+        {"hold": 1, "box": [0.18, 0.41, 0.81, 0.66], "point": True, "tone": "good",
+         "x": 0.05, "y": 0.71, "w": 0.44,
+         "title": "The arithmetic behind the verdict",
+         "body": "Units reconciled onto one scale, both periods placed on a timeline, and a tolerance derived from how precisely each figure was written. Every decision shows its working."},
+        {"hold": 2, "box": [0.18, 0.27, 0.82, 0.38], "point": True,
+         "x": 0.05, "y": 0.50, "w": 0.44,
+         "title": "2,685 links, all inspectable",
+         "body": "Filter by kind, scope or metric. Roughly nine in ten verdicts come from deterministic rules; only the pairs those cannot settle are sent to a model."},
+        {"hold": 3, "box": [0.18, 0.32, 0.82, 0.97], "point": True,
+         "x": 0.05, "y": 0.06, "w": 0.42,
+         "title": "3,112 facts, each tied to a source",
+         "body": "Numbers, roles, addresses, ownership, dates. Every row carries the document and page it came from, and clicking one shows it highlighted on that page."},
     ]},
 ]
 
