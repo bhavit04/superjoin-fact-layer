@@ -14,7 +14,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "pytest-asyncio>=0.24"]
+# pillow: the OCR-detection test paints a page-image PDF to prove a scan is
+# recognised as having no text layer.
+dev = ["pytest>=8.0", "pytest-asyncio>=0.24", "pillow>=10.0"]
 
 [project.scripts]
 factlayer = "factlayer.cli:main"
