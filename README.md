@@ -112,23 +112,23 @@ doctor` reports it directly.
 <!--STATS-->
 | document | pages | facts | grounded |
 |---|---:|---:|---:|
-| `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 964 | 93% |
-| `01-delhivery-prospectus-2022-excerpt.pdf` | 100 | 712 | 88% |
+| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | 79% |
+| `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 968 | 93% |
+| `01-delhivery-prospectus-2022-excerpt.pdf` | 100 | 724 | 88% |
 | `01-india-economic-survey-2024-25-excerpt.pdf` | 89 | 329 | 100% |
 | `02-rbi-annual-report-2024-25-excerpt.pdf` | 100 | 622 | 94% |
-| `03-imf-india-2025-article-iv-excerpt.pdf` | 95 | 367 | 82% |
-| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | 79% |
-| **6 documents** | **511** | **3,112** | **91%** |
+| `03-imf-india-2025-article-iv-excerpt.pdf` | 95 | 371 | 83% |
+| **6 documents** | **511** | **3,132** | **91%** |
 
 | relationship | count | |
 |---|---:|---|
-| **CORROBORATES** | 171 | the same claim, agreeing |
-| **RECONCILED** | 322 | disagreeing, but a stated difference in context explains it |
+| **CORROBORATES** | 203 | the same claim, agreeing |
+| **RECONCILED** | 291 | disagreeing, but a stated difference in context explains it |
 | **CONTRADICTS** | 10 | disagreeing with nothing to explain it |
-| **RELATED** | 2,182 | same metric, different periods — a time series |
-| _of which cross-document_ | 598 | |
+| **RELATED** | 2,209 | same metric, different periods — a time series |
+| _of which cross-document_ | 611 | |
 
-The fact schema grew to **1,322 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **180** proposed facts were rejected for failing to ground.
+The fact schema grew to **1,325 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **77** proposed facts were rejected for failing to ground.
 <!--/STATS-->
 
 Full output, with evidence and reasoning for every example, is in
@@ -426,16 +426,17 @@ Written honestly; several of these are visible in the "Failures" tab of the UI.
   ingesting the result, is the right order of operations.
 - **English only.** The prompts, stopword lists and period vocabulary are English.
 
-- **Tables are read as prose, and the obvious fix does not work here.** Text is
-  extracted linearly, so a wide table loses the association between a row label, a
-  column header and a cell. This is the largest source of rejected facts (155,
-  recorded as `table_association_unverifiable`) and the reason the chart-heavy
-  earnings deck grounds at 79% against 93–100% for prose documents. PyMuPDF's built-in
-  `find_tables` was measured against exactly those rejected facts and recovered
-  **0 of 35**: these are financial tables without ruling lines, laid out by whitespace,
-  and it either misses them or returns numeric blocks stripped of their row labels.
-  Doing this properly needs coordinate-level layout analysis, which is the single
-  highest-value thing left to build.
+- **Tables are partly solved; the rest is the largest remaining gap.** Linear text
+  extraction returns a PDF's runs in storage order, which for a column-major table
+  interleaves labels and values so a row cannot be read back. The geometry survives
+  that, and is now used: words are clustered by vertical position to rebuild the row a
+  reader sees, and a quote whose tokens all sit on one such row is grounded. That took
+  quarantined facts from 180 to 77 and grounded 51 facts that were previously
+  rejected. PyMuPDF's own `find_tables` was measured on the same failures first and
+  recovered 0 of 35 — these tables have no ruling lines. What remains unsolved is
+  column association: rows are rebuilt, columns are not, so a figure still cannot be
+  tied to the header above it, and on a two-column page a rebuilt row spans both
+  columns. Proper column clustering is the highest-value thing left to build.
 - **Periods that need document context.** "the prior year" or "the previous quarter"
   resolve to nothing, because resolving them requires knowing the document's own
   reporting date. Those facts are stored with an unresolved period and are then only

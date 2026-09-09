@@ -66,6 +66,8 @@ class PdfDocument:
         self._doc = fitz.open(self.path)
         self._page_text: dict[int, str] = {}
         self._page_lines: dict[int, list[tuple[str, tuple[float, float, float, float]]]] = {}
+        self._page_rows: dict[int, list[tuple[str, tuple[float, float, float, float]]]] = {}
+        self._page_row_items: dict[int, list] = {}
 
     def __enter__(self) -> "PdfDocument":
         return self
@@ -261,6 +263,12 @@ class PdfDocument:
             if row is not None:
                 return row
 
+        # A quote whose words all sit on one reconstructed row is a table row the
+        # extractor read correctly, even though linear extraction scrambled it.
+        row = self._locate_in_geometric_row(quote, page_no)
+        if row is not None:
+            return row
+
         # Last resort: shingle verification. Charts and wide tables do not extract
         # in reading order, so a faithful quote off a bar chart ("1,579 1,101 1,429
         # FY22 FY23 FY24 PTL freight revenue") is real evidence that simply is not
@@ -289,6 +297,50 @@ class PdfDocument:
         self._page_lines[page_no] = lines
         return lines
 
+    def page_rows(self, page_no: int) -> list[tuple[str, tuple[float, float, float, float]]]:
+        """Reconstruct visual rows from word coordinates, left to right.
+
+        `get_text("text")` returns whatever order the PDF stores its runs in,
+        which for a column-major table interleaves labels and values so a row
+        cannot be read back. The geometry survives that: on the page where
+        "Oils and Fats" was wrongly compared, the label and its value sit at the
+        same y to a tenth of a point. Clustering words by vertical position
+        rebuilds the row the reader actually sees.
+        """
+        if page_no in self._page_rows:
+            return self._page_rows[page_no]
+        try:
+            words = self._doc[page_no - 1].get_text("words")
+        except Exception:
+            words = []
+
+        rows: list[dict] = []
+        for x0, y0, x1, y1, word, *_ in sorted(words, key=lambda w: (w[1], w[0])):
+            mid = (y0 + y1) / 2
+            height = max(y1 - y0, 1.0)
+            for row in rows:
+                if abs(row["mid"] - mid) <= height * 0.6:
+                    row["items"].append((x0, word))
+                    row["box"] = (min(row["box"][0], x0), min(row["box"][1], y0),
+                                  max(row["box"][2], x1), max(row["box"][3], y1))
+                    row["mid"] = (row["mid"] * row["n"] + mid) / (row["n"] + 1)
+                    row["n"] += 1
+                    break
+            else:
+                rows.append({"mid": mid, "n": 1, "items": [(x0, word)],
+                             "box": (x0, y0, x1, y1)})
+
+        out = [(sorted(r["items"]), tuple(round(v, 2) for v in r["box"])) for r in rows]
+        self._page_rows[page_no] = [(" ".join(w for _, w in items), box) for items, box in out]
+        self._page_row_items[page_no] = out
+        return self._page_rows[page_no]
+
+    def page_row_items(self, page_no: int) -> list[tuple[list[tuple[float, str]], tuple]]:
+        """Rows as ordered (x, word) pairs, so a match can be trimmed to its span."""
+        if page_no not in self._page_row_items:
+            self.page_rows(page_no)
+        return self._page_row_items.get(page_no, [])
+
     def _locate_in_row(
         self, page_text: str, quote: str, page_no: int
     ) -> EvidenceLocation | None:
@@ -302,12 +354,44 @@ class PdfDocument:
         fragments = [f for f in fragments if len(f) >= 2]
         if len(fragments) < 2:
             return None
-        for text, bbox in self.page_lines(page_no):
-            lowered = text.lower()
-            if all(fragment.lower() in lowered for fragment in fragments):
-                return EvidenceLocation(
-                    page_no, [bbox], 0.9, text, verified=True, mode="row",
-                )
+        # Rendered lines first, then rows rebuilt from word coordinates — the
+        # latter is what recovers column-major tables.
+        for source in (self.page_lines(page_no), self.page_rows(page_no)):
+            for text, bbox in source:
+                lowered = text.lower()
+                if all(fragment.lower() in lowered for fragment in fragments):
+                    return EvidenceLocation(
+                        page_no, [bbox], 0.9, text, verified=True, mode="row",
+                    )
+        return None
+
+    def _locate_in_geometric_row(self, quote: str, page_no: int) -> EvidenceLocation | None:
+        """Match a quote against a row rebuilt from word coordinates.
+
+        Every content token must appear on one row, so an invented quote still
+        fails; only the reading order is forgiven, which is exactly what a
+        column-major table breaks.
+        """
+        tokens = [t for t in re.split(r"[^\w.%,₹$()-]+", quote) if len(t) >= 2]
+        if len(tokens) < 3:
+            return None
+        for items, bbox in self.page_row_items(page_no):
+            words = [w.lower() for _, w in items]
+            lowered = " ".join(words)
+            if not all(t.lower() in lowered for t in tokens):
+                continue
+            # A two-column page puts unrelated text at the same height, so keep
+            # only the span the match actually covers rather than the whole row.
+            hits = [i for i, w in enumerate(words)
+                    if any(t.lower() in w or w in t.lower() for t in tokens)]
+            if not hits:
+                continue
+            lo, hi = max(0, min(hits) - 1), min(len(items), max(hits) + 2)
+            span = items[lo:hi]
+            text = " ".join(w for _, w in span)
+            box = (span[0][0], bbox[1], span[-1][0] + 40, bbox[3])
+            return EvidenceLocation(page_no, [tuple(round(v, 2) for v in box)], 0.88,
+                                    text, verified=True, mode="row")
         return None
 
     def _locate_by_shingles(
