@@ -30,7 +30,7 @@ Use the wording a reader would search for ("revenue from operations", "consumer 
 price inflation", "board role", "headquarters location"). Never put the value, \
 the period, or the unit inside the metric.
   value        The value EXACTLY as printed, including its symbol and scale word \
-("Rs. 8,142 Mn", "6.5 per cent", "resigned", "Bengaluru, India"). Do not convert.
+("Rs. 1,234 Mn", "6.5 per cent", "resigned", "Springfield, Illinois"). Do not convert.
   unit_hint    If the unit or scale comes from a table header or nearby caption \
 rather than the value itself, put it here ("figures in INR million"). Else "".
   fact_type    One of: numeric, categorical, temporal, textual.

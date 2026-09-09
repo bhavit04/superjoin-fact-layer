@@ -448,6 +448,23 @@ Written honestly; several of these are visible in the "Failures" tab of the UI.
   but should not be read as a probability.
 - **Single-hop only.** If A corroborates B and B contradicts C, nothing notices that A
   and C are in tension.
+- **No ground truth, so precision is argued rather than measured.** Contradictions fell
+  from 138 to 9 as false-positive classes were found and fixed, and each fix is named
+  and regression-tested — but that evidence is examples I inspected, not a labelled
+  set. Nothing here proves real contradictions were not suppressed along the way. The
+  right next step is to hand-label a few hundred pairs and report precision and recall
+  properly.
+- **The thresholds are fitted to this corpus.** No fact, filename or metric is
+  hard-coded — logic never branches on document content — but around eight numeric
+  cutoffs (metric similarity 0.42, fuzzy-match floors, the 0.82 textual-equality bar,
+  three values for an enumeration) were chosen by looking at these six documents, with
+  no held-out set. They are all biased toward refusing a comparison rather than
+  making a false one, so the failure mode on unfamiliar documents should be
+  under-linking rather than invented conflicts — but that is a design intention, not a
+  measurement. The parts that generalise by construction are the ones derived rather
+  than tuned: the rounding tolerance comes from how precisely a figure is written, the
+  period algebra is calendar arithmetic, and the fiscal-year convention is read off
+  each document.
 - **Recall depends on the clustering pass.** Because comparison requires metric-name
   equality or an explicit cluster, a metric the clustering pass fails to merge simply
   never gets compared. That failure is silent — there is no signal distinguishing
