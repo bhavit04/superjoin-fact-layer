@@ -1,0 +1,12 @@
+{
+ "key": "b55b5b4de1ba8a198905a33d0a6206fe86172d921165dfa58496ad15de9d7c1c",
+ "response": "```json\n{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports EBITDA margin of 1.6% (rounded) and Fact B reports 1.56% for FY24. The values are mathematically consistent within standard rounding tolerance.\",\n  \"reconciling_evidence\": \"Fact A: \\\"1.6% EBITDA / EBITDA margin\\\" Fact B: \\\"EBITDA margin 1.56%\\\"\"\n}\n```",
+ "created_at": 1788964700.420346,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 947,
+  "output": 121
+ }
+}

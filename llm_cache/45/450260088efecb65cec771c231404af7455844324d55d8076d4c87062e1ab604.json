@@ -1,0 +1,12 @@
+{
+ "key": "450260088efecb65cec771c231404af7455844324d55d8076d4c87062e1ab604",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The discrepancy likely arises from differences in scope or reporting methodology rather than a direct contradiction. Fact A reports a specific line item for 'Supply Chain Services' within a regulatory filing, while Fact B reports a significantly higher figure, suggesting it may include broader service categories or different accounting consolidations under the same label.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964651.729728,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1001,
+  "output": 110
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "0ad6b66bb95b304b5b7be3e00a6b32da64cd821510fd983ebac11e6e9e44e780",
+ "response": "```json\n{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts report Delhivery's revenue from services for FY24/2024 as approximately INR 8,142 crore. The minor difference of 0.0057% is due to rounding.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Revenue for services (A) 1,860 2,194 2,076\\\"\\nFact B: \\\"Revenue from services* 81,415.38\\\"\"\n}\n```",
+ "created_at": 1788964915.8611178,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1003,
+  "output": 150
+ }
+}

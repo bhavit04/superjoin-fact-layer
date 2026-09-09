@@ -1,0 +1,12 @@
+{
+ "key": "799f69157283789d31def706f878c21bd46c1ee87472e69315019e0c1cb4f4af",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"scope\",\n  \"explanation\": \"The facts describe two distinct roles held by the same individual: Fact A refers to an appointment to a specific committee, while Fact B refers to an appointment as a Non-Executive Independent Director. These are complementary pieces of information rather than conflicting claims.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964604.130636,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1060,
+  "output": 95
+ }
+}

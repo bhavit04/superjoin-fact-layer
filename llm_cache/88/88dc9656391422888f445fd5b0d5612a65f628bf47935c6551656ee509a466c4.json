@@ -1,0 +1,12 @@
+{
+ "key": "88dc9656391422888f445fd5b0d5612a65f628bf47935c6551656ee509a466c4",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.95,\n  \"dimension\": \"value\",\n  \"explanation\": \"Both facts refer to the same metric (Adjusted EBITDA) for the same entity (Delhivery Limited) and the same period (FY2021). Fact A explicitly states the value as negative ₹2,258 million, while Fact B presents a table where the value for FY21 is listed as (2,532). The 10.8% discrepancy is material and unexplained.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964614.057646,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1065,
+  "output": 134
+ }
+}

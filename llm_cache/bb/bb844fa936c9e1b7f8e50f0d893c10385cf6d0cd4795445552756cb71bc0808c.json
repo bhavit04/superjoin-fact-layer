@@ -1,0 +1,12 @@
+{
+ "key": "bb844fa936c9e1b7f8e50f0d893c10385cf6d0cd4795445552756cb71bc0808c",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports revenue for the full fiscal year 2024 (FY24), while Fact B reports the revenue for the previous fiscal year (FY23). Fact A's source evidence explicitly lists 72,236 for FY23, which matches Fact B's value.\",\n  \"reconciling_evidence\": \"Revenue from services* (₹ million) 72,236 FY23 70,536 FY22 81,415 FY24\"\n}",
+ "created_at": 1788965346.388373,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1002,
+  "output": 149
+ }
+}

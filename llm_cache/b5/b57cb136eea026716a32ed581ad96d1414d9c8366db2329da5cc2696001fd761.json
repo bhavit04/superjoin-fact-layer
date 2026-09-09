@@ -1,0 +1,12 @@
+{
+ "key": "b57cb136eea026716a32ed581ad96d1414d9c8366db2329da5cc2696001fd761",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"unit\",\n  \"explanation\": \"The figures represent the same metric for the same period but are expressed in different units. Fact A is reported in millions (34,107 million), while Fact B is reported in crores (3,411 crore). Since 1 crore equals 10 million, the values are mathematically equivalent.\",\n  \"reconciling_evidence\": \"Fact A: '(34,107.48)'; Fact B: '(3,411)'\"\n}",
+ "created_at": 1788965319.985811,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1077,
+  "output": 137
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "55337543574af7ef5900a145897570bf6bb01551be9c43e36aeee4381bbfe834",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports revenue from services for 2023 (INR 7,223.65 crore), while Fact B reports revenue for FY24 (INR 8,142 crore). The differing periods (CY2023/FY23 vs FY2024) account for the difference in values.\",\n  \"reconciling_evidence\": \"Fact A: \\\"2023\\\" / Fact B: \\\"FY24\\\"\"\n}\n```",
+ "created_at": 1788964710.110626,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1004,
+  "output": 145
+ }
+}

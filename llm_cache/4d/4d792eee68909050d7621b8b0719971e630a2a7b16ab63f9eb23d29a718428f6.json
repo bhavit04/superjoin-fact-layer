@@ -1,0 +1,12 @@
+{
+ "key": "4d792eee68909050d7621b8b0719971e630a2a7b16ab63f9eb23d29a718428f6",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The two facts represent the same metric over different timeframes. Fact A covers the full fiscal year 2021 (ending March 31, 2021), while Fact B covers a specific nine-month period ending December 31, 2021.\",\n  \"reconciling_evidence\": \"but increased to 20.22% for the nine months period ended December 31, 2021\"\n}",
+ "created_at": 1788965345.305155,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1108,
+  "output": 135
+ }
+}

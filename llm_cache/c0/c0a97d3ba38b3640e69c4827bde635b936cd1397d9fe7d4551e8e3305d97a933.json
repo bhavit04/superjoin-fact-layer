@@ -1,0 +1,12 @@
+{
+ "key": "c0a97d3ba38b3640e69c4827bde635b936cd1397d9fe7d4551e8e3305d97a933",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"value\",\n  \"explanation\": \"Both facts refer to the same metric for the same fiscal year (FY24/2024). The values (776 crore vs 152.53 crore) differ by a magnitude that cannot be explained by simple period or unit differences. The discrepancy is material and represents a direct conflict in reported financial data.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964634.46618,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 991,
+  "output": 117
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "65706bc4ab54e133d0e3dc934094b2ad80ab508a3de6b28928b6ad6b4cdad2d0",
+ "response": "```json\n{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts report revenue from services for the 2023 fiscal period. Fact A reports INR 7,224 crore and Fact B reports INR 7,223.65 crore (72,236.47 million). The difference of less than 0.01% is due to rounding.\",\n  \"reconciling_evidence\": \"\"\n}\n```",
+ "created_at": 1788964769.84816,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1003,
+  "output": 123
+ }
+}

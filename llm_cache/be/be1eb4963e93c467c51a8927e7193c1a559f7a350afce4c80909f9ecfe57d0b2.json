@@ -1,0 +1,12 @@
+{
+ "key": "be1eb4963e93c467c51a8927e7193c1a559f7a350afce4c80909f9ecfe57d0b2",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"Fact A and Fact B report the same EBITDA figure for the same fiscal period (FY23). The difference between -451.61 crore and -452 crore is less than 0.1%, which is a standard rounding difference in financial reporting.\",\n  \"reconciling_evidence\": \"Fact A: \\\"(4,516.08)\\\" [in millions] vs Fact B: \\\"₹(452) Cr\\\"\"\n}",
+ "created_at": 1788964659.0017831,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1017,
+  "output": 138
+ }
+}

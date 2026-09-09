@@ -1,0 +1,12 @@
+{
+ "key": "8e4dd2292cbb3b87f65d02329f6dec84389c15525eee33b24e68ebff75fdef4d",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts describe different roles held by the same individual. Fact A refers to an appointment to a specific committee (Risk Management Committee), while Fact B refers to an appointment as a Non-Executive Independent Director. These are distinct board-related positions.\",\n  \"reconciling_evidence\": \"Fact A: \\\"member of the Committee\\\"; Fact B: \\\"Non-Executive Independent Director\\\"\"\n}",
+ "created_at": 1788964645.4170089,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1087,
+  "output": 118
+ }
+}

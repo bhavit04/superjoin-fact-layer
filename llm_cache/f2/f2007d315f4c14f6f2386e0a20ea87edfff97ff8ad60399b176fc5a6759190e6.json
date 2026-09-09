@@ -1,0 +1,12 @@
+{
+ "key": "f2007d315f4c14f6f2386e0a20ea87edfff97ff8ad60399b176fc5a6759190e6",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"membership list\",\n  \"explanation\": \"The facts are not contradictory; they describe different individuals who are both members of the same committee. The document lists multiple members, and these facts simply identify two distinct people serving on that committee.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964617.058309,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 993,
+  "output": 85
+ }
+}

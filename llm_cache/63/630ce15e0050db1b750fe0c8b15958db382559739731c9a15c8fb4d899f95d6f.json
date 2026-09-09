@@ -1,0 +1,12 @@
+{
+ "key": "630ce15e0050db1b750fe0c8b15958db382559739731c9a15c8fb4d899f95d6f",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts describe the same entity's board nomination rights at different stages of the company's lifecycle. Fact A describes the pre-listing rights (effective until the listing), while Fact B describes the post-listing rights (effective upon the commencement of listing).\",\n  \"reconciling_evidence\": \"Fact A: \\\"effective until the earlier of the listing and trading of the Equity Shares\\\"; Fact B: \\\"upon the commencement of listing and trading of our Company’s Equity Shares\\\"\"\n}",
+ "created_at": 1788964608.826795,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1284,
+  "output": 140
+ }
+}

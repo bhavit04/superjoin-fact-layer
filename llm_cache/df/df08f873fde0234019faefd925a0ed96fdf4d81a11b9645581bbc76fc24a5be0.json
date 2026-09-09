@@ -1,0 +1,12 @@
+{
+ "key": "df08f873fde0234019faefd925a0ed96fdf4d81a11b9645581bbc76fc24a5be0",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"unit\",\n  \"explanation\": \"The figures represent the same metric for the same period but differ by a factor of 10. Fact A is reported in crores (366 crore = 3,660 million), while Fact B is reported in millions (3,660.83 million). The values are mathematically consistent once the unit scale is aligned.\",\n  \"reconciling_evidence\": \"Fact A: '366' (implied crore); Fact B: '3,660.83' (implied million)\"\n}",
+ "created_at": 1788964634.8354418,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1065,
+  "output": 150
+ }
+}

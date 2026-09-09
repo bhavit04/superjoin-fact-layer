@@ -1,0 +1,12 @@
+{
+ "key": "2a121c2a7f6cec95040ddcb74fc8bcc50d0dfd98e2dc541ff7f6b2b5fbcfb343",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.85,\n  \"dimension\": \"basis\",\n  \"explanation\": \"Fact A and Fact B report different figures for cash and cash equivalents for FY24 because Fact B is explicitly on a Consolidated basis, whereas Fact A represents a different reporting basis or scope.\",\n  \"reconciling_evidence\": \"basis=Consolidated\"\n}\n```",
+ "created_at": 1788964836.8716202,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1058,
+  "output": 98
+ }
+}

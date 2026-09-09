@@ -1,0 +1,12 @@
+{
+ "key": "8210209897914cfbebd50036806d7eedc67087100bf23c2db3b28114b1045fd4",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports revenue for the 2023 fiscal year, while Fact B reports revenue for the 2024 fiscal year. Because these figures represent distinct, non-overlapping reporting periods, they are not comparable as the same metric, but rather form a time series.\",\n  \"reconciling_evidence\": \"Fact A: '2023'; Fact B: 'FY24'\"\n}",
+ "created_at": 1788965302.7087831,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 983,
+  "output": 120
+ }
+}

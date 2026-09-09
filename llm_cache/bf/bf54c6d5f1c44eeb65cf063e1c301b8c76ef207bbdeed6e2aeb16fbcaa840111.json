@@ -1,0 +1,12 @@
+{
+ "key": "bf54c6d5f1c44eeb65cf063e1c301b8c76ef207bbdeed6e2aeb16fbcaa840111",
+ "response": "```json\n{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A reports freight, handling, and servicing costs for FY2023 (5,669.48 crore), whereas Fact B reports the cost for FY2024 (5,971 crore). They represent the same metric over two different fiscal periods, forming a time series.\",\n  \"reconciling_evidence\": \"Fact A: \\\"56,694.80\\\"\\nFact B: \\\"Freight, Handling and Servicing Cost(1,2) 1,502 1,372 1,572 1,519 5,669 5,971\\\"\"\n}\n```",
+ "created_at": 1788964997.7449448,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1061,
+  "output": 182
+ }
+}

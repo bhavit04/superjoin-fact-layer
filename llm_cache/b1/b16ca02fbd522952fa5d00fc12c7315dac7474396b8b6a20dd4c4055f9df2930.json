@@ -1,0 +1,12 @@
+{
+ "key": "b16ca02fbd522952fa5d00fc12c7315dac7474396b8b6a20dd4c4055f9df2930",
+ "response": "```json\n{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A (-404 crore) and Fact B (-4,038.66 million, or -403.87 crore) report the same Adjusted EBITDA figure for FY23/2023. The difference of 0.03% is due to rounding and scale differences.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Adjusted EBITDA 6 92 21 (404) 76\\\" Fact B: \\\"Adjusted EBITDA1 757.86 (4,038.66)\\\"\"\n}\n```",
+ "created_at": 1788964931.37115,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 976,
+  "output": 168
+ }
+}

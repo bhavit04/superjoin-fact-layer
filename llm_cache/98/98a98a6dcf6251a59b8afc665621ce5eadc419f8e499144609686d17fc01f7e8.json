@@ -1,0 +1,12 @@
+{
+ "key": "98a98a6dcf6251a59b8afc665621ce5eadc419f8e499144609686d17fc01f7e8",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports revenue for the fiscal year (FY24), while Fact B reports for the calendar year 2024. The 21.5% difference is explained by the different timeframes covered by these reporting periods.\",\n  \"reconciling_evidence\": \"FY24 vs 2024\"\n}",
+ "created_at": 1788964650.670424,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 989,
+  "output": 107
+ }
+}

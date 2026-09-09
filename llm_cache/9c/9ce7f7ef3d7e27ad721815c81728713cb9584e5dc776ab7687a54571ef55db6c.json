@@ -1,0 +1,12 @@
+{
+ "key": "9ce7f7ef3d7e27ad721815c81728713cb9584e5dc776ab7687a54571ef55db6c",
+ "response": "{\n  \"verdict\": \"UNRELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"entity\",\n  \"explanation\": \"Fact A refers to 'Delhivery Limited', an Indian entity reporting in INR. Fact B refers to 'Delhivery Corp Limited' (DCL), a distinct entity reporting in GBP. These are different corporate entities, not merely a currency conversion difference.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788965311.2211468,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 971,
+  "output": 96
+ }
+}

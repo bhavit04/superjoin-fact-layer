@@ -117,9 +117,9 @@ doctor` reports it directly.
 <!--STATS-->
 | document | pages | facts | grounded |
 |---|---:|---:|---:|
-| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | 79% |
-| `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 968 | 93% |
 | `01-delhivery-prospectus-2022-excerpt.pdf` | 100 | 724 | 88% |
+| `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 968 | 93% |
+| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | 79% |
 | `01-india-economic-survey-2024-25-excerpt.pdf` | 89 | 329 | 100% |
 | `02-rbi-annual-report-2024-25-excerpt.pdf` | 100 | 622 | 94% |
 | `03-imf-india-2025-article-iv-excerpt.pdf` | 95 | 371 | 83% |
@@ -127,17 +127,18 @@ doctor` reports it directly.
 
 | relationship | count | |
 |---|---:|---|
-| **CORROBORATES** | 203 | the same claim, agreeing |
-| **RECONCILED** | 291 | disagreeing, but a stated difference in context explains it |
-| **CONTRADICTS** | 10 | disagreeing with nothing to explain it |
-| **RELATED** | 2,209 | same metric, different periods — a time series |
-| _of which cross-document_ | 611 | |
+| **CORROBORATES** | 202 | the same claim, agreeing |
+| **RECONCILED** | 286 | disagreeing, but a stated difference in context explains it |
+| **CONTRADICTS** | 7 | disagreeing with nothing to explain it |
+| **RELATED** | 2,188 | same metric, different periods — a time series |
+| _of which cross-document_ | 542 | |
 
 The fact schema grew to **1,325 metric names** and **107 qualifier keys** across **671 subjects** — none of it declared in advance. **77** proposed facts were rejected for failing to ground.
 <!--/STATS-->
 
 Every number in those two tables is read out of the database by `make readme-stats`,
-not typed. Full output, with evidence and reasoning for every example, is in
+not typed, and a rebuild reproduces them exactly -- ids are derived from content, so
+the same PDFs give the same corpus every time rather than merely a similar one. Full output, with evidence and reasoning for every example, is in
 **[`cases/CASES.md`](cases/CASES.md)**. `make verify` re-checks all of this against the
 database and exits non-zero if any of it stops being true.
 

@@ -31,7 +31,10 @@ class FactIndex:
         self.tokens: dict[str, set[str]] = {}
         self.by_cluster: dict[str, list[str]] = defaultdict(list)
 
-        for fact in facts:
+        # By id, not by however the rows arrived: posting order decides the order
+        # scores are summed in, and float addition is not associative, so an
+        # unsorted build makes neighbour scores differ in their last bits.
+        for fact in sorted(facts, key=lambda f: f["id"]):
             toks = set(metrics.metric_tokens(fact.get("metric_raw"))) or {"_untitled"}
             self.tokens[fact["id"]] = toks
             for token in toks:
@@ -48,7 +51,7 @@ class FactIndex:
 
     def add(self, facts: Iterable[dict]) -> None:
         """Extend in place, for linking a new document against what is stored."""
-        for fact in facts:
+        for fact in sorted(facts, key=lambda f: f["id"]):
             if fact["id"] in self.facts:
                 continue
             self.facts[fact["id"]] = fact
@@ -71,9 +74,11 @@ class FactIndex:
 
         # Stage 1: cheap IDF overlap. Very common tokens are skipped entirely
         # unless the metric is made only of common tokens.
+        # Sorted: set iteration order varies per process, and float addition is not
+        # associative, so an unordered walk gives different scores run to run.
         scores: dict[str, float] = defaultdict(float)
-        rare_tokens = [t for t in my_tokens if self.idf.get(t, 0.0) > 0.35]
-        for token in (rare_tokens or list(my_tokens)):
+        rare_tokens = [t for t in sorted(my_tokens) if self.idf.get(t, 0.0) > 0.35]
+        for token in (rare_tokens or sorted(my_tokens)):
             postings = self.postings.get(token, ())
             if len(postings) > 4000:
                 continue
@@ -91,7 +96,8 @@ class FactIndex:
         if not scores:
             return []
 
-        shortlist = sorted(scores.items(), key=lambda kv: -kv[1])[: max(top_k * 6, 60)]
+        # Ties broken by id, so the cut at the end of the shortlist is reproducible.
+        shortlist = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))[: max(top_k * 6, 60)]
 
         # Stage 2: full scoring on the shortlist only.
         out: list[Candidate] = []
@@ -118,7 +124,7 @@ class FactIndex:
             )
             out.append(Candidate(fact, other, similarity, same_cluster))
 
-        out.sort(key=lambda c: -c.similarity)
+        out.sort(key=lambda c: (-c.similarity, c.fact_b["id"]))
         return out[:top_k]
 
 

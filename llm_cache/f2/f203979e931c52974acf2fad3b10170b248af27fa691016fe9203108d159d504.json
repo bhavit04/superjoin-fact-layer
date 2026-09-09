@@ -1,0 +1,12 @@
+{
+ "key": "f203979e931c52974acf2fad3b10170b248af27fa691016fe9203108d159d504",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different reporting periods (FY2021 vs. the 12-month period ending December 31, 2021). Because these periods are distinct and non-identical, the figures are not expected to match, and the relationship is a time-series comparison rather than a contradiction or reconciliation.\",\n  \"reconciling_evidence\": \"Fact A: 'Year ended March 31, 2021'; Fact B: 'period ended December 31, 2021'\"\n}",
+ "created_at": 1788965332.562019,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1060,
+  "output": 148
+ }
+}

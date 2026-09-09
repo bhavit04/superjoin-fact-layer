@@ -1,0 +1,12 @@
+{
+ "key": "5edab7d849c99cd778d59f4acae6da68b0735b1a37636508dacd1fcf62659e77",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different time periods: Fact A reports an annual figure for 2023, while Fact B reports a quarterly figure for Q3 FY24. Because they cover non-overlapping or distinct reporting periods, they are not directly comparable and do not contradict each other.\",\n  \"reconciling_evidence\": \"Fact A: \\\"2023\\\"; Fact B: \\\"Q3 FY24\\\"\"\n}",
+ "created_at": 1788965300.697736,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1122,
+  "output": 124
+ }
+}

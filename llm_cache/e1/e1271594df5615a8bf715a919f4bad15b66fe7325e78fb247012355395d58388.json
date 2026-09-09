@@ -1,0 +1,12 @@
+{
+ "key": "e1271594df5615a8bf715a919f4bad15b66fe7325e78fb247012355395d58388",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports a full-year EBITDA loss for 2023, while Fact B reports a positive EBITDA for the specific fourth quarter of that fiscal year. For a metric like EBITDA, it is common for a profitable quarter to be nested within a loss-making full year.\",\n  \"reconciling_evidence\": \"Fact A: \\\"EBITDA 1,266.41 (4,516.08)\\\" Fact B: \\\"Q4 FY23: ₹13 Cr / 0.7%\\\"\"\n}",
+ "created_at": 1788964652.187194,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1117,
+  "output": 156
+ }
+}

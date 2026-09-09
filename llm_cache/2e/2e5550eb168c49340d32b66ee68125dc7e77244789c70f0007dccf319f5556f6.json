@@ -1,0 +1,12 @@
+{
+ "key": "2e5550eb168c49340d32b66ee68125dc7e77244789c70f0007dccf319f5556f6",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports Adjusted EBITDA for FY24 (INR 76 crore), while Fact B reports Adjusted EBITDA for FY23/2023 (INR -403.87 crore). The different reporting periods explain the numeric difference.\",\n  \"reconciling_evidence\": \"Fact A: \\\"FY24\\\", Fact B: \\\"2023\\\"\"\n}\n```",
+ "created_at": 1788964868.225936,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 975,
+  "output": 124
+ }
+}

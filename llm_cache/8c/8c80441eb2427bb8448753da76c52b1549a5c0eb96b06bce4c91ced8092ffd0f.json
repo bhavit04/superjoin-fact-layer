@@ -1,0 +1,12 @@
+{
+ "key": "8c80441eb2427bb8448753da76c52b1549a5c0eb96b06bce4c91ced8092ffd0f",
+ "response": "```json\n{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.98,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A and Fact B report the same annual revenue from services for Delhivery for FY2024. The minor difference between 8,142 Cr and 81,415.38 million/lakhs (8,141.54 Cr) is due to rounding.\",\n  \"reconciling_evidence\": \"Fact A: \\\"₹8,142 Cr FY24 revenue from services\\\"\\nFact B: \\\"Revenue from services* 81,415.38\\\"\"\n}\n```",
+ "created_at": 1788964866.753406,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 982,
+  "output": 157
+ }
+}

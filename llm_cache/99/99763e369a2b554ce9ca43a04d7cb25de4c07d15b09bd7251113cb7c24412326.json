@@ -1,0 +1,12 @@
+{
+ "key": "99763e369a2b554ce9ca43a04d7cb25de4c07d15b09bd7251113cb7c24412326",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a nine-month period ending December 31, 2020, while Fact B refers to the full Fiscal Year 2021. The difference in values is explained by the different durations and end dates of the reporting periods.\",\n  \"reconciling_evidence\": \"nine months period ended December 31, 2020 ... Fiscal 2021\"\n}",
+ "created_at": 1788965405.701644,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1099,
+  "output": 126
+ }
+}

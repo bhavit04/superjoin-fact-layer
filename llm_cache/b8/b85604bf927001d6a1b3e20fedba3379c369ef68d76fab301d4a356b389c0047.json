@@ -1,0 +1,12 @@
+{
+ "key": "b85604bf927001d6a1b3e20fedba3379c369ef68d76fab301d4a356b389c0047",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"Fact A and Fact B report the same financial metric for the same fiscal year. The slight numerical difference (5,669 vs 5,669.48) is negligible and attributable to rounding or precision differences in reporting, falling well within the acceptable tolerance for corroboration.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788965313.748437,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1062,
+  "output": 108
+ }
+}

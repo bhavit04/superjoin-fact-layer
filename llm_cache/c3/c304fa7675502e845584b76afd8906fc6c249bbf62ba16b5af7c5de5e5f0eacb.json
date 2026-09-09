@@ -1,0 +1,12 @@
+{
+ "key": "c304fa7675502e845584b76afd8906fc6c249bbf62ba16b5af7c5de5e5f0eacb",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"personnel\",\n  \"explanation\": \"The facts describe different individuals serving on the same committee. Fact A identifies a member who ceased their role, while Fact B identifies a current member. They are not conflicting claims about the same person or role.\",\n  \"reconciling_evidence\": \"Fact A: 'Mr. Sandeep Kumar Barasia ceased to be a member of the Committee'; Fact B: 'Member – Mr. Sahil Barua'\"\n}",
+ "created_at": 1788964597.729393,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1014,
+  "output": 121
+ }
+}

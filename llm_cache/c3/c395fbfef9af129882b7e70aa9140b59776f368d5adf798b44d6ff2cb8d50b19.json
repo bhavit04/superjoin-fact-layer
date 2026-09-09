@@ -1,0 +1,12 @@
+{
+ "key": "c395fbfef9af129882b7e70aa9140b59776f368d5adf798b44d6ff2cb8d50b19",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"The two figures (-6.3% and -6.25%) are effectively identical, with the minor difference attributable to rounding. Both sources refer to the same fiscal period (FY23/2023) and metric, making this a corroboration rather than a conflict or reconciliation.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964638.373662,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 990,
+  "output": 109
+ }
+}

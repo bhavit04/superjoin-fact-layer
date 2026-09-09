@@ -1,0 +1,12 @@
+{
+ "key": "06640c26b75ce1dc028e166ea8248c6118e62b654f83e3d0d4359189be91dc47",
+ "response": "{\n  \"verdict\": \"CONTRADICTS\",\n  \"confidence\": 0.9,\n  \"dimension\": \"value\",\n  \"explanation\": \"Both facts report revenue for the same entity and metric for the same fiscal year (FY24/2024). The values (776 crore vs 152.53 crore) differ by over 80%, which is too large to be explained by minor reporting differences or period misalignment. They represent conflicting data points for the same annual performance.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964632.941337,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1005,
+  "output": 124
+ }
+}

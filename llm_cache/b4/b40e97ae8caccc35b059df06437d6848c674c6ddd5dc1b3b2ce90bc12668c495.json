@@ -1,0 +1,12 @@
+{
+ "key": "b40e97ae8caccc35b059df06437d6848c674c6ddd5dc1b3b2ce90bc12668c495",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts are reconciled because they refer to different, nested time periods: Fact A reports a quarterly figure (Q4 FY23), while Fact B reports the full fiscal year (FY23). It is mathematically possible for a quarterly profit to be positive while the full-year result is a loss.\",\n  \"reconciling_evidence\": \"Fact A: \\\"Q4 FY23: ₹13 Cr\\\"; Fact B: \\\"loss of ₹4,516 million in FY23\\\"\"\n}",
+ "created_at": 1788965318.58587,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1134,
+  "output": 144
+ }
+}

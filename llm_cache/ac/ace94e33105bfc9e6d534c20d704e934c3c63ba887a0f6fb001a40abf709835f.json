@@ -1,0 +1,12 @@
+{
+ "key": "ace94e33105bfc9e6d534c20d704e934c3c63ba887a0f6fb001a40abf709835f",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"basis\",\n  \"explanation\": \"While both figures represent cash and cash equivalents for FY2023, they reflect different reporting bases. Fact A likely represents standalone figures, whereas Fact B explicitly specifies a consolidated basis, accounting for the material difference in the reported values.\",\n  \"reconciling_evidence\": \"Fact B: 'basis=Consolidated'\"\n}",
+ "created_at": 1788965305.3109398,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1058,
+  "output": 105
+ }
+}

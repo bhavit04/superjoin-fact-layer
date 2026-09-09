@@ -1,0 +1,12 @@
+{
+ "key": "5da9dfa7647bf756d25eaec8761c0f8b7938c14b22dcd0c75457cf712e6ffdcb",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact B reports an increase in ownership to 39% during FY24, which explains why it is higher than the 35.98% stake reported for the 2023 period in Fact A.\",\n  \"reconciling_evidence\": \"We increased our ownership in Falcon Autotech... to 39%.\"\n}",
+ "created_at": 1788965347.9452002,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 966,
+  "output": 111
+ }
+}

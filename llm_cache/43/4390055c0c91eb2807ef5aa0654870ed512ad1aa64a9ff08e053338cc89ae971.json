@@ -1,0 +1,12 @@
+{
+ "key": "4390055c0c91eb2807ef5aa0654870ed512ad1aa64a9ff08e053338cc89ae971",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports an EBITDA margin of 1.6% for FY24, whereas Fact B reports -6.25% for the year 2023. The differing reporting periods account for the variation in values.\",\n  \"reconciling_evidence\": \"Fact A: \\\"FY24\\\" Fact B: \\\"2023\\\"\"\n}\n```",
+ "created_at": 1788964767.850873,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 947,
+  "output": 119
+ }
+}

@@ -8,9 +8,9 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 
 | document | pages | facts | primary entity |
 |---|---:|---:|---|
-| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | Delhivery Limited |
-| `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 968 | Delhivery Limited |
 | `01-delhivery-prospectus-2022-excerpt.pdf` | 100 | 724 | Delhivery Corp Limited |
+| `02-delhivery-annual-report-fy24-excerpt.pdf` | 100 | 968 | Delhivery Limited |
+| `03-delhivery-q4-fy24-earnings-presentation.pdf` | 27 | 118 | Delhivery Limited |
 | `01-india-economic-survey-2024-25-excerpt.pdf` | 89 | 329 | India |
 | `02-rbi-annual-report-2024-25-excerpt.pdf` | 100 | 622 | India |
 | `03-imf-india-2025-article-iv-excerpt.pdf` | 95 | 371 | India |
@@ -20,12 +20,12 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 | documents | 6 |
 | facts | 3,132 |
 | facts grounded | 2,856 |
-| relations | 2,713 |
-| relations cross doc | 611 |
-| relations · CONTRADICTS | 10 |
-| relations · CORROBORATES | 203 |
-| relations · RECONCILED | 291 |
-| relations · RELATED | 2,209 |
+| relations | 2,683 |
+| relations cross doc | 542 |
+| relations · CONTRADICTS | 7 |
+| relations · CORROBORATES | 202 |
+| relations · RECONCILED | 286 |
+| relations · RELATED | 2,188 |
 | quarantined | 77 |
 | distinct metrics | 1,325 |
 | distinct qualifiers | 107 |
@@ -37,18 +37,9 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 
 Ranked by how *differently* the two sources state the same agreeing fact, so the examples shown are the ones that only match because of normalization.
 
-### 1. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
+### 1. CORROBORATES  ·  confidence 0.95  ·  cross-document  ·  decided by `llm`  ·  explained by **period**
 
-**Fact A — Delhivery Limited · revenue from services**
-
-- Value as printed: `₹81,415Mn`
-- Normalized: `INR 8,141.50 crore`
-- Period: `FY24` → `FY2024`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
-
-> ₹81,415Mn Revenue from services
-
-**Fact B — Delhivery Limited · revenue for services**
+**Fact A — Delhivery Limited · revenue for services**
 
 - Value as printed: `8,142`
 - Normalized: `INR 8,142.00 crore`
@@ -57,59 +48,34 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 > Revenue for services (A) 1,860 2,194 2,076 (5.4%) 11.6%
 
-**System reasoning.** INR 8,141.50 crore and INR 8,142.00 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
+**Fact B — Delhivery Limited · revenue from services**
+
+- Value as printed: `81,415.38`
+- Normalized: `INR 8,141.54 crore`
+- Period: `2024` → `2024`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 85
+
+> Revenue from services* 81,415.38 72,236.47
+
+**System reasoning.** Both facts report Delhivery's revenue from services for FY24/2024 as approximately INR 8,142 crore. The minor difference of 0.0057% is due to rounding. Supporting words: “Fact A: "Revenue for services (A) 1,860 2,194 2,076"
+Fact B: "Revenue from services* 81,415.38"”
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `EQUAL` — both cover FY2024 |
+| period relation | `OVERLAPS` — FY2024 partially overlaps 2024 |
 | units | `INR` ↔ `INR` (comparable) |
-| values compared | `8.1415e+10` vs `8.142e+10` |
-| relative difference | `0.0061%` |
+| values compared | `8.142e+10` vs `8.14154e+10` |
+| relative difference | `0.0057%` |
 | verdict on that | within rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `0.999939` |
+| ratio A/B | `1.00006` |
+| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
 
 </details>
 
-### 2. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
-
-**Fact A — Delhivery Limited · revenue from services**
-
-- Value as printed: `81,415`
-- Normalized: `INR 8,141.50 crore`
-- Period: `FY24` → `FY2024`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 6
-
-> Revenue from services* (₹ million) 72,236 FY23 70,536 FY22 81,415 FY24
-
-**Fact B — Delhivery Limited · revenue for services**
-
-- Value as printed: `8,142`
-- Normalized: `INR 8,142.00 crore`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 17
-
-> Revenue for services (A) 1,860 2,194 2,076 (5.4%) 11.6%
-
-**System reasoning.** INR 8,141.50 crore and INR 8,142.00 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover FY2024 |
-| units | `INR` ↔ `INR` (comparable) |
-| values compared | `8.1415e+10` vs `8.142e+10` |
-| relative difference | `0.0061%` |
-| verdict on that | within rounding tolerance |
-| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `0.999939` |
-
-</details>
-
-### 3. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
+### 2. CORROBORATES  ·  confidence 0.95  ·  cross-document  ·  decided by `llm`  ·  explained by **period**
 
 **Fact A — Delhivery Limited · revenue for services**
 
@@ -122,23 +88,60 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 **Fact B — Delhivery Limited · revenue from services**
 
-- Value as printed: `72,236`
-- Normalized: `INR 7,223.60 crore`
-- Period: `FY23` → `FY2023`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 6
+- Value as printed: `72,236.47`
+- Normalized: `INR 7,223.65 crore`
+- Period: `2023` → `2023`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 85
 
-> Revenue from services* (₹ million) 72,236 FY23
+> Revenue from services* 81,415.38 72,236.47
 
-**System reasoning.** INR 7,224.00 crore and INR 7,223.60 crore agree to within 0.01% for FY2023, inside the 0.05% tolerance implied by how precisely each figure is written.
+**System reasoning.** Both facts report revenue from services for the 2023 fiscal period. Fact A reports INR 7,224 crore and Fact B reports INR 7,223.65 crore (72,236.47 million). The difference of less than 0.01% is due to rounding.
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `EQUAL` — both cover FY2023 |
+| period relation | `OVERLAPS` — FY2023 partially overlaps 2023 |
 | units | `INR` ↔ `INR` (comparable) |
-| values compared | `7.224e+10` vs `7.2236e+10` |
-| relative difference | `0.0055%` |
+| values compared | `7.224e+10` vs `7.22365e+10` |
+| relative difference | `0.0049%` |
+| verdict on that | within rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `1.00005` |
+| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
+
+</details>
+
+### 3. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
+
+**Fact A — Delhivery Limited · revenue for services**
+
+- Value as printed: `8,142`
+- Normalized: `INR 8,142.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 17
+
+> Revenue for services (A) 1,860 2,194 2,076 (5.4%) 11.6%
+
+**Fact B — Delhivery Limited · revenue from services**
+
+- Value as printed: `81,415`
+- Normalized: `INR 8,141.50 crore`
+- Period: `FY24` → `FY2024`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 6
+
+> Revenue from services* (₹ million) 72,236 FY23 70,536 FY22 81,415 FY24
+
+**System reasoning.** INR 8,142.00 crore and INR 8,141.50 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover FY2024 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `8.142e+10` vs `8.1415e+10` |
+| relative difference | `0.0061%` |
 | verdict on that | within rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
 | ratio A/B | `1.00006` |
@@ -152,7 +155,81 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 Same metric, same subject, same resolved period, and no stated difference in basis, scope or units — yet the figures disagree by more than rounding can explain.
 
-### 1. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `hybrid`  ·  explained by **definition**
+### 1. CONTRADICTS  ·  confidence 0.90  ·  cross-document  ·  decided by `llm`  ·  explained by **value**
+
+**Fact A — Delhivery Limited · Cross Border Services revenue**
+
+- Value as printed: `776`
+- Normalized: `INR 776.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 10
+
+> FY22 FY23 FY24 TL revenue Cross Border Services revenue (3) (₹ Cr) (₹ Cr) Suppl
+
+**Fact B — Delhivery Limited · revenues from cross-border services**
+
+- Value as printed: `1,525.31`
+- Normalized: `INR 152.53 crore`
+- Period: `2024` → `2024`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 36
+
+> Revenues from cross-border services 1,525.31 1.87% 2,957.68 4.09%
+
+**System reasoning.** Both facts report revenue for the same entity and metric for the same fiscal year (FY24/2024). The values (776 crore vs 152.53 crore) differ by over 80%, which is too large to be explained by minor reporting differences or period misalignment. They represent conflicting data points for the same annual performance.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `OVERLAPS` — FY2024 partially overlaps 2024 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `7.76e+09` vs `1.52531e+09` |
+| relative difference | `80.3439%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.0644%` (from how precisely each figure is written) |
+| ratio A/B | `5.08749` |
+| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
+
+</details>
+
+### 2. CONTRADICTS  ·  confidence 0.90  ·  cross-document  ·  decided by `llm`  ·  explained by **value**
+
+**Fact A — Delhivery Limited · Cross Border Services revenue**
+
+- Value as printed: `776`
+- Normalized: `INR 776.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 10
+
+> FY22 FY23 FY24 TL revenue Cross Border Services revenue (3) (₹ Cr) (₹ Cr) Suppl
+
+**Fact B — Delhivery Limited · revenue from cross border services**
+
+- Value as printed: `1,525.31`
+- Normalized: `INR 152.53 crore`
+- Period: `2024` → `2024`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 85
+
+> Revenue from Cross Border services 1,525.31 2,957.68
+
+**System reasoning.** Both facts refer to the same metric for the same fiscal year (FY24/2024). The values (776 crore vs 152.53 crore) differ by a magnitude that cannot be explained by simple period or unit differences. The discrepancy is material and represents a direct conflict in reported financial data.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `OVERLAPS` — FY2024 partially overlaps 2024 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `7.76e+09` vs `1.52531e+09` |
+| relative difference | `80.3439%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.0644%` (from how precisely each figure is written) |
+| ratio A/B | `5.08749` |
+| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
+
+</details>
+
+### 3. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `hybrid`  ·  explained by **definition**
 
 **Fact A — Delhivery Limited · adjusted ebitda**
 
@@ -189,78 +266,6 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 </details>
 
-### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
-
-**Fact A — Global economy · growth rate**
-
-- Value as printed: `3.5 per cent`
-- Normalized: `3.50 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 7
-
-> global growth at 3.3 per cent in 2024 (3.5 per cent a year ago)
-
-**Fact B — Global economy · growth rate**
-
-- Value as printed: `3.3 per cent`
-- Normalized: `3.30 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 7
-
-> global growth at 3.3 per cent in 2024
-
-**System reasoning.** Both sources report this metric for 2024, with no stated difference in basis, scope or units, yet the figures differ by 5.7% (3.50 % vs 3.30 %).
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover 2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `3.5` vs `3.3` |
-| relative difference | `5.7143%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `1.5152%` (from how precisely each figure is written) |
-| ratio A/B | `1.06061` |
-
-</details>
-
-### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
-
-**Fact A — Spoton · Active Customers**
-
-- Value as printed: `5,533`
-- Normalized: `5,533`
-- Period: `period ended December 31, 2021` → `12M to 2021-12-31`
-- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 59
-
-> In addition, Spoton offers PTL freight services to 5,533 Active Customers across industry verticals.
-
-**Fact B — Spoton · number of active customers**
-
-- Value as printed: `5,541`
-- Normalized: `5,541`
-- Period: `2021` → `2021`
-- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 45
-
-> No. of Active Customers 5,234 5,541 (1) Includes permanent
-
-**System reasoning.** Both sources report this metric for 12M to 2021-12-31, with no stated difference in basis, scope or units, yet the figures differ by 0.1% (5,533 vs 5,541).
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover 12M to 2021-12-31 |
-| units | `count` ↔ `count` (comparable) |
-| values compared | `5,533` vs `5,541` |
-| relative difference | `0.1444%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `0.998556` |
-
-</details>
-
 
 ---
 
@@ -268,56 +273,16 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 The numbers disagree, but a stated difference in period, basis, scope, unit or currency accounts for it. The dimension that resolves the conflict is named.
 
-### 1. RECONCILED  ·  confidence 0.90  ·  cross-document  ·  decided by `hybrid`  ·  explained by **period**
-
-**Fact A — Food inflation · inflation rate**
-
-- Value as printed: `6.7 per cent`
-- Normalized: `6.70 %`
-- Period: `2024-25` → `FY2025`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 10
-
-> food inflation remained elevated at 6.7 per cent in 2024-25
-
-**Fact B — Food inflation · inflation rate**
-
-- Value as printed: `8.4 per cent`
-- Normalized: `8.40 %`
-- Period: `FY25` → `FY2025`
-- Qualifiers: `measure=CFPI`
-- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 28
-
-> Food inflation, measured by the Consumer Food Price Index (CFPI), has increased from 7.5 per cent in FY24 to 8.4 per cent in FY25 (April-December)
-
-**System reasoning.** Fact A reports the full fiscal year 2024-25, while Fact B reports only the April-December period of FY25. The difference in the time period covered explains why the inflation figures do not match. Supporting words: “Fact B: '8.4 per cent in FY25 (April-December)'”
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover FY2025 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `6.7` vs `8.4` |
-| relative difference | `20.2381%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.7463%` (from how precisely each figure is written) |
-| ratio A/B | `0.797619` |
-| qualifier `measure` | A=`(unstated)` · B=`CFPI` |
-| hypothesis 1 | stated measure differs (unstated vs CFPI), a definition difference |
-| rule-based verdict | `RECONCILED` — confirmed by the adjudicator |
-
-</details>
-
-### 2. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `hybrid`  ·  explained by **period**
+### 1. RECONCILED  ·  confidence 0.95  ·  cross-document  ·  decided by `hybrid`  ·  explained by **period**
 
 **Fact A — Delhivery Limited · EBITDA**
 
-- Value as printed: `₹(452) Cr`
-- Normalized: `INR -452.00 crore`
-- Period: `FY23` → `FY2023`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 6
+- Value as printed: `(4,516.08)`
+- Normalized: `INR -451.61 crore`
+- Period: `2023` → `2023`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 36
 
-> FY23: ₹(452) Cr / (6.3%)
+> EBITDA 1,266.41 (4,516.08)
 
 **Fact B — Delhivery Limited · EBITDA**
 
@@ -328,58 +293,95 @@ The numbers disagree, but a stated difference in period, basis, scope, unit or c
 
 > Q4 FY23: ₹13 Cr / 0.7%
 
-**System reasoning.** Fact A represents the full fiscal year (FY23) EBITDA, while Fact B represents only the fourth quarter (Q4 FY23). The full-year loss of ₹452 Cr is consistent with a profitable fourth quarter of ₹13 Cr, implying significant losses in the preceding three quarters. Supporting words: “FY23: ₹(452) Cr / (6.3%) ... Q4 FY23: ₹13 Cr / 0.7%”
+**System reasoning.** Fact A reports a full-year EBITDA loss for 2023, while Fact B reports a positive EBITDA for the specific fourth quarter of that fiscal year. For a metric like EBITDA, it is common for a profitable quarter to be nested within a loss-making full year. Supporting words: “Fact A: "EBITDA 1,266.41 (4,516.08)" Fact B: "Q4 FY23: ₹13 Cr / 0.7%"”
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `CONTAINS` — FY2023 contains Q4 FY2023 |
+| period relation | `CONTAINS` — 2023 contains Q4 FY2023 |
 | units | `INR` ↔ `INR` (comparable) |
-| values compared | `-4.52e+09` vs `1.3e+08` |
-| relative difference | `102.8761%` |
+| values compared | `-4.51608e+09` vs `1.3e+08` |
+| relative difference | `102.8786%` |
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `3.8462%` (from how precisely each figure is written) |
-| ratio A/B | `-34.7692` |
-| hypothesis 1 | the shorter period reports INR 13.00 crore, which exceeds the INR -452.00 crore reported for the longer period containing it -- consistent only if other sub-periods were negative |
-| hypothesis 2 | periods nest: FY2023 contains Q4 FY2023 |
+| ratio A/B | `-34.7391` |
+| hypothesis 1 | the shorter period reports INR 13.00 crore, which exceeds the INR -451.61 crore reported for the longer period containing it -- consistent only if other sub-periods were negative |
+| hypothesis 2 | periods nest: 2023 contains Q4 FY2023 |
 | rule-based verdict | `RECONCILED` — confirmed by the adjudicator |
 
 </details>
 
-### 3. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `hybrid`  ·  explained by **period**
+### 2. RECONCILED  ·  confidence 0.95  ·  cross-document  ·  decided by `hybrid`  ·  explained by **period**
 
-**Fact A — India · forex reserves increase**
+**Fact A — Delhivery Limited · EBITDA**
 
-- Value as printed: `USD 59.4 billion`
-- Normalized: `USD 59.40 bn`
-- Period: `FY25` → `FY2025`
-- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 71
+- Value as printed: `(4,516.08)`
+- Normalized: `INR -451.61 crore`
+- Period: `2023` → `2023`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 36
 
-> In H1 of FY25, forex reserves rose by USD 59.4 billion
+> EBITDA 1,266.41 (4,516.08)
 
-**Fact B — India · forex reserves increase**
+**Fact B — Delhivery Limited · EBITDA**
 
-- Value as printed: `USD 27.1 billion`
-- Normalized: `USD 27.10 bn`
-- Period: `2024` → `2024`
-- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 71
+- Value as printed: `Rs. 127 Cr`
+- Normalized: `INR 127.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 5
 
-> India’s forex reserves witnessed a notable increase of USD 27.1 billion in 2024.
+> FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr
 
-**System reasoning.** The facts refer to different timeframes: Fact A covers the first half of the fiscal year 2025 (April to September 2024), while Fact B covers the calendar year 2024. Because the periods are not identical, the difference in values does not constitute a contradiction. Supporting words: “Fact A: "In H1 of FY25"; Fact B: "in 2024"”
+**System reasoning.** Fact A reports EBITDA for 2023 (FY23), whereas Fact B reports EBITDA for FY24. The difference is explained by comparing two distinct financial periods. Supporting words: “"EBITDA 1,266.41 (4,516.08)" and "FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr"”
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `OVERLAPS` — FY2025 partially overlaps 2024 |
-| units | `USD` ↔ `USD` (comparable) |
-| values compared | `5.94e+10` vs `2.71e+10` |
-| relative difference | `54.3771%` |
+| period relation | `OVERLAPS` — 2023 partially overlaps FY2024 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `-4.51608e+09` vs `1.27e+09` |
+| relative difference | `128.1217%` |
 | verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.1845%` (from how precisely each figure is written) |
-| ratio A/B | `2.19188` |
+| rounding tolerance | `0.3937%` (from how precisely each figure is written) |
+| ratio A/B | `-3.55597` |
+| rule-based verdict | `RECONCILED` — confirmed by the adjudicator |
+
+</details>
+
+### 3. RECONCILED  ·  confidence 0.95  ·  cross-document  ·  decided by `hybrid`  ·  explained by **period**
+
+**Fact A — Delhivery Limited · adjusted EBITDA**
+
+- Value as printed: `76`
+- Normalized: `INR 76.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 23
+
+> Adjusted EBITDA 6 92 21 (404) 76
+
+**Fact B — Delhivery Limited · adjusted EBITDA**
+
+- Value as printed: `(4,038.66)`
+- Normalized: `INR -403.87 crore`
+- Period: `2023` → `2023`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 36
+
+> Adjusted EBITDA1 757.86 (4,038.66)
+
+**System reasoning.** Fact A reports Adjusted EBITDA for FY24 (INR 76 crore), while Fact B reports Adjusted EBITDA for FY23/2023 (INR -403.87 crore). The different reporting periods explain the numeric difference. Supporting words: “Fact A: "FY24", Fact B: "2023"”
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `OVERLAPS` — FY2024 partially overlaps 2023 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `7.6e+08` vs `-4.03866e+09` |
+| relative difference | `118.8181%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.6579%` (from how precisely each figure is written) |
+| ratio A/B | `-0.188181` |
 | rule-based verdict | `RECONCILED` — confirmed by the adjudicator |
 
 </details>
@@ -400,7 +402,7 @@ storage; failures are written to a quarantine table with a reason instead of bei
 | fuzzy grounded | 530 |
 | unresolved period | 634 |
 | unresolved period pct | 20.2 |
-| rule verdicts overturned | 1 |
+| rule verdicts overturned | 5 |
 
 ### Why facts were rejected
 
@@ -413,39 +415,70 @@ storage; failures are written to a quarantine table with a reason instead of bei
 
 The most useful place to look for reasoning errors on either side.
 
-### 1. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **period**
+### 1. RELATED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **identity**
 
-**Fact A — Global economy · GDP growth**
+**Fact A — Audit Committee · member**
 
-- Value as printed: `3.5 per cent`
-- Normalized: `3.50 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 22
+- Value as printed: `Suvir Suren Sujan`
+- Qualifiers: `role=Non-Executive Nominee Director`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 92
 
-> Global GDP grew by 3.3 per cent in 2024 (3.5 per cent a year ago)
+> (c) Suvir Suren Sujan, Non-Executive Nominee Director (Member).
 
-**Fact B — Global economy · GDP growth**
+**Fact B — Audit Committee · member**
 
-- Value as printed: `3.3 per cent`
-- Normalized: `3.30 %`
-- Period: `2024` → `2024`
-- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 22
+- Value as printed: `Srivatsan Rajan`
+- Qualifiers: `role=Non-Executive Independent Director`
+- Source: `01-delhivery-prospectus-2022-excerpt.pdf`, page 92
 
-> Global GDP grew by 3.3 per cent in 2024
+> (b) Srivatsan Rajan, Non-Executive Independent Director (Member); and
 
-**System reasoning.** Fact A reports 3.5% as the growth rate for 'a year ago' (2023), while Fact B correctly identifies 3.3% as the growth rate for 2024. The document text in Fact A clarifies that the 3.5% figure refers to the prior year, not 2024. Supporting words: “Fact A: "3.5 per cent a year ago"; Fact B: "Global GDP grew by 3.3 per cent in 2024"”
+**System reasoning.** Fact A and Fact B identify different individuals serving as members of the same Audit Committee. They are not conflicting claims about the same person or role, but rather a list of distinct committee members.
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `EQUAL` — both cover 2024 |
-| units | `%` ↔ `%` (comparable) |
-| values compared | `3.5` vs `3.3` |
-| relative difference | `5.7143%` |
-| verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `1.5152%` (from how precisely each figure is written) |
-| ratio A/B | `1.06061` |
+| period relation | `UNKNOWN` — at least one period could not be resolved |
+| units | `` vs `` — **not directly comparable** |
+| qualifier `role` | A=`Non-Executive Nominee Director` · B=`Non-Executive Independent Director` |
+| rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
+
+</details>
+
+### 2. RECONCILED  ·  confidence 1.00  ·  same document  ·  decided by `llm`  ·  explained by **definition**
+
+**Fact A — Mr. Anindya Ghose · board role**
+
+- Value as printed: `member of the Committee`
+- Period: `2023` → `2023`
+- Qualifiers: `committee=Risk Management Committee`, `effective_date=November 04, 2023`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 44
+
+> Mr. Anindya Ghose has been appointed as member of the Committee with effect from November 04, 2023.
+
+**Fact B — Mr. Anindya Ghose · board role**
+
+- Value as printed: `Non-Executive Independent Director`
+- Period: `2023` → `2023`
+- Qualifiers: `effective_date=August 04, 2023`, `status=appointed`, `tenure=5 years`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 40
+
+> Mr. Anindya Ghose was appointed as Non-Executive Independent Director for a period of 5 years with effect from August 04, 2023.
+
+**System reasoning.** The facts describe different roles held by the same individual. Fact A refers to an appointment to a specific committee (Risk Management Committee), while Fact B refers to an appointment as a Non-Executive Independent Director. These are distinct board-related positions. Supporting words: “Fact A: "member of the Committee"; Fact B: "Non-Executive Independent Director"”
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover 2023 |
+| units | `` vs `` — **not directly comparable** |
+| qualifier `committee` | A=`Risk Management Committee` · B=`(unstated)` |
+| qualifier `effective_date` | A=`November 04, 2023` · B=`August 04, 2023` |
+| qualifier `tenure` | A=`(unstated)` · B=`5 years` |
+| qualifier `status` | A=`(unstated)` · B=`appointed` |
+| hypothesis 1 | stated status differs (unstated vs appointed), a vintage difference |
 | rule-based verdict | `CONTRADICTS` — **overturned** by the adjudicator |
 
 </details>

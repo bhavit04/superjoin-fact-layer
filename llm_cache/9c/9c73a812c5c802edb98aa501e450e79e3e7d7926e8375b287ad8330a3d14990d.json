@@ -1,0 +1,12 @@
+{
+ "key": "9c73a812c5c802edb98aa501e450e79e3e7d7926e8375b287ad8330a3d14990d",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"identity\",\n  \"explanation\": \"Fact A and Fact B identify different individuals serving as members of the same Audit Committee. They are not conflicting claims about the same person or role, but rather a list of distinct committee members.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964610.1124768,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 896,
+  "output": 84
+ }
+}

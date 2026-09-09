@@ -1,0 +1,12 @@
+{
+ "key": "7aeb005465abf928a431a8c81e7133b41859d563106945e2cfcd63c0ac66fa0e",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"\",\n  \"explanation\": \"Both facts report the same metric for the same fiscal year (FY2024). The slight numerical difference (5,970.75 vs 5,971) is due to rounding, which falls well within the acceptable tolerance for corroboration.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788965322.6252291,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1061,
+  "output": 102
+ }
+}

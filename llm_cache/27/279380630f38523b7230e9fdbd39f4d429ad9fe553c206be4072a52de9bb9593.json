@@ -1,0 +1,12 @@
+{
+ "key": "279380630f38523b7230e9fdbd39f4d429ad9fe553c206be4072a52de9bb9593",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports revenue for the full fiscal year 2024 (April 2023 - March 2024), while Fact B reports revenue for the calendar year 2023. While the periods overlap, they represent different reporting windows and thus different totals.\",\n  \"reconciling_evidence\": \"Fact A: \\\"FY22 FY23 FY24 Supply Chain Services revenue\\\" Fact B: \\\"Revenue from Supply Chain services# 7,760.29 7,817.47\\\"\"\n}",
+ "created_at": 1788964686.5012412,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 990,
+  "output": 153
+ }
+}

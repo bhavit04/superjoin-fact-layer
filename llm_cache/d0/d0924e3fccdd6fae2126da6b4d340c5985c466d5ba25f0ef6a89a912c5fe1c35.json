@@ -1,0 +1,12 @@
+{
+ "key": "d0924e3fccdd6fae2126da6b4d340c5985c466d5ba25f0ef6a89a912c5fe1c35",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different fiscal periods (FY24 vs. 2023). While they both measure 'Cross Border Services revenue', they represent distinct timeframes, making them a time series rather than a direct conflict or corroboration.\",\n  \"reconciling_evidence\": \"Fact A: 'FY24'; Fact B: '2023'\"\n}",
+ "created_at": 1788964638.9306939,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 991,
+  "output": 112
+ }
+}

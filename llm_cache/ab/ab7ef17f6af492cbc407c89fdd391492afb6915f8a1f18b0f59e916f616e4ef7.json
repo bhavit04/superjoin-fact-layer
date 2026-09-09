@@ -1,0 +1,12 @@
+{
+ "key": "ab7ef17f6af492cbc407c89fdd391492afb6915f8a1f18b0f59e916f616e4ef7",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"unit\",\n  \"explanation\": \"Fact A reports 990.92 million INR (approx. 99.09 crore), while Fact B reports 99 crore INR. The figures represent the same amount stated in different scale units (millions vs. crores).\",\n  \"reconciling_evidence\": \"Fact A: \\\"Net cash used in investing activities (B) (990.92)\\\" vs Fact B: \\\"Net cash from / (used in) investing activities (3,411) (99)\\\"\"\n}\n```",
+ "created_at": 1788964882.037796,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1062,
+  "output": 156
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "bca3915019e714f6112f105cf67220b47214bd336b73e55eb6d573c79f2eea77",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports positive EBITDA of ₹13 Cr for Q4 FY23, while Fact B reports full-year FY23 EBITDA of negative ₹451.60 Cr (-4,516 million). A positive quarter within a negative full year is mathematically consistent if earlier quarters in FY23 incurred losses.\",\n  \"reconciling_evidence\": \"\\\"Q4 FY23: ₹13 Cr / 0.7%\\\" versus \\\"EBITDA (₹ million) and EBITDA margin (%)* FY20 FY21 FY22 FY23 FY24 (6.9) (9.1) 1.0 (5.6) 0.9 (2,53\\\"\"\n}\n```",
+ "created_at": 1788964875.381691,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1156,
+  "output": 198
+ }
+}

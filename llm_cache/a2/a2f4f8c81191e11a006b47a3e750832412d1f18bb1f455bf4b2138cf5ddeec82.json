@@ -1,0 +1,12 @@
+{
+ "key": "a2f4f8c81191e11a006b47a3e750832412d1f18bb1f455bf4b2138cf5ddeec82",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different reporting periods: Fact A covers the calendar year 2023, while Fact B covers the financial year 2024 (April 2023–March 2024). Because these periods are distinct, the differing EBITDA figures do not represent a conflict but rather a time-series comparison of performance across different fiscal windows.\",\n  \"reconciling_evidence\": \"Fact A: '2023'; Fact B: 'FY24'\"\n}",
+ "created_at": 1788965307.774297,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 971,
+  "output": 139
+ }
+}

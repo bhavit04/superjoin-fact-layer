@@ -1,0 +1,12 @@
+{
+ "key": "792ba511595f23b521a47a9a36445da34b66fa64678a90245c432c6fe21bcea1",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different reporting periods. Fact A reports the Adjusted EBITDA margin for the full Fiscal Year 2020, while Fact B reports the margin for the nine-month period ended December 31, 2020. These are distinct timeframes, explaining the difference in values.\",\n  \"reconciling_evidence\": \"Fact A: 'Fiscal 2020'; Fact B: 'nine months period ended December 31, 2020'\"\n}",
+ "created_at": 1788965340.917691,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1103,
+  "output": 141
+ }
+}

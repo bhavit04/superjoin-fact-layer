@@ -1,0 +1,12 @@
+{
+ "key": "b79a53919834ef1627124accf6a7d8c6c2bbc8b3204a74d3e88944494977c565",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.9,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"The difference between 5,533 and 5,541 is approximately 0.14%. Per the guidance, differences under 1% are considered corroborating rather than contradictory, as they likely represent minor reporting discrepancies or rounding differences within the same document.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964638.553003,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1063,
+  "output": 105
+ }
+}

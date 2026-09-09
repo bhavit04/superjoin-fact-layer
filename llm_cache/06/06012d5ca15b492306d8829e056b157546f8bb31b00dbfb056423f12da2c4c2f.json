@@ -1,0 +1,12 @@
+{
+ "key": "06012d5ca15b492306d8829e056b157546f8bb31b00dbfb056423f12da2c4c2f",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different fiscal periods (FY24 vs. 2023) and potentially different scopes or definitions of 'cross-border services' revenue, as evidenced by the significant discrepancy in values. They are not directly comparable, representing different time slices rather than a conflict.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788964624.497587,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1005,
+  "output": 104
+ }
+}

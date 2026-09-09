@@ -1,0 +1,12 @@
+{
+ "key": "999bd4d0bbf1f8533c46cf59188a1b30b254b6ed0e9642d0d3400220c7d0f95f",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A refers to a nine-month period ending December 31, 2020, while Fact B refers to the full Fiscal Year 2020. The difference in the profit margin is explained by the different durations and specific timeframes being reported.\",\n  \"reconciling_evidence\": \"nine months period ended December 31, 2020 ... in Fiscal 2020\"\n}",
+ "created_at": 1788965352.42725,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1089,
+  "output": 128
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "key": "5e52f8a44d611dba46da0c5e069f938ccc0aa2ca57827efd0d11ea75db0846a3",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.9,\n  \"dimension\": \"definition\",\n  \"explanation\": \"The facts describe different roles held by the same individual at different times or in different capacities. Fact A notes a resignation from the CFO position, while Fact B identifies the individual as the Chief Operating Officer, which is a distinct role.\",\n  \"reconciling_evidence\": \"Fact A: 'Resignation as chief financial officer'; Fact B: 'Chief Operating Officer (Member)'\"\n}",
+ "created_at": 1788964604.712992,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1033,
+  "output": 117
+ }
+}

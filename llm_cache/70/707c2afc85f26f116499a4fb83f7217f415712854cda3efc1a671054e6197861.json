@@ -1,0 +1,12 @@
+{
+ "key": "707c2afc85f26f116499a4fb83f7217f415712854cda3efc1a671054e6197861",
+ "response": "{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports Adjusted EBITDA for the full fiscal year (FY24), while Fact B reports it for a single quarter (Q3 FY24). The full-year figure (76 Cr) is lower than the Q3 figure (92 Cr), which is mathematically possible for EBITDA if other quarters in the fiscal year were negative.\",\n  \"reconciling_evidence\": \"FY24 vs Q3 FY24\"\n}",
+ "created_at": 1788965341.745901,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1115,
+  "output": 129
+ }
+}

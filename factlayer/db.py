@@ -6,6 +6,7 @@ indexed lookups. A single file also makes the project clone-and-run.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 import threading
@@ -144,6 +145,22 @@ def new_id(prefix: str) -> str:
     return f"{prefix}_{uuid.uuid4().hex[:12]}"
 
 
+def content_id(prefix: str, *parts) -> str:
+    """A stable id derived from the content itself.
+
+    Random ids made every rebuild of the same corpus produce a different set of
+    fact ids, and ordering downstream of them is what decides which ambiguous
+    pairs fit inside the adjudication budget -- so identical input gave different
+    verdict counts run to run. Hashing the content instead also makes re-ingesting
+    a document idempotent rather than duplicating its facts.
+    """
+    digest = hashlib.blake2b(
+        "\x1f".join("" if p is None else str(p) for p in parts).encode("utf-8"),
+        digest_size=6,
+    ).hexdigest()
+    return f"{prefix}_{digest}"
+
+
 class Store:
     """Thread-safe-enough SQLite wrapper: one connection per thread."""
 
@@ -211,6 +228,11 @@ class Store:
         return self.one("SELECT * FROM documents WHERE sha256 = ?", (sha256,))
 
     def insert_document(self, **fields) -> str:
+        # From the file's own digest, so the same PDF is the same document id on
+        # every rebuild. Fact ids hash the doc id, so a random one here would make
+        # every id in the corpus change from run to run. See content_id.
+        if fields.get("sha256"):
+            fields.setdefault("id", f"doc_{fields['sha256'][:12]}")
         fields.setdefault("id", new_id("doc"))
         fields.setdefault("ingested_at", time.time())
         fields.setdefault("meta_json", "{}")

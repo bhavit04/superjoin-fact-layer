@@ -1,0 +1,12 @@
+{
+ "key": "1d2f94478baff7ab52a3e95a4803fabb22618a1966d54bc744bd524726e53c3a",
+ "response": "```json\n{\n  \"verdict\": \"RECONCILED\",\n  \"confidence\": 0.95,\n  \"dimension\": \"period\",\n  \"explanation\": \"Fact A reports EBITDA for 2023 (FY23), whereas Fact B reports EBITDA for FY24. The difference is explained by comparing two distinct financial periods.\",\n  \"reconciling_evidence\": \"\\\"EBITDA 1,266.41 (4,516.08)\\\" and \\\"FY24 EBITDA increased by Rs. 578 Cr to Rs. 127 Cr\\\"\"\n}\n```",
+ "created_at": 1788964721.5780559,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 979,
+  "output": 139
+ }
+}

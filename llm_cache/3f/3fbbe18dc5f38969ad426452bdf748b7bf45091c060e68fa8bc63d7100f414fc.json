@@ -1,0 +1,12 @@
+{
+ "key": "3fbbe18dc5f38969ad426452bdf748b7bf45091c060e68fa8bc63d7100f414fc",
+ "response": "```json\n{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 0.95,\n  \"dimension\": \"\",\n  \"explanation\": \"Fact A and Fact B report the same Adjusted EBITDA metric for FY2024. The values (INR 76.00 crore vs. INR 75.79 crore) differ by less than 0.3%, which is well within standard rounding tolerance.\",\n  \"reconciling_evidence\": \"\"\n}\n```",
+ "created_at": 1788964846.395178,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 968,
+  "output": 110
+ }
+}

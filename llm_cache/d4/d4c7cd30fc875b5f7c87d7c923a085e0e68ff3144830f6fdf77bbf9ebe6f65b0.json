@@ -1,0 +1,12 @@
+{
+ "key": "d4c7cd30fc875b5f7c87d7c923a085e0e68ff3144830f6fdf77bbf9ebe6f65b0",
+ "response": "{\n  \"verdict\": \"RELATED\",\n  \"confidence\": 1.0,\n  \"dimension\": \"period\",\n  \"explanation\": \"The facts refer to different reporting periods. Fact A reports the margin for the calendar year 2023, while Fact B reports the margin for the fiscal year 2024 (FY24). Because these periods do not align, the figures are not directly comparable and do not constitute a contradiction.\",\n  \"reconciling_evidence\": \"\"\n}",
+ "created_at": 1788965330.272985,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 968,
+  "output": 109
+ }
+}

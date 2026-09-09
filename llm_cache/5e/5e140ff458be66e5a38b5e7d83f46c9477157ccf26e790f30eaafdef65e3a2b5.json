@@ -1,0 +1,12 @@
+{
+ "key": "5e140ff458be66e5a38b5e7d83f46c9477157ccf26e790f30eaafdef65e3a2b5",
+ "response": "{\n  \"verdict\": \"CORROBORATES\",\n  \"confidence\": 1.0,\n  \"dimension\": \"rounding\",\n  \"explanation\": \"Fact A and Fact B report the same metric for the same fiscal period (FY24) within the same document. Fact A is simply rounded to the nearest million, while Fact B provides two decimal places of precision. The difference is negligible (0.0005%).\",\n  \"reconciling_evidence\": \"Fact A: 81,415 FY24; Fact B: 81,415.38\"\n}",
+ "created_at": 1788965349.793498,
+ "provider": "gemini",
+ "model": "gemini-3.1-flash-lite",
+ "task": "adjudicate_pair",
+ "usage": {
+  "input": 1002,
+  "output": 134
+ }
+}

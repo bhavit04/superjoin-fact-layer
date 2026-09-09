@@ -471,7 +471,9 @@ async def _link(
     def priority(item) -> tuple:
         candidate, obs, verdict = item
         kind_rank = {CONTRADICTS: 0, RECONCILED: 1, CORROBORATES: 2, RELATED: 3}.get(verdict.kind, 4)
-        return (kind_rank, 0 if not obs.same_document else 1, -obs.metric_similarity)
+        # Trailing ids keep the budget cut from depending on candidate order.
+        return (kind_rank, 0 if not obs.same_document else 1, -obs.metric_similarity,
+                candidate.fact_a["id"], candidate.fact_b["id"])
 
     escalate.sort(key=priority)
     chosen, deferred = escalate[:budget], escalate[budget:]
@@ -484,15 +486,25 @@ async def _link(
     if chosen:
         emit("adjudicate", f"sending {len(chosen)} ambiguous pairs for adjudication")
 
+        unreachable: list[str] = []
+
         async def judge(item):
             candidate, obs, verdict = item
             try:
                 final = await adjudicate(client, candidate.fact_a, candidate.fact_b, obs, verdict, titles)
-            except Exception:
+            except Exception as exc:
+                # Keeping the rule-based verdict is the right degradation, but doing
+                # it silently once hid five rate-limited chunks. Count it instead.
+                unreachable.append(f"{type(exc).__name__}: {exc}")
                 final = verdict
             return candidate, obs, final
 
         judged = await asyncio.gather(*(judge(i) for i in chosen))
+        if unreachable:
+            result.notes.append(
+                f"{len(unreachable)} of {len(chosen)} adjudications did not reach the model "
+                f"and kept their rule-based verdict ({unreachable[0]})."
+            )
         result.adjudicated = sum(1 for _, _, v in judged if v.detail.get("adjudicated"))
         result.overturned = sum(1 for _, _, v in judged if v.detail.get("overturned"))
     else:

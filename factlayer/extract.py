@@ -11,7 +11,7 @@ import re
 import time
 from typing import Any
 
-from .db import new_id
+from .db import content_id
 from .llm import LLMClient
 from .normalize import entities, metrics, periods, units
 from .pdf import Chunk, PdfDocument, normalize_ws
@@ -177,7 +177,10 @@ def normalize_fact(
         page_label = str(location.page)
 
     return {
-        "id": new_id("f"),
+        # Content-addressed: the same fact from the same document is the same id on
+        # every rebuild. See db.content_id.
+        "id": content_id("f", doc_id, subject_key, metric_raw, fact_type,
+                         value_raw, period_text, location.page, evidence),
         "metric_support": support,
         "doc_id": doc_id,
         "chunk_ordinal": chunk.ordinal,
