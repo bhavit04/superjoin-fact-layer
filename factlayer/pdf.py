@@ -1,11 +1,8 @@
-"""PDF text extraction, chunking, and -- most importantly -- evidence grounding.
+"""PDF text, chunking, and evidence grounding.
 
-A fact is only worth something if you can point at the words that support it. The
-extraction model returns a page number and a verbatim quote; both are claims by
-the model, not facts about the document. ``locate_evidence`` checks them against
-the actual page text and reports how well they matched. Facts whose quote cannot
-be found anywhere near the cited page are flagged rather than trusted, which is
-what turns "the model said so" into "the document says so".
+A model's page number and quote are claims, not facts about the document.
+`locate_evidence` checks them against the real page text; what cannot be found is
+rejected. That check is what turns "the model said so" into "the document says so".
 """
 from __future__ import annotations
 
@@ -160,13 +157,8 @@ class PdfDocument:
     # --- chunking ------------------------------------------------------------
 
     def chunks(self, pages_per_chunk: int = 4, char_budget: int = 14000) -> list[Chunk]:
-        """Group pages into chunks bounded by both page count and character count.
-
-        Two bounds rather than one because these corpora mix dense financial-note
-        pages (10k+ chars) with sparse slide pages (300 chars). A pure page count
-        would produce wildly uneven prompts; a pure character count would split
-        mid-table more often than necessary.
-        """
+        """Bounded by both page count and characters: these corpora mix 10k-char
+        note pages with 300-char slides, and either bound alone splits badly."""
         out: list[Chunk] = []
         buf: list[Page] = []
         buf_chars = 0
@@ -204,11 +196,10 @@ class PdfDocument:
         search_window: int = 3,
         candidate_pages: list[int] | None = None,
     ) -> EvidenceLocation | None:
-        """Find ``quote`` in the document and return where it is.
+        """Locate `quote`, searching the hinted page then a small window around it.
 
-        Searches the hinted page first, then a small window around it, then gives
-        up rather than scanning the whole document -- a quote that is nowhere near
-        where the model said it was is itself a signal worth keeping.
+        Not scanning the whole document is deliberate: a quote nowhere near where
+        the model placed it is itself a signal.
         """
         quote = normalize_ws(quote)
         if len(quote) < 12:
@@ -301,14 +292,11 @@ class PdfDocument:
     def _locate_in_row(
         self, page_text: str, quote: str, page_no: int
     ) -> EvidenceLocation | None:
-        """Verify an ellipsis-stitched quote against a single rendered line.
+        """Verify an ellipsis-stitched quote against one rendered line.
 
-        Models routinely quote a table row as "Adjusted EBITDA ... 76 ... FY24".
-        Confirming only that each piece appears *somewhere* on the page would be
-        false confidence: the whole claim is that these cells belong together. But
-        a table row is a rendered line, so if every fragment appears in one line,
-        the association is real and checkable. If they are scattered across
-        different lines, the fact is rejected.
+        "Adjusted EBITDA ... 76 ... FY24" claims those cells belong together.
+        Confirming each piece appears *somewhere* on the page would be false
+        confidence; a table row is a line, so one line is the real test.
         """
         fragments = [normalize_ws(f) for f in re.split(r"\.\.\.|…|\|", quote)]
         fragments = [f for f in fragments if len(f) >= 2]
@@ -373,8 +361,7 @@ class PdfDocument:
 
     @staticmethod
     def _rects_for(page: "fitz.Page", quote: str) -> list[tuple[float, float, float, float]]:
-        """Best-effort highlight rectangles. Long quotes rarely match as one run,
-        so we fall back to locating the first and last fragments."""
+        """Highlight rectangles; long quotes rarely match as a single run."""
         try:
             hits = page.search_for(quote[:180], quads=False)
             if hits:
@@ -449,11 +436,8 @@ def _fragments(text: str, size: int) -> list[str]:
 
 
 def _best_window_match(needle: str, haystack: str) -> tuple[float, str]:
-    """Best fuzzy alignment of ``needle`` inside ``haystack``.
-
-    Uses SequenceMatcher's longest-block anchor to pick where to compare, which is
-    far cheaper than scoring every offset and good enough for locating a sentence.
-    """
+    """Best fuzzy alignment, anchored on the longest common block — far cheaper
+    than scoring every offset and good enough to locate a sentence."""
     if not needle or not haystack:
         return 0.0, ""
     matcher = SequenceMatcher(None, needle.lower(), haystack.lower(), autojunk=False)

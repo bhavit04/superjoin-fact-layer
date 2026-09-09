@@ -1,10 +1,8 @@
 """Turn model output into grounded fact rows.
 
-The model proposes; this module verifies. Every proposed fact is checked against
-the actual page text before it is allowed into the knowledge layer, and anything
-that fails is written to the quarantine table with a reason rather than silently
-dropped. Extraction failures you cannot see are worse than extraction failures
-you can.
+The model proposes; this verifies. Anything whose quote cannot be found in the
+page is quarantined with a reason rather than dropped — an extraction failure you
+cannot see is worse than one you can.
 """
 from __future__ import annotations
 
@@ -76,16 +74,11 @@ def _pick_period_text(qualifiers: dict, evidence: str, fy_start: int | None = No
 
 
 def metric_support(metric_raw: str, evidence: str) -> float:
-    """How much of the metric's own wording appears in its evidence.
+    """Fraction of the metric's own words present in its evidence.
 
-    Grounding proves the quote is real; this asks whether the quote actually
-    supports the claim being attached to it. A table cell quoted as "Oils and
-    Fats 3.6" is real text, but it says nothing about *what* 3.6 measures -- the
-    extractor took "weight in CPI-food and beverages" from elsewhere on the page.
-    That fact then contradicted the genuine figure, because one number is a
-    weight within the food sub-index and the other a weight within all of CPI.
-
-    Returns the fraction of the metric's content words present in the evidence.
+    Grounding proves the quote is real; this asks whether it supports the claim
+    attached to it. "Oils and Fats 3.6" is real text that says nothing about what
+    3.6 measures, and the metric had been taken from elsewhere on the page.
     """
     tokens = [t for t in metrics.metric_tokens(metric_raw) if len(t) > 2]
     if not tokens:
@@ -228,14 +221,11 @@ def normalize_fact(
 def _classify_grounding_failure(
     pdf: PdfDocument, chunk: Chunk, value_raw: str, metric_raw: str, hint_page: int | None
 ) -> str:
-    """Say *why* a fact failed to ground, not just that it did.
+    """Say *why* grounding failed, not just that it did.
 
-    The distinction matters. If neither the value nor the metric appears anywhere
-    near the cited page, the model very likely invented the fact. If both appear
-    but the quote is not a verifiable span, the model read a table or chart whose
-    cells do not extract in reading order -- the fact is probably true, and it is
-    the extractor's spatial understanding that failed, not its honesty. Lumping
-    those together would hide a fixable engineering problem behind a scary word.
+    Nothing on the page means the model likely invented it; value and metric both
+    present but no verifiable span means it read a table whose cells do not
+    extract in reading order. Those are different problems.
     """
     pages = [p for p in ([hint_page] if hint_page else []) + list(chunk.pages) if p]
     haystack = " ".join(pdf.page_text(p) for p in dict.fromkeys(pages) if 1 <= p <= pdf.page_count)
@@ -266,12 +256,10 @@ _STOP_START = re.compile(r"^(?:table|figure|source|note|annex|chart|page)\b", re
 
 
 def heuristic_extract(chunk: Chunk, limit: int = 12) -> list[dict]:
-    """A deliberately simple regex extractor used when no LLM is reachable.
+    """Regex fallback for when no LLM is reachable.
 
-    It exists so the system degrades instead of failing on an unseen PDF with no
-    credential. It is genuinely weak -- it guesses the metric from the words
-    preceding a number and has no notion of basis or scope -- and facts it
-    produces are tagged ``extractor="heuristic"`` so they can be told apart.
+    Deliberately weak — it guesses the metric from the words before a number —
+    so its facts are tagged `extractor="heuristic"` and can be told apart.
     """
     out: list[dict] = []
     page = chunk.page_start

@@ -1,25 +1,14 @@
 """Decide how two candidate facts relate.
 
-The central idea of this system is a distinction the word "contradiction" usually
-hides:
-
     values disagree  !=  the sources contradict each other
 
-Two figures can differ because they cover different periods, a different
-consolidation basis, a different scope, a different unit, or a different data
-vintage. Only when *no* stated difference in context accounts for the gap is
-there a real conflict.
+Figures differ for good reasons — period, basis, scope, unit, vintage. Only when
+no stated difference accounts for the gap is there a real conflict.
 
-So the work happens in two stages. First, ``observe`` computes everything that
-can be established mechanically -- units reconciled onto a common scale, periods
-placed on a timeline, the numeric ratio, and which qualifiers differ. Then
-``classify`` applies deterministic rules; most pairs are settled right there,
-with a rationale that cites arithmetic rather than an opinion. Only the pairs the
-rules cannot settle are escalated to an LLM, and even then the mechanical
-observations go with them so the model is adjudicating, not calculating.
-
-That split is what keeps the system explainable and cheap: roughly nine in ten
-pairs never reach a model at all.
+`observe` establishes what is mechanical (units reconciled, periods placed on a
+timeline, ratio, differing qualifiers); `classify` applies deterministic rules and
+settles roughly nine pairs in ten; only the rest reach a model, and they arrive
+with the observations so it adjudicates rather than calculates.
 """
 from __future__ import annotations
 
@@ -141,12 +130,10 @@ def _pct(value: float | None, places: int = 1) -> str:
 def implied_tolerance(raw: str | None, value: float | None) -> float:
     """How much two figures may differ and still be the same number.
 
-    Derived from how precisely each was *written*, not from its magnitude.
-    "Rs 814 crore" resolves the value only to the nearest crore, so it cannot
-    distinguish 8.140bn from 8.144bn; demanding those match to 0.01% would
-    manufacture a contradiction out of rounding. Concretely: half a unit in the
-    last stated decimal place, as a fraction of the number as printed. This is
-    why "Rs. 8,142 Mn" and "Rs 814 crore" corroborate rather than conflict.
+    Half a unit in the last stated decimal place, as a fraction of the printed
+    number. "Rs 814 crore" resolves only to the nearest crore, so demanding it
+    match "Rs. 8,142 Mn" to 0.01% would manufacture a contradiction out of
+    rounding.
     """
     if value in (None, 0) or not raw:
         return 0.01
@@ -253,10 +240,8 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
     # Suvir Suren Sujan" is not a disagreement about the same thing.
     obs.kind_mismatch = (value_a.number is None) != (value_b.number is None)
 
-    # Two facts quoting the same span are two readings of one statement, not two
-    # sources. "we reduced net working capital days from 38 to 31" yields facts
-    # for 38 and for 31, and comparing them reports the sentence as contradicting
-    # itself. The same applies to a table row read once per column.
+    # Two facts quoting one span are two readings of a statement, not two sources:
+    # "reduced ... from 38 to 31" yields both numbers and would self-contradict.
     ev_a = normalize_ws(fact_a.get("evidence_text") or "").lower()
     ev_b = normalize_ws(fact_b.get("evidence_text") or "").lower()
     if ev_a and ev_b and fact_a.get("doc_id") == fact_b.get("doc_id"):
@@ -265,8 +250,7 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
             or (len(ev_a) > 40 and len(ev_b) > 40 and (ev_a in ev_b or ev_b in ev_a))
             or SequenceMatcher(None, ev_a[:220], ev_b[:220], autojunk=False).ratio() >= 0.90
         )
-    # Either side's evidence failing to mention what it measures means the metric
-    # was attributed from context, and the pair cannot support a conflict.
+    # Evidence that never says what it measures cannot support a conflict.
     obs.weak_attribution = min(
         float(fact_a.get("metric_support") if fact_a.get("metric_support") is not None else 1.0),
         float(fact_b.get("metric_support") if fact_b.get("metric_support") is not None else 1.0),
@@ -296,9 +280,8 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
         if obs.rel_diff is not None:
             obs.within_tolerance = obs.rel_diff <= obs.tolerance
 
-        # Equal magnitude, opposite sign: a loss shown as "(17,833.04)" in a table
-        # and described in prose as "restated losses of ₹17,833.04 million" is one
-        # figure under two sign conventions, not two claims about a quantity.
+        # Equal magnitude, opposite sign: a loss in accounting brackets and the
+        # same loss described in prose is one figure under two conventions.
         if a_val and b_val and a_val * b_val < 0:
             magnitude_gap = abs(abs(a_val) - abs(b_val)) / max(abs(a_val), abs(b_val))
             obs.sign_convention = magnitude_gap <= max(obs.tolerance, 0.01)
@@ -392,13 +375,9 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
     explanatory = {
         EXPLANATORY_QUALIFIERS[k] for k in obs.qualifier_deltas if k in EXPLANATORY_QUALIFIERS
     }
-    # A fixed allowlist of "explanatory" qualifiers contradicts the whole point of
-    # letting documents introduce their own dimensions. The prospectus recorded
-    # `partner: ACT grants` against `partner: Hunger Heroes` for two separate
-    # import programmes -- a difference the document states plainly -- and because
-    # "partner" was not on the list, the two were reported as contradicting.
-    # Any stated difference is now treated as a candidate explanation, named by
-    # its own key, and sent for adjudication rather than asserted as a conflict.
+    # An allowlist would defeat the open qualifier design: "partner: ACT grants"
+    # vs "partner: Hunger Heroes" are two programmes, and that key is not on any
+    # list. Any stated difference counts as a candidate explanation.
     unrecognized = [k for k in obs.qualifier_deltas if k not in EXPLANATORY_QUALIFIERS]
 
     # --- non-numeric facts ---------------------------------------------------
@@ -479,10 +458,8 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
                 dimension=dimension, needs_llm=True,
             )
         if obs.hypotheses:
-            # When the ratio is itself the explanation, this is arithmetic rather
-            # than a judgement call. Escalating it invited the adjudicator to
-            # overturn a correct reconciliation on reasoning it is worse at than
-            # the calculation already performed.
+            # When the ratio is itself the explanation this is arithmetic, and
+            # escalating invited the model to overturn a correct reconciliation.
             scale_explained = any("factor of 10" in h or "scale" in h for h in obs.hypotheses)
             return Verdict(
                 RECONCILED, 0.6 if scale_explained else 0.55, "deterministic",
@@ -521,13 +498,9 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
         bigger, smaller = (
             (obs.value_a, obs.value_b) if period_rel == periods.CONTAINS else (obs.value_b, obs.value_a)
         )
-        # A part exceeding its whole looks like an inconsistency, and for a
-        # strictly non-negative quantity (shipments, headcount, revenue) it is.
-        # But earnings measures go negative: Delhivery's FY23 EBITDA was
-        # Rs (452) crore, so a single profitable quarter can genuinely exceed the
-        # loss-making year containing it. Asserting a contradiction here would be
-        # claiming an impossibility this layer cannot establish, so the tension is
-        # reported as a hypothesis and the adjudicator decides.
+        # A part exceeding its whole is only impossible for a non-negative
+        # quantity. EBITDA goes negative, so a profitable quarter inside a
+        # loss-making year is ordinary — raise it, do not assert it.
         additive = obs.units_a not in {"%", "pp", "bps", "x"} and not metrics.derivative_kind(
             fact_a.get("metric_raw")
         )
@@ -592,23 +565,13 @@ ENUMERATION_MIN_VALUES = 3
 
 
 def find_enumerations(facts: list[dict]) -> set[tuple]:
-    """Group keys whose facts are a list of events rather than one claim.
+    """Group keys whose facts are a list of events, not one claim.
 
-    Share-capital histories, allotment tables and dividend schedules repeat the
-    same metric for the same period with a different value each time:
-
-        equity shares allotted = 197,846   (2023)
-        equity shares allotted = 113,136   (2023)
-        equity shares allotted = 493,231   (2023)
-
-    Compared pairwise these look like flat contradictions, but nothing is in
-    conflict -- they are three separate allotments. A contradiction requires two
-    sources making the *same singular claim*, so a group carrying three or more
-    distinct values for one subject, metric and period within one document is
-    treated as an enumeration and its pairs are downgraded to RELATED.
-
-    The threshold is three rather than two precisely because two competing values
-    for one quantity is the case we most want to keep.
+    A share-capital history repeats "equity shares allotted" for 2023 with a
+    different value per allotment; pairwise those read as contradictions though
+    nothing conflicts. Three or more distinct values for one subject, metric and
+    period within a document is an enumeration. The threshold is three because
+    two rival values is exactly the case worth keeping.
     """
     groups: dict[tuple, set[float]] = {}
     for fact in facts:

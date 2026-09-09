@@ -1,20 +1,17 @@
-"""Turn the many ways a document names a time period into a comparable interval.
+"""Turn the many ways a document names a period into a comparable interval.
 
-This module is the single biggest lever on reconciliation quality. Most apparent
-contradictions in financial and macroeconomic documents are not disagreements at
-all -- they are the same metric measured over different windows. You cannot tell
-those apart until "FY24", "the year ended March 31, 2024", "Q4FY24" and "2023-24"
-are all intervals on one timeline.
+The biggest lever on reconciliation quality: most apparent contradictions are the
+same metric over different windows, which you cannot see until "FY24", "the year
+ended March 31, 2024" and "2023-24" are intervals on one timeline.
 
-Convention note: these documents use the Indian fiscal year, April 1 -> March 31,
-labelled by its *ending* calendar year. FY24 therefore runs 2023-04-01 to
-2024-03-31, and its quarters are Q1 Apr-Jun, Q2 Jul-Sep, Q3 Oct-Dec, Q4 Jan-Mar.
+The default convention is the Indian fiscal year (April–March, labelled by its
+ending year); `detect_fiscal_year_start` overrides it per document.
 """
 from __future__ import annotations
 
 import re
 from dataclasses import dataclass, asdict
-from datetime import date
+from datetime import date, timedelta
 from typing import Any
 
 # The month a fiscal year starts in. April is the Indian convention and the
@@ -51,20 +48,8 @@ class PeriodSpec:
         return self.start is not None and self.end is not None
 
 
-# Set per document at ingest time by detect_fiscal_year_start().
+# Default when a document does not reveal its own convention.
 _fy_start_month = FY_START_MONTH
-
-
-def set_fiscal_year_start(month: int) -> None:
-    """Set the fiscal-year start month used to resolve FY labels."""
-    global _fy_start_month
-    if 1 <= int(month) <= 12:
-        _fy_start_month = int(month)
-
-
-def get_fiscal_year_start() -> int:
-    return _fy_start_month
-
 
 # Phrases that reveal where a document's financial year ends. Whichever appears
 # most often wins, so one stray mention does not flip the whole document.
@@ -76,12 +61,10 @@ _FY_END_PATTERNS = [
 
 
 def detect_fiscal_year_start(text: str, default: int = FY_START_MONTH) -> int:
-    """Infer a document's fiscal-year start month from how it names its year end.
+    """Read the fiscal-year start off the document's own wording.
 
-    "the year ended March 31, 2024" implies a year starting in April; "year ended
-    December 31, 2024" implies January. Without this, "FY2024" in a US or European
-    filing is shifted by a quarter and every period comparison against it is
-    quietly wrong.
+    Hardcoding April–March would shift "FY2024" in a US filing by a quarter and
+    quietly corrupt every comparison against it.
     """
     from collections import Counter
 
@@ -121,7 +104,7 @@ def _quarter_bounds(end_year: int, q: int, fy_start: int | None = None) -> tuple
 def _last_day(year: int, month: int) -> int:
     if month == 12:
         return 31
-    return (date(year + (month // 12), month % 12 + 1, 1) - __import__("datetime").timedelta(days=1)).day
+    return (date(year + (month // 12), month % 12 + 1, 1) - timedelta(days=1)).day
 
 
 def _expand_two_digit_year(token: str) -> int:
@@ -164,12 +147,10 @@ _P_BARE_YEAR = re.compile(r"\b(19\d{2}|20\d{2})\b")
 
 
 def parse_period(text: str | None, fy_start: int | None = None) -> PeriodSpec:
-    """Parse the first recognizable period expression in ``text``.
+    """Parse the first recognizable period in `text`.
 
-    ``fy_start`` is the document's fiscal-year start month, from
-    ``detect_fiscal_year_start``. Passing it explicitly rather than reading a
-    global keeps two documents with different conventions from interfering when
-    they are ingested at the same time.
+    `fy_start` is passed rather than read from a global so two documents with
+    different conventions can be ingested at once.
     """
     if not text:
         return PeriodSpec(kind="UNKNOWN", start=None, end=None, label="", canonical="")
@@ -222,7 +203,10 @@ def parse_period(text: str | None, fy_start: int | None = None) -> PeriodSpec:
         if spec:
             month, day, year = spec
             end = date(year, month, day)
-            start = date(year - 1, month, day) + __import__("datetime").timedelta(days=1)
+            # The same day one year earlier need not exist: a year ending
+            # 29 February has no 29 February before it.
+            prior = date(year - 1, month, min(day, _last_day(year - 1, month)))
+            start = prior + timedelta(days=1)
             kind = "FY" if month == (fy_start - 1 or 12) else "CY"
             canonical = f"FY{year}" if kind == "FY" else f"12M to {end.isoformat()}"
             return PeriodSpec(kind, start.isoformat(), end.isoformat(), m.group(0), canonical)

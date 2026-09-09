@@ -26,8 +26,7 @@ def _load_dotenv() -> None:
 
 _load_dotenv()
 
-# Default model per provider. All are cheap, high-throughput models with a large
-# context window, which is what this workload wants: many medium-sized prompts.
+# Cheap, high-throughput models: this workload is many medium-sized prompts.
 DEFAULT_MODELS = {
     "gemini": "gemini-3.1-flash-lite",
     "anthropic": "claude-sonnet-5",
@@ -56,11 +55,8 @@ class Settings:
     upload_dir: Path = field(default_factory=lambda: Path(os.getenv("FACTLAYER_UPLOADS", str(UPLOAD_DIR))))
 
     # Ingestion tuning.
-    # These two settings do different jobs and are easy to confuse. The provider
-    # meters *requests per minute*, but each request takes tens of seconds, so a
-    # low concurrency leaves most of the budget unused: at 45s per call, four in
-    # flight is only ~5 requests/min against a budget of 20. Concurrency exists to
-    # cover latency; the rate limiter is what protects the quota.
+    # Concurrency covers latency; the rate limiter protects the quota. At 45s a
+    # call, four in flight is ~5 req/min against a budget of 20 — most unused.
     max_concurrency: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_MAX_CONCURRENCY", "10")))
     requests_per_minute: float = field(default_factory=lambda: float(os.getenv("FACTLAYER_RPM", "18")))
     # Smaller chunks finish faster and parallelize better, which matters more than
@@ -76,9 +72,8 @@ class Settings:
     # When true, never call a live API; only replay from the on-disk cache.
     offline: bool = field(default_factory=lambda: os.getenv("FACTLAYER_OFFLINE", "").lower() in {"1", "true", "yes"})
 
-    # The regex extractor is a last resort for running with no credential at all.
-    # It must never stand in for a missing cache entry during an offline replay,
-    # because that would present guessed facts as reproduced ones.
+    # Never let the regex extractor stand in for a missing cache entry: that
+    # would present guessed facts as reproduced ones.
     allow_heuristic_fallback: bool = True
 
     def __post_init__(self) -> None:

@@ -100,6 +100,7 @@ doctor` reports it directly.
 | `GET /api/facts/{id}` | one fact with everything related to it |
 | `GET /api/facts/{id}/evidence.png` | **the source page, with the evidence highlighted** |
 | `GET /api/relations` | browse links, filtered by kind / dimension / cross-document |
+| `GET /api/claims` | **everything every source says about one quantity**, grouped and ranked |
 | `GET /api/cases` | the four required cases, selected from live data |
 | `GET /api/schema` | the fact schema as it has accumulated from documents |
 | `GET /api/quarantine` | facts that were rejected, and why |
@@ -307,6 +308,26 @@ observations attached, so it is arbitrating a judgement rather than doing arithm
 it is bad at. Every relation records which path produced it (`deterministic`,
 `hybrid`, `llm`), and the UI and exported cases show the observation table behind
 each decision.
+
+### Claims: above the pairwise view
+
+A relation answers *"do these two agree?"*. That is the right unit for the machine
+and the wrong one for a reader, whose actual question is *"what does every source
+say about this, and do they line up?"*
+
+`/api/claims` groups facts sharing a subject, metric and period, reports the spread
+across sources, and carries through whatever the pairwise pass found explained the
+difference. It is pure aggregation over stored data — no model calls — and it
+surfaces the single most interesting disagreement in the corpus without being asked:
+
+```
+India · current account deficit · FY2025          sources disagree, spread 50%
+  1.20 %   Economic Survey 2024-25   p.62   "…1.2 per cent of GDP in Q2 FY25"
+  0.60 %   IMF Article IV 2025       p.52   "The CA deficit declined to 0.6 percent…"
+```
+
+Two institutions, one quantity, one screen. This is the layer a claim-level truth
+model would be built on, and it is listed under next steps for that reason.
 
 ### Scaling, and the brownie points
 

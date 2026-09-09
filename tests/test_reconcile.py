@@ -411,3 +411,14 @@ def test_with_nothing_stated_to_explain_it_a_conflict_is_still_a_conflict():
     b = make_fact(id="b", doc_id="doc_b", value_raw="9,010", value_num=9_010_000_000.0,
                   evidence_text="Revenue was 9,010")
     assert decide(a, b)[0].kind == CONTRADICTS
+
+
+# --- claims: everything every source says about one quantity -------------------
+
+def test_a_claim_groups_sources_and_reports_their_spread():
+    from factlayer.claims import _spread
+    assert _spread([1.20, 0.60])[0] == "disagree"
+    assert _spread([8.142e9, 8.140e9])[0] == "agree"     # inside rounding
+    assert _spread([5.0])[0] == "single"
+    assert _spread([])[0] == "single"
+    assert _spread([0.0, 0.0]) == ("agree", 0.0)         # zero scale must not divide

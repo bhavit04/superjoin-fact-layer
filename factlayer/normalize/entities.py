@@ -1,16 +1,8 @@
-"""Collapse the many surface forms of a subject onto one key.
+"""Collapse surface forms of a subject onto one key.
 
-Two problems show up in real filings:
-
-1. Legal-suffix noise. "Delhivery Limited", "Delhivery Ltd.", "Delhivery" and
-   "DELHIVERY LIMITED" are one entity.
-2. Anaphora. Annual reports overwhelmingly say "the Company", "our Company",
-   "the Group" or "the Bank" instead of naming themselves. Left alone, every
-   document produces its own useless "the company" entity and nothing links.
-   These are resolved against the primary entity detected for the document.
-
-Nothing here is specific to a company or a document -- the primary entity is
-inferred per document at ingest time from what the extractor actually saw.
+Two problems: legal-suffix noise ("Delhivery Limited" / "Delhivery Ltd."), and
+anaphora — filings say "the Company" far more often than they name themselves,
+which would otherwise give every document its own useless entity.
 """
 from __future__ import annotations
 
@@ -66,19 +58,12 @@ def is_anaphoric(name: str | None) -> bool:
 def infer_primary_entity(
     subject_names: list[str], front_matter: str = "", title: str = ""
 ) -> str | None:
-    """Guess the entity a document is *about*, to resolve its "the Company" references.
+    """Guess what a document is about, to resolve its "the Company" references.
 
-    Frequency alone is not enough, and gets this wrong in a characteristic way: in
-    a segment-heavy earnings deck the most-mentioned subject is a business line
-    ("Express Parcel"), not the company that owns it. Resolving "the Company" to a
-    segment would then split one entity across documents and silently prevent any
-    cross-document link from forming.
-
-    So frequency is combined with where a name appears. A document names its own
-    subject on the cover and in the opening pages, whereas segments and
-    counterparties turn up later, in the body. Names carrying a legal suffix get a
-    further nudge, because an organisation is a likelier document subject than a
-    product line.
+    Frequency alone picked the segment "Express Parcel" (99 mentions) over
+    "Delhivery Limited" (2) in an earnings deck, which would split one entity
+    across documents. Names on the cover and opening pages are weighted heavily,
+    since that is where a document names itself.
     """
     counts: Counter[str] = Counter()
     display: dict[str, str] = {}
@@ -127,18 +112,12 @@ def resolve_subject(raw: str | None, primary_entity: str | None) -> tuple[str, s
 
 
 def entities_match(key_a: str, key_b: str) -> bool:
-    """Exact match, or one key being a strict token-prefix of the other.
+    """Exact match only.
 
-    "delhivery" matches "delhivery" and "delhivery supply chain" is treated as a
-    *different* entity -- a subsidiary is not its parent. Only whole-key equality
-    and single-token containment of a multi-word key count.
+    Letting a one-word subject match any subject starting with it joined "WPI" to
+    "WPI primary articles", reporting overall inflation as contradicting one of
+    its own components. A component is not its whole.
     """
     if not key_a or not key_b:
         return False
-    # Exact equality only. Allowing a single-token subject to match any subject
-    # beginning with it seemed harmless -- it was meant to join "india" to "indian
-    # economy" -- but it also joined "WPI" to "WPI primary articles", so overall
-    # wholesale inflation of 2.3 per cent was reported as contradicting the 5.1
-    # per cent for one component of the same index. A component is not its whole,
-    # which is the same principle the metric comparison already enforces.
     return key_a == key_b

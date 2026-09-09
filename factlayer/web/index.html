@@ -15,6 +15,7 @@
     </div>
     <nav role="tablist">
       <button data-tab="cases"     aria-selected="true">Four cases</button>
+      <button data-tab="claims"    aria-selected="false">Claims</button>
       <button data-tab="relations" aria-selected="false">Relations</button>
       <button data-tab="facts"     aria-selected="false">Facts</button>
       <button data-tab="schema"    aria-selected="false">Schema</button>
@@ -25,6 +26,23 @@
 
   <main>
     <section class="panel" id="panel-cases"></section>
+
+    <section class="panel" id="panel-claims" hidden>
+      <h2>Claims</h2>
+      <p class="lede">A relation answers "do these two agree?". A claim answers the question a
+        reader actually has: what does <em>every</em> source say about one quantity, and do they
+        line up? Facts sharing a subject, metric and period are grouped, and the spread across
+        sources is ranked by how much it matters.</p>
+      <div class="controls">
+        <input type="search" id="claim-q" placeholder="search subject or metric…">
+        <select id="claim-conf">
+          <option value="">all claims</option>
+          <option value="1">only where sources differ</option>
+        </select>
+        <span class="meta" id="claim-count"></span>
+      </div>
+      <div id="claim-list"></div>
+    </section>
 
     <section class="panel" id="panel-relations" hidden>
       <h2>Relations</h2>

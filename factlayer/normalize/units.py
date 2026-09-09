@@ -1,13 +1,7 @@
-"""Parse a value as written in a document into something two facts can be compared on.
+"""Parse a value as written into a comparable magnitude and unit.
 
-The hard part is not "read a number". It is that the same quantity appears as
-``Rs. 8,142 Mn``, ``INR 814.2 crore``, ``81,420 lakh`` and ``$97.4 million`` in four
-different documents. Comparison only means anything after all four collapse onto a
-common magnitude and a common unit tag.
-
-Indian financial writing drives several of the choices here: lakh/crore scales and
-``1,23,456`` digit grouping, ``Rs.``/``INR``/``Rs``/``₹`` used interchangeably, and
-accounting parentheses for negatives.
+`Rs. 8,142 Mn`, `INR 814.2 crore` and `81,420 lakh` are one quantity; comparison
+only means anything once they collapse onto a common scale.
 """
 from __future__ import annotations
 
@@ -98,8 +92,7 @@ def _to_float(token: str) -> float | None:
 
 
 def _detect_currency(text: str) -> str | None:
-    """Longest-match currency detection. ``Rs.`` must win over a bare ``s``, and
-    ``US$`` must win over ``$``, so candidates are tried longest-first."""
+    """Longest match wins, so `Rs.` beats a bare `s` and `US$` beats `$`."""
     lowered = text.lower()
     best: tuple[int, str] | None = None
     for surface, code in CURRENCIES:
@@ -137,11 +130,7 @@ def _detect_plain_unit(text: str) -> str | None:
 
 
 def parse_value(raw: str, unit_hint: str | None = None) -> ValueSpec:
-    """Parse a value string as it appears in a document.
-
-    ``unit_hint`` lets the extraction model pass through a unit it read from a table
-    header ("₹ Mn") that is not present in the cell itself.
-    """
+    """`unit_hint` carries a unit from a table header that the cell itself omits."""
     if raw is None:
         return ValueSpec(kind="other", number=None, unit="", raw="")
     text = str(raw).strip()
@@ -238,12 +227,8 @@ CONVERSIONS: dict[tuple[str, str], float] = {
 
 
 def to_common_unit(a: ValueSpec, b: ValueSpec) -> tuple[float, float, str] | None:
-    """Return (a_value, b_value, unit) on a shared scale, or None if incomparable.
-
-    Returning None is a real answer, not a failure: ₹ and $ figures for the same
-    metric are *not* directly comparable, and the reconciler treats that as a
-    currency-difference hypothesis rather than a contradiction.
-    """
+    """(a, b, unit) on a shared scale, or None. None is an answer, not a failure:
+    INR against USD is a currency difference for the reconciler to explain."""
     if a.number is None or b.number is None:
         return None
     if a.unit == b.unit:
@@ -262,7 +247,7 @@ def to_common_unit(a: ValueSpec, b: ValueSpec) -> tuple[float, float, str] | Non
 
 
 def humanize(value: float | None, unit: str) -> str:
-    """Render a normalized magnitude back into something a human reads quickly."""
+    """Render a magnitude the way a reader would write it."""
     if value is None:
         return "—"
     if unit in {"%", "pp", "bps", "x"}:

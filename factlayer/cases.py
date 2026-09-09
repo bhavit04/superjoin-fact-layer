@@ -1,10 +1,7 @@
-"""Select the four cases the assignment asks for, from whatever is in the store.
+"""Select the four required cases from whatever is in the store.
 
-Nothing here is hard-coded to a document, a metric or a figure. Each case is a
-ranking over live relations, so pointing the system at a different corpus
-produces a different set of examples through the same code path. If the corpus
-genuinely contains no contradiction, this reports that honestly rather than
-inventing one.
+Each case is a ranking over live relations, so a different corpus produces
+different examples through the same code. Nothing is hard-coded to a document.
 """
 from __future__ import annotations
 
@@ -49,9 +46,10 @@ def _load(store: Store, kind: str) -> list[dict]:
         "SELECT * FROM relations WHERE kind = ? ORDER BY cross_doc DESC, score DESC LIMIT 600",
         (kind,),
     )
+    facts = store.get_facts([r["fact_a"] for r in rows] + [r["fact_b"] for r in rows])
     out = []
     for relation in rows:
-        a, b = store.get_fact(relation["fact_a"]), store.get_fact(relation["fact_b"])
+        a, b = facts.get(relation["fact_a"]), facts.get(relation["fact_b"])
         if not a or not b:
             continue
         try:
@@ -74,12 +72,8 @@ def _obs(relation: dict) -> dict:
 
 
 def _corroboration_score(relation: dict) -> float:
-    """Reward agreement reached across documents despite different wording.
-
-    Two documents printing the identical string is a much weaker demonstration
-    than two documents printing "Rs. 8,142 Mn" and "INR 814 crore", so surface
-    difference is what this ranks on.
-    """
+    """Rank on surface difference: two documents printing the same string is a
+    weaker demonstration than "Rs. 8,142 Mn" against "INR 814 crore"."""
     a, b, obs = relation["a"], relation["b"], _obs(relation)
     if not relation.get("cross_doc"):
         return 0.0
@@ -126,7 +120,7 @@ def _contradiction_score(relation: dict) -> float:
 
 
 def _reconciled_score(relation: dict) -> float:
-    """Reward pairs that looked like a real conflict until context resolved them."""
+    """Rank pairs that looked like conflicts until context resolved them."""
     obs = _obs(relation)
     if not relation.get("dimension"):
         return 0.0
@@ -148,7 +142,7 @@ def _reconciled_score(relation: dict) -> float:
 # --- case 4 ------------------------------------------------------------------
 
 def _failures(store: Store) -> dict[str, Any]:
-    """Assemble what actually went wrong, from the system's own bookkeeping."""
+    """What actually went wrong, from the system's own bookkeeping."""
     reasons = store.query(
         "SELECT reason, COUNT(*) AS n FROM quarantine GROUP BY reason ORDER BY n DESC"
     )
@@ -187,8 +181,9 @@ def _failures(store: Store) -> dict[str, Any]:
         "ORDER BY score DESC LIMIT 5"
     )
     overturned_examples = []
+    facts = store.get_facts([r["fact_a"] for r in overturned] + [r["fact_b"] for r in overturned])
     for relation in overturned:
-        a, b = store.get_fact(relation["fact_a"]), store.get_fact(relation["fact_b"])
+        a, b = facts.get(relation["fact_a"]), facts.get(relation["fact_b"])
         if not a or not b:
             continue
         try:
@@ -226,7 +221,7 @@ def _shape(store: Store, fact: dict) -> dict:
     except (TypeError, ValueError):
         fact["qualifiers"] = {}
     fact.pop("bbox_json", None)
-    document = store.one("SELECT filename, title FROM documents WHERE id = ?", (fact["doc_id"],))
-    fact["doc_filename"] = (document or {}).get("filename", "")
-    fact["doc_title"] = (document or {}).get("title", "")
+    document = store.documents_map().get(fact["doc_id"], {})
+    fact["doc_filename"] = document.get("filename", "")
+    fact["doc_title"] = document.get("title", "")
     return fact

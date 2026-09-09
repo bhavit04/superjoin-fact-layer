@@ -150,6 +150,40 @@ const loaders = {
       </table></div>` : `<div class="empty">No facts match.</div>`;
   },
 
+  async claims() {
+    const params = new URLSearchParams({
+      q: $("#claim-q").value, conflicts: $("#claim-conf").value, limit: "40",
+    });
+    const data = await api(`/api/claims?${params}`);
+    const s = data.stats || {};
+    $("#claim-count").textContent =
+      `${data.claims.length} shown · ${s.disagree || 0} disagree · ${s.explained || 0} explained`;
+    const badge = { agree: "CORROBORATES", disagree: "CONTRADICTS", explained: "RECONCILED",
+                    single: "RELATED" };
+    $("#claim-list").innerHTML = data.claims.length ? data.claims.map((c) => `
+      <article class="card">
+        <div class="card-head">
+          <span class="tag ${badge[c.status] || "RELATED"}">${esc(c.status)}</span>
+          <span class="meta">${esc(c.subject)}</span>
+          <span class="meta">${esc(c.metric)}</span>
+          <span class="meta">${esc(c.period)}</span>
+          <span class="meta">${c.n_documents} document(s)</span>
+          ${c.spread ? `<span class="meta">spread ${(c.spread * 100).toFixed(1)}%</span>` : ""}
+          ${c.dimensions.length ? `<span class="meta">explained by: ${esc(c.dimensions.join(", "))}</span>` : ""}
+        </div>
+        <div class="scroll" style="border:0;border-radius:0">
+          <table><thead><tr><th>Value</th><th>Period</th><th>Source</th><th>Evidence</th></tr></thead>
+          <tbody>${c.sources.map((src) => `
+            <tr class="fact-row" data-fact="${src.fact_id}">
+              <td class="num"><b>${esc(src.display)}</b></td>
+              <td>${esc(src.period_label || "—")}</td>
+              <td class="muted" style="font-size:12px">${esc(src.document)}<br>p.${src.page}</td>
+              <td class="muted" style="font-size:12.5px;font-style:italic">${esc((src.evidence || "").slice(0, 150))}</td>
+            </tr>`).join("")}</tbody></table>
+        </div>
+      </article>`).join("") : `<div class="empty">No claims match.</div>`;
+  },
+
   async relations() {
     const params = new URLSearchParams({
       kind: $("#rel-kind").value, cross_doc: $("#rel-cross").value,
@@ -383,6 +417,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const rerun = (fn) => { clearTimeout(debounce); debounce = setTimeout(fn, 220); };
   ["#fact-q", "#fact-doc", "#fact-type"].forEach((sel) =>
     $(sel).addEventListener("input", () => rerun(() => loaders.facts())));
+  ["#claim-q", "#claim-conf"].forEach((sel) =>
+    $(sel).addEventListener("input", () => rerun(() => loaders.claims())));
   ["#rel-kind", "#rel-cross", "#rel-q"].forEach((sel) =>
     $(sel).addEventListener("input", () => rerun(() => loaders.relations())));
 

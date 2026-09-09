@@ -1,16 +1,11 @@
 """Ingestion and linking orchestration.
 
-The shape of ``ingest`` is deliberate:
+Documents are content-addressed, so re-uploading is a no-op. The primary entity
+is inferred after extraction from what the extractor saw. Linking probes only new
+facts against the existing index, so document seven costs what document two did.
 
-* Documents are content-addressed, so re-uploading the same PDF is a no-op.
-* Extraction runs over chunks concurrently, bounded by the LLM client's semaphore.
-* The document's own primary entity is inferred *after* extraction, from what the
-  extractor actually saw, then used to resolve "the Company"-style references.
-* Linking probes only the NEW facts against the index of everything already
-  stored. Existing relations are never recomputed, so ingesting the seventh
-  document costs about what ingesting the second did.
-* Only pairs the deterministic rules could not settle reach a model, ranked so
-  the most consequential ones are spent first when a budget is in force.
+`renormalize` and `relink` re-derive single stages in under a second, which is
+what makes a parser or comparison fix cheap to apply.
 """
 from __future__ import annotations
 
@@ -155,9 +150,7 @@ async def ingest(
                 emit("entity", f"primary entity resolved to “{primary_entity}”", doc_id=doc_id)
 
             # --- grounding ---------------------------------------------------
-            # A document's fiscal-year convention is a property of the document.
-            # Read it from how the document names its own year end, so a filing
-            # with a December year end is not silently shifted by a quarter.
+            # Read the fiscal-year convention off the document itself.
             fy_start = periods.detect_fiscal_year_start(front_matter + " " + chunks[0].text)
             if fy_start != periods.FY_START_MONTH:
                 emit("calendar", f"fiscal year detected as starting in month {fy_start}", doc_id=doc_id)
@@ -174,9 +167,7 @@ async def ingest(
             if not stored:
                 store.update_document(doc_id, status="ready", duration_s=time.time() - started)
                 result.duration_s = time.time() - started
-                # Distinguish "this document yielded nothing" from "we never got to
-                # look at it". Reporting an exhausted quota as an empty document
-                # sends the reader hunting for a problem in their PDF.
+                # "Yielded nothing" and "never got to look" need different answers.
                 quota_failures = [f for f in client.failures if "quota" in f["error"].lower()
                                   or "429" in f["error"] or "too_many_requests" in f["error"].lower()]
                 if quota_failures or client.exhausted:
@@ -232,12 +223,10 @@ async def ingest(
 
 
 def renormalize(store: Store, progress: ProgressFn | None = None) -> dict[str, int]:
-    """Re-parse stored values and periods in place, without re-reading any PDF.
+    """Re-parse stored values and periods in place, without re-reading a PDF.
 
-    Values are normalized at ingest and then frozen in the database, so a fix to
-    the unit or period parser previously required re-extracting an entire corpus
-    to take effect -- paying again for the one stage that had not changed. This
-    re-derives just the parsed columns from the raw text already stored.
+    Values are frozen at ingest, so a parser fix would otherwise mean
+    re-extracting the corpus to change one derived column.
     """
     facts = store.all_facts(grounded_only=False)
     updates, changed = [], 0
@@ -287,12 +276,10 @@ async def relink(
     adjudication_budget: int = 60,
     progress: ProgressFn | None = None,
 ) -> IngestResult:
-    """Recompute every relation from facts already stored, without re-extracting.
+    """Recompute every relation from stored facts, without re-extracting.
 
-    Extraction is the expensive stage and its output does not change when the
-    comparison logic does. Rebuilding a whole corpus to pick up a change in how
-    two facts are judged wastes that work; this re-derives only the stage that
-    actually changed, which takes seconds instead of half an hour.
+    Extraction does not change when the comparison logic does, so rebuilding a
+    corpus to pick up a rule change wastes it. Seconds instead of half an hour.
     """
     settings = settings or get_settings()
     started = time.time()
@@ -324,7 +311,7 @@ async def relink(
 async def _extract_all(
     client: LLMClient, chunks: Sequence, title: str, emit, result: IngestResult
 ) -> dict[int, list[dict]]:
-    """Extract every chunk concurrently; fall back to heuristics per chunk."""
+    """Extract chunks concurrently, degrading per chunk rather than as a whole."""
     done = 0
     total = len(chunks)
 
@@ -414,7 +401,7 @@ def _ground_and_store(
 
 
 async def _apply_clusters(store: Store, client: LLMClient, rows: list[dict], doc_id: str, emit) -> None:
-    """Assign this document's new metric labels to the shared vocabulary."""
+    """Fold this document's new metric labels into the shared vocabulary."""
     known = {r["key"]: (r.get("canonical") or r["key"]) for r in store.schema_snapshot("metric")}
     new_labels: dict[str, str] = {}   # metric_key -> a representative raw label
     for row in rows:
@@ -467,7 +454,7 @@ async def _link(
         verdict = classify(candidate.fact_a, candidate.fact_b, obs)
         if verdict.kind == UNRELATED:
             continue
-        # Repeated rows of one table are a list of events, not rival claims.
+        # Repeated table rows are a series, not rival claims.
         key = enumeration_key(candidate.fact_a)
         if key in enumerations and key == enumeration_key(candidate.fact_b):
             verdict = Verdict(

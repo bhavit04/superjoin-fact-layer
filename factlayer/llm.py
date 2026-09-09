@@ -1,17 +1,8 @@
-"""One JSON-in/JSON-out interface over Gemini, Anthropic, OpenAI, and a replay cache.
+"""JSON-in/JSON-out over Gemini, Anthropic, OpenAI, or a replay cache.
 
-Three things this layer is responsible for, all of which exist because of how the
-pipeline uses it:
-
-* **Provider independence.** Nothing above this file knows which vendor answered.
-  The prompts are plain text and the contract is "return JSON", so switching
-  providers is an environment variable.
-* **A content-addressed disk cache.** The cache key is a hash of the prompt, not
-  of the provider, so a cache built with one model replays under any
-  configuration -- including with no API key at all. That is what lets this repo
-  ship a runnable demo without shipping a credential.
-* **Surviving free-tier rate limits.** Retries with backoff, honouring
-  ``Retry-After``, and a bounded concurrency semaphore.
+Nothing above this file knows which vendor answered. The cache is keyed on the
+prompt rather than the provider, so a cache built with one model replays under
+any configuration — including with no API key, which is how the demo runs.
 """
 from __future__ import annotations
 
@@ -22,7 +13,7 @@ import os
 import random
 import re
 import time
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -89,13 +80,10 @@ def extract_json(text: str) -> Any:
 
 
 class RateLimiter:
-    """A token bucket that paces requests to a requests-per-minute budget.
+    """Token bucket pacing requests to a per-minute budget.
 
-    Free-tier quotas are per-minute, and the natural approach -- fire everything
-    and retry on 429 -- is actively counterproductive against them: the rejected
-    requests still count, so bursting turns a 20/min budget into far less than
-    20/min of useful work. Pacing to just under the limit is both faster overall
-    and kinder to the quota.
+    Bursting and retrying is counterproductive: rejected requests still count
+    against the quota, so a 20/min budget yields far less than 20/min of work.
     """
 
     def __init__(self, per_minute: float):
@@ -369,11 +357,8 @@ class LLMClient:
         raise LLMError(f"unknown provider {provider!r}")
 
     async def _call_gemini(self, system, prompt, max_output_tokens, temperature):
-        """Google now serves two incompatible APIs and which one a key can reach
-        depends on when the key was issued: newer keys get the Interactions API
-        and are refused by ``generateContent`` with a 404 on every model, while
-        older keys are the other way round. Rather than make the user work out
-        which they have, the first call probes and the answer is reused."""
+        """Google serves two incompatible APIs and which one a key reaches depends
+        on when it was issued. The first call probes; the answer is reused."""
         if self._gemini_api is None:
             self._gemini_api = "interactions"
         try:
@@ -390,10 +375,8 @@ class LLMClient:
             return await self._call_gemini_generate(system, prompt, max_output_tokens, temperature)
 
     async def _call_gemini_interactions(self, system, prompt, max_output_tokens, temperature):
-        """The current API. Note there is no JSON response-mime setting here: the
-        only structured-output control is a full JSON schema, and supplying a bare
-        object type makes the model return an empty object. The prompts ask for
-        JSON and ``extract_json`` cleans up whatever comes back."""
+        """The current API. It has no JSON mime setting — the only structured
+        output control is a full schema, and a bare object type returns `{}`."""
         resp = await self._client.post(
             "https://generativelanguage.googleapis.com/v1beta/interactions",
             params={"key": self.settings.api_key},

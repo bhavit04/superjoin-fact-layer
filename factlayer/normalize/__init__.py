@@ -1,1 +1,1 @@
-from . import entities, metrics, periods, units  # noqa: F401
+"""Normalization: units, periods, entities and metric names."""

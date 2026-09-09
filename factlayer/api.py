@@ -1,9 +1,7 @@
 """HTTP API and the UI it serves.
 
-Upload PDFs, watch them being processed, then browse the facts, their evidence,
-and the relationships between them. ``/api/cases`` is worth calling out: it
-selects, from whatever is in the store, the strongest live example of each of the
-four cases the brief asks for, rather than relying on anything hard-coded.
+Upload PDFs, watch them process, browse facts, evidence and relationships.
+`/api/cases` selects the four required cases from live data, not a fixed list.
 """
 from __future__ import annotations
 
@@ -15,10 +13,11 @@ from pathlib import Path
 from typing import Any
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Query, UploadFile, File
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, Response
+from fastapi.responses import HTMLResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from .cases import build_cases
+from .claims import build_claims, claim_stats
 from .config import get_settings
 from .db import Store
 from .llm import LLMClient
@@ -163,10 +162,13 @@ def get_fact(fact_id: str):
     fact = store.get_fact(fact_id)
     if not fact:
         raise HTTPException(404, "unknown fact")
+    rows = store.relations_for_fact(fact_id)
+    others = store.get_facts(
+        [r["fact_b"] if r["fact_a"] == fact_id else r["fact_a"] for r in rows])
     relations = []
-    for relation in store.relations_for_fact(fact_id):
+    for relation in rows:
         other_id = relation["fact_b"] if relation["fact_a"] == fact_id else relation["fact_a"]
-        other = store.get_fact(other_id)
+        other = others.get(other_id)
         if other:
             relations.append({**_decorate_relation(relation), "other": _decorate_fact(other)})
     relations.sort(key=lambda r: (_KIND_ORDER.get(r["kind"], 9), -(r["score"] or 0)))
@@ -178,7 +180,7 @@ def fact_evidence_image(fact_id: str, crop: int = 0):
     fact = store.get_fact(fact_id)
     if not fact:
         raise HTTPException(404, "unknown fact")
-    document = store.one("SELECT * FROM documents WHERE id = ?", (fact["doc_id"],))
+    document = store.documents_map().get(fact["doc_id"])
     if not document or not document.get("source_path"):
         raise HTTPException(404, "source document is no longer available")
     path = Path(document["source_path"])
@@ -222,9 +224,10 @@ def list_relations(
         f"SELECT r.* {join} {clause} ORDER BY r.cross_doc DESC, r.score DESC LIMIT ? OFFSET ?",
         [*params, limit, offset],
     )
+    facts = store.get_facts([r["fact_a"] for r in rows] + [r["fact_b"] for r in rows])
     out = []
     for relation in rows:
-        a, b = store.get_fact(relation["fact_a"]), store.get_fact(relation["fact_b"])
+        a, b = facts.get(relation["fact_a"]), facts.get(relation["fact_b"])
         if a and b:
             out.append({**_decorate_relation(relation), "a": _decorate_fact(a), "b": _decorate_fact(b)})
     return {"total": total, "relations": out}
@@ -241,7 +244,7 @@ def get_relation(relation_id: str):
 
 @app.get("/api/schema")
 def get_schema():
-    """The fact schema as it currently exists -- accumulated from documents, not declared."""
+    """The schema as accumulated from documents, not as declared."""
     snapshot = store.schema_snapshot()
     grouped: dict[str, list[dict]] = {}
     for row in snapshot:
@@ -265,9 +268,16 @@ def get_quarantine(limit: int = Query(100, le=500)):
     return {"reasons": reasons, "items": rows}
 
 
+@app.get("/api/claims")
+def list_claims(q: str = "", conflicts: str = "", limit: int = Query(60, le=200)):
+    """Everything every source says about one quantity, grouped."""
+    claims = build_claims(store, limit=limit, only_conflicts=conflicts == "1", query=q)
+    return {"stats": claim_stats(claims), "claims": claims}
+
+
 @app.get("/api/cases")
 def get_cases():
-    """The four cases the assignment asks for, selected from live data."""
+    """The four required cases, selected from live data."""
     return build_cases(store)
 
 
@@ -302,9 +312,9 @@ def _decorate_fact(fact: dict | None) -> dict | None:
         fact["bbox"] = json.loads(fact.pop("bbox_json") or "[]")
     except (TypeError, ValueError):
         fact["bbox"] = []
-    document = store.one("SELECT filename, title FROM documents WHERE id = ?", (fact["doc_id"],))
-    fact["doc_filename"] = (document or {}).get("filename", "")
-    fact["doc_title"] = (document or {}).get("title", "")
+    document = store.documents_map().get(fact["doc_id"], {})
+    fact["doc_filename"] = document.get("filename", "")
+    fact["doc_title"] = document.get("title", "")
     return fact
 
 

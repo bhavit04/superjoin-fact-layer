@@ -1,14 +1,8 @@
 """Maintain a controlled vocabulary of metric names, incrementally.
 
-Lexical similarity gets "revenue from operations" and "operating revenue"
-together, but it will never get "CPI inflation" and "consumer price inflation",
-and it should not: the words barely overlap. That is a semantic judgement, so it
-goes to a model -- but only once per *distinct metric label*, not once per fact.
-
-There are a few hundred distinct labels across six documents and thousands of
-facts, so this costs one or two calls per document rather than one per pair. When
-a new document arrives, only its previously unseen labels are sent, together with
-the vocabulary built so far, which keeps the cost of document N independent of N.
+Lexical similarity will never match "CPI inflation" to "consumer price
+inflation". That judgement goes to a model — once per distinct label, not once
+per fact pair, so it costs one or two calls per document rather than thousands.
 """
 from __future__ import annotations
 
@@ -25,11 +19,8 @@ MAX_LABELS_PER_CALL = 60
 async def assign_clusters(
     store: Store, client: LLMClient, new_labels: list[str], doc_id: str = ""
 ) -> dict[str, str]:
-    """Map each new metric label to a canonical name.
-
-    Falls back to lexical clustering against the existing vocabulary when no model
-    is reachable, so the system still links across obvious wording differences.
-    """
+    """Map new metric labels to canonical names, falling back to lexical
+    matching when no model is reachable."""
     new_labels = [l for l in dict.fromkeys(l.strip() for l in new_labels if l and l.strip())]
     if not new_labels:
         return {}
@@ -116,12 +107,8 @@ def _salvage_assignments(text: str) -> list[dict]:
 
 
 def _lexical_fallback(label: str, existing: list[str], threshold: float = 0.72) -> str:
-    """Attach to the closest existing canonical name, or keep the label itself.
-
-    The threshold is deliberately high. Over-merging metrics invents
-    contradictions that are not in the documents, which is a much worse failure
-    than leaving two names for one quantity.
-    """
+    """Closest existing canonical name, or the label itself. The threshold is
+    high: over-merging invents contradictions that are not in the documents."""
     best_name, best_score = label.strip().lower(), 0.0
     for name in existing:
         score = metrics.metric_similarity(label, name)

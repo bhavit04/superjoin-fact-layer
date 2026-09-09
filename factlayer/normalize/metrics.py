@@ -1,18 +1,8 @@
-"""Canonicalize the *name* of what is being measured.
+"""Canonicalize what is being measured.
 
-"Revenue from operations", "operating revenue", "revenues from operations" and
-"total operating revenue" all name one quantity. Matching them by exact string
-fails; matching them by embedding alone over-matches ("revenue" vs "revenue
-growth" are different claims). The approach here is deliberately conservative:
-
-- strip a small set of financial-writing stopwords and filler modifiers,
-- apply light suffix stemming so operations/operating/operational collapse,
-- keep a *token set*, which downstream similarity scores with Jaccard,
-- and separately flag "derivative" metrics (growth, margin, share, per-unit),
-  because a level and its growth rate must never be compared as the same claim.
-
-That last point matters more than it looks: without it the system happily
-reports that "revenue was Rs 8,142 Mn" contradicts "revenue grew 8.1 per cent".
+"Revenue from operations" and "operating revenue" name one quantity; "revenue"
+and "revenue growth" do not. Derivative metrics are flagged separately so a level
+is never compared against its own growth rate.
 """
 from __future__ import annotations
 
@@ -49,14 +39,8 @@ _WS = re.compile(r"\s+")
 
 
 def _stem(token: str) -> str:
-    """Crude but sufficient suffix stripping.
-
-    Real stemming would be a heavyweight dependency for matching a few hundred
-    metric labels. What matters is *consistency*: every surface form of a word
-    must land on one stem, or two labels naming the same quantity will be judged
-    different. The trailing-vowel strip at the end exists for exactly that --
-    without it "revenue" and "revenues" reduce to different stems.
-    """
+    """Crude suffix stripping. Consistency matters more than correctness: every
+    surface form must reach one stem or equal metrics are judged different."""
     if token.endswith("ies") and len(token) > 4:
         token = token[:-3] + "y"
     else:
@@ -95,25 +79,12 @@ def derivative_kind(label: str | None) -> str | None:
 
 
 def same_quantity(label_a: str | None, label_b: str | None) -> bool:
-    """Do two labels name the same measured quantity by their words alone?
+    """Token sets must be equal, not merely similar.
 
-    This is deliberately strict: the stemmed, stopword-stripped token sets must be
-    equal. Similarity is not enough, because the labels that matter most here
-    differ by exactly one word --
-
-        net cash from (used in) OPERATING activities
-        net cash from (used in) INVESTING activities
-        net cash from (used in) FINANCING activities
-
-    -- which share five of six tokens and score 0.67, yet are three unrelated line
-    items. Comparing them produced confident, well-evidenced, completely false
-    contradictions. The same applies to "EBITDA margin" against "Adj. EBITDA
-    margin", where the one differing word is the whole point.
-
-    Genuine synonyms whose words differ ("CPI inflation" / "consumer price
-    inflation") are handled by the clustering pass instead, which asks a model.
-    Missing a link costs a little recall; inventing a contradiction costs the
-    system its credibility.
+    "net cash from OPERATING/INVESTING/FINANCING activities" share five of six
+    tokens and score 0.67, yet are three unrelated line items — comparing them
+    produced confident false contradictions. Synonyms whose words differ ("CPI
+    inflation" / "consumer price inflation") are the clustering pass's job.
     """
     ta, tb = set(metric_tokens(label_a)), set(metric_tokens(label_b))
     return bool(ta) and ta == tb
@@ -126,12 +97,8 @@ def jaccard(a: set[str], b: set[str]) -> float:
 
 
 def metric_similarity(label_a: str | None, label_b: str | None) -> float:
-    """0..1 similarity between two metric labels.
-
-    Blends token overlap with character-trigram overlap so that both
-    "revenue from operations"/"operating revenue" (token overlap) and
-    "EBITDA"/"EBITDA margin" (character overlap) score sensibly.
-    """
+    """0..1 similarity, blending token and character-trigram overlap. Used to
+    rank candidates, never to authorise a comparison — see same_quantity."""
     ta, tb = set(metric_tokens(label_a)), set(metric_tokens(label_b))
     if not ta or not tb:
         return 0.0

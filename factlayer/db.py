@@ -1,13 +1,8 @@
-"""SQLite storage for the knowledge layer.
+"""SQLite storage.
 
-SQLite rather than a graph database on purpose. The interesting work in this
-problem is normalization and adjudication, not traversal; the queries this system
-actually runs are "facts sharing a metric cluster and entity" and "relations
-touching this fact", both of which are ordinary indexed lookups. A single file
-with no server also makes the whole thing clone-and-run for a reviewer.
-
-Everything is additive. Ingesting a document never rewrites existing facts or
-relations, which is what makes incremental ingestion cheap.
+Not a graph database on purpose: the queries this system runs are "facts sharing
+a metric cluster and entity" and "relations touching this fact", both ordinary
+indexed lookups. A single file also makes the project clone-and-run.
 """
 from __future__ import annotations
 
@@ -112,9 +107,8 @@ CREATE INDEX IF NOT EXISTS idx_rel_a    ON relations(fact_a);
 CREATE INDEX IF NOT EXISTS idx_rel_b    ON relations(fact_b);
 CREATE INDEX IF NOT EXISTS idx_rel_kind ON relations(kind);
 
--- The observed schema, accumulated as documents arrive. This is what makes the
--- fact schema "dynamic": nothing declares the set of metrics or qualifier keys
--- up front, they are registered here the first time a document uses them.
+-- The observed schema. Nothing declares metrics or qualifier keys up front;
+-- they are registered here the first time a document uses one.
 CREATE TABLE IF NOT EXISTS schema_registry (
     kind          TEXT NOT NULL,    -- metric | qualifier | unit | entity | fact_type
     key           TEXT NOT NULL,
@@ -126,8 +120,7 @@ CREATE TABLE IF NOT EXISTS schema_registry (
     PRIMARY KEY (kind, key)
 );
 
--- Facts the system extracted but could not ground. Kept rather than dropped so
--- extraction failures are inspectable instead of invisible.
+-- Facts that failed to ground. Kept so failure is inspectable, not invisible.
 CREATE TABLE IF NOT EXISTS quarantine (
     id           TEXT PRIMARY KEY,
     doc_id       TEXT,
@@ -159,6 +152,7 @@ class Store:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self._local = threading.local()
         self._write_lock = threading.Lock()
+        self._documents_cache: dict[str, dict] | None = None
         with self.connect() as conn:
             conn.executescript(SCHEMA)
 
@@ -203,6 +197,16 @@ class Store:
 
     # --- documents -----------------------------------------------------------
 
+    def documents_map(self) -> dict[str, dict]:
+        """id -> document row, cached. Decorating facts otherwise re-queries the
+        documents table once per fact."""
+        if self._documents_cache is None:
+            self._documents_cache = {r["id"]: r for r in self.query("SELECT * FROM documents")}
+        return self._documents_cache
+
+    def _invalidate_documents(self) -> None:
+        self._documents_cache = None
+
     def find_document_by_hash(self, sha256: str) -> dict | None:
         return self.one("SELECT * FROM documents WHERE sha256 = ?", (sha256,))
 
@@ -213,6 +217,7 @@ class Store:
         cols = ", ".join(fields)
         marks = ", ".join("?" for _ in fields)
         self.execute(f"INSERT INTO documents ({cols}) VALUES ({marks})", tuple(fields.values()))
+        self._invalidate_documents()
         return fields["id"]
 
     def update_document(self, doc_id: str, **fields) -> None:
@@ -220,9 +225,11 @@ class Store:
             return
         sets = ", ".join(f"{k} = ?" for k in fields)
         self.execute(f"UPDATE documents SET {sets} WHERE id = ?", (*fields.values(), doc_id))
+        self._invalidate_documents()
 
     def delete_document(self, doc_id: str) -> None:
         self.execute("DELETE FROM documents WHERE id = ?", (doc_id,))
+        self._invalidate_documents()
 
     # --- facts ---------------------------------------------------------------
 
@@ -255,6 +262,20 @@ class Store:
 
     def get_fact(self, fact_id: str) -> dict | None:
         return self.one("SELECT * FROM facts WHERE id = ?", (fact_id,))
+
+    def get_facts(self, ids: Iterable[str]) -> dict[str, dict]:
+        """Fetch many facts in one query. Relation listings need both sides of
+        every row, which is two lookups each if done one at a time."""
+        ids = list(dict.fromkeys(ids))
+        if not ids:
+            return {}
+        out: dict[str, dict] = {}
+        for i in range(0, len(ids), 400):          # stay under SQLite's variable limit
+            batch = ids[i : i + 400]
+            marks = ", ".join("?" for _ in batch)
+            for row in self.query(f"SELECT * FROM facts WHERE id IN ({marks})", batch):
+                out[row["id"]] = row
+        return out
 
     # --- relations -----------------------------------------------------------
 

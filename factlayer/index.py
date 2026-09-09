@@ -1,18 +1,8 @@
-"""Candidate generation: decide which fact pairs are even worth comparing.
+"""Decide which fact pairs are worth comparing at all.
 
-Comparing every fact against every other fact is O(n^2). At ~6,000 facts that is
-18 million pairs, and any of them that reach an LLM cost real money and time. The
-knowledge layer only ever needs to compare facts that could plausibly be the same
-claim, so this module narrows the field before any expensive work happens:
-
-1. an inverted index over metric tokens, weighted by inverse document frequency,
-   so a shared "revenue" counts for less than a shared "ebitda";
-2. a cheap IDF-overlap prefilter that keeps only the strongest few dozen
-   candidates per fact;
-3. a full lexical similarity score on the survivors, plus an entity check.
-
-The result is roughly linear in the number of facts, and it is also what makes
-incremental ingestion cheap: a new document only queries the existing index.
+All-pairs is O(n²) — 4.8M pairs at 3,100 facts. An IDF-weighted inverted index
+over metric tokens plus an entity check narrows that to a bounded top-K per fact,
+which keeps pair generation roughly linear and makes incremental ingest cheap.
 """
 from __future__ import annotations
 
@@ -57,8 +47,7 @@ class FactIndex:
         return len(self.facts)
 
     def add(self, facts: Iterable[dict]) -> None:
-        """Extend the index in place. Used when linking a newly ingested document
-        against everything already stored."""
+        """Extend in place, for linking a new document against what is stored."""
         for fact in facts:
             if fact["id"] in self.facts:
                 continue
@@ -138,11 +127,8 @@ def generate_pairs(
     top_k: int,
     min_similarity: float,
 ) -> list[Candidate]:
-    """All unique candidate pairs seeded from ``probe_facts``.
-
-    Passing only the newly ingested facts as probes is what makes ingestion
-    incremental: existing fact-to-fact relations are never recomputed.
-    """
+    """Unique candidate pairs seeded from `probe_facts`. Probing only new facts
+    is what makes ingestion incremental."""
     seen: set[tuple[str, str]] = set()
     pairs: list[Candidate] = []
     for fact in probe_facts:
