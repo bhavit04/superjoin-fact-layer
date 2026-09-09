@@ -33,10 +33,17 @@ This repository ships the model's cached responses for the six starter documents
 the whole knowledge layer can be rebuilt offline and the API browsed without a
 credential:
 
+The PDFs themselves are not redistributed here. Put the starter dataset at
+`data_raw/starter-datasets/` (the folder as it was handed out — unzipping it there is
+enough), then:
+
 ```bash
 FACTLAYER_PROVIDER=replay factlayer ingest data_raw/starter-datasets/*/*.pdf
 factlayer serve                      # http://127.0.0.1:8000
 ```
+
+The cache is keyed by the text of each chunk, so the same PDFs hit it and the rebuild
+runs without a network call. Different PDFs simply miss, and need a key.
 
 Pre-generated output is also committed, if you would rather just read it:
 
@@ -59,7 +66,7 @@ Open <http://127.0.0.1:8000> and drop PDFs onto the page. Or use the CLI:
 factlayer ingest path/to/*.pdf     # incremental: links against what is already stored
 factlayer cases                    # print the four cases
 factlayer stats                    # corpus statistics
-pytest -q                          # 55 tests, no API key needed
+pytest -q                          # 81 tests; 73 need no PDFs and no key
 ```
 
 Set `FACTLAYER_PROVIDER` to `gemini`, `anthropic`, or `openai`. The code is the same

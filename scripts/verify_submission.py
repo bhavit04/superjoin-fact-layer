@@ -26,6 +26,14 @@ OK, BAD = "  ok  ", " MISS "
 def main() -> int:
     store = Store(get_settings().db_path)
     stats = store.stats()
+
+    # Empty database is not a failing corpus, it is an un-run one. Say so, rather
+    # than printing fourteen misses that all mean the same thing.
+    if stats["documents"] == 0:
+        print("No documents ingested yet. Build the corpus first:\n"
+              "    FACTLAYER_PROVIDER=replay factlayer ingest data_raw/starter-datasets/*/*.pdf")
+        return 2
+
     cases = build_cases(store, per_case=3)
     failures: list[str] = []
 
