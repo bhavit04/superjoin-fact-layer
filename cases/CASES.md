@@ -22,11 +22,11 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 | facts grounded | 2,833 |
 | relations | 2,685 |
 | relations cross doc | 598 |
-| relations · CONTRADICTS | 9 |
-| relations · CORROBORATES | 167 |
-| relations · RECONCILED | 327 |
+| relations · CONTRADICTS | 10 |
+| relations · CORROBORATES | 171 |
+| relations · RECONCILED | 322 |
 | relations · RELATED | 2,182 |
-| quarantined | 155 |
+| quarantined | 180 |
 | distinct metrics | 1,322 |
 | distinct qualifiers | 107 |
 | distinct entities | 671 |
@@ -38,6 +38,42 @@ relations the system actually produced, selected by `factlayer/cases.py`.
 Ranked by how *differently* the two sources state the same agreeing fact, so the examples shown are the ones that only match because of normalization.
 
 ### 1. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
+
+**Fact A — Delhivery Limited · revenue from services**
+
+- Value as printed: `₹81,415Mn`
+- Normalized: `INR 8,141.50 crore`
+- Period: `FY24` → `FY2024`
+- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
+
+> ₹81,415Mn Revenue from services
+
+**Fact B — Delhivery Limited · revenue for services**
+
+- Value as printed: `8,142`
+- Normalized: `INR 8,142.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 17
+
+> Revenue for services (A) 1,860 2,194 2,076 (5.4%) 11.6%
+
+**System reasoning.** INR 8,141.50 crore and INR 8,142.00 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `EQUAL` — both cover FY2024 |
+| units | `INR` ↔ `INR` (comparable) |
+| values compared | `8.1415e+10` vs `8.142e+10` |
+| relative difference | `0.0061%` |
+| verdict on that | within rounding tolerance |
+| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
+| ratio A/B | `0.999939` |
+
+</details>
+
+### 2. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
 
 **Fact A — Delhivery Limited · EBITDA**
 
@@ -73,54 +109,9 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 </details>
 
-### 2. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
-
-**Fact A — Delhivery Limited · EBITDA**
-
-- Value as printed: `₹127Cr`
-- Normalized: `INR 127.00 crore`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 6
-
-> ₹127Cr / 1.6% EBITDA / EBITDA margin
-
-**Fact B — Delhivery Limited · EBITDA**
-
-- Value as printed: `₹1,266Mn`
-- Normalized: `INR 126.60 crore`
-- Period: `FY24` → `FY2024`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
-
-> ₹1,266Mn EBITDA
-
-**System reasoning.** INR 127.00 crore and INR 126.60 crore agree to within 0.31% for FY2024, inside the 0.39% tolerance implied by how precisely each figure is written.
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover FY2024 |
-| units | `INR` ↔ `INR` (comparable) |
-| values compared | `1.27e+09` vs `1.266e+09` |
-| relative difference | `0.3150%` |
-| verdict on that | within rounding tolerance |
-| rounding tolerance | `0.3937%` (from how precisely each figure is written) |
-| ratio A/B | `1.00316` |
-
-</details>
-
 ### 3. CORROBORATES  ·  confidence 0.99  ·  cross-document  ·  decided by `deterministic`
 
 **Fact A — Delhivery Limited · revenue from services**
-
-- Value as printed: `₹8,142 Cr`
-- Normalized: `INR 8,142.00 crore`
-- Period: `FY24` → `FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 6
-
-> ₹8,142 Cr FY24 revenue from services
-
-**Fact B — Delhivery Limited · revenue from services**
 
 - Value as printed: `₹81,415Mn`
 - Normalized: `INR 8,141.50 crore`
@@ -129,7 +120,16 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 
 > ₹81,415Mn Revenue from services
 
-**System reasoning.** INR 8,142.00 crore and INR 8,141.50 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
+**Fact B — Delhivery Limited · revenue from services**
+
+- Value as printed: `₹8,142 Cr`
+- Normalized: `INR 8,142.00 crore`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 6
+
+> ₹8,142 Cr FY24 revenue from services
+
+**System reasoning.** INR 8,141.50 crore and INR 8,142.00 crore agree to within 0.01% for FY2024, inside the 0.05% tolerance implied by how precisely each figure is written.
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
@@ -137,11 +137,11 @@ Ranked by how *differently* the two sources state the same agreeing fact, so the
 |---|---|
 | period relation | `EQUAL` — both cover FY2024 |
 | units | `INR` ↔ `INR` (comparable) |
-| values compared | `8.142e+10` vs `8.1415e+10` |
+| values compared | `8.1415e+10` vs `8.142e+10` |
 | relative difference | `0.0061%` |
 | verdict on that | within rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `1.00006` |
+| ratio A/B | `0.999939` |
 
 </details>
 
@@ -188,7 +188,46 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 
 </details>
 
-### 2. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
+### 2. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `llm`  ·  explained by **period**
+
+**Fact A — Delhivery Limited · PTL freight tonnage**
+
+- Value as printed: `1,517`
+- Normalized: `1,517 tonnes`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 9
+
+> 1,705 1,157 1,517 FY22 FY23 FY24 PTL freight tonnage(2)
+
+**Fact B — Delhivery Limited · PTL freight tonnage**
+
+- Value as printed: `384K Tons`
+- Normalized: `384,000 tonnes`
+- Period: `Q4 FY24` → `Q4 FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+
+> 384K Tons PTL freight tonnage in Q4 FY24
+
+**System reasoning.** While the periods are nested (FY24 contains Q4 FY24), the reported tonnage for the single quarter (384,000 tonnes) is mathematically impossible to reconcile with the total reported for the full fiscal year (1,517 tonnes). Freight tonnage cannot be negative, so the Q4 figure cannot exceed the annual total.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `CONTAINS` — FY2024 contains Q4 FY2024 |
+| units | `tonnes` ↔ `tonnes` (comparable) |
+| values compared | `1,517` vs `384,000` |
+| relative difference | `99.6049%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.1302%` (from how precisely each figure is written) |
+| ratio A/B | `0.00395052` |
+| hypothesis 1 | the shorter period reports 384,000 tonnes, which exceeds the 1,517 tonnes reported for the longer period containing it -- consistent only if other sub-periods were negative |
+| hypothesis 2 | periods nest: FY2024 contains Q4 FY2024 |
+| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
+
+</details>
+
+### 3. CONTRADICTS  ·  confidence 0.65  ·  same document  ·  decided by `deterministic`
 
 **Fact A — Spoton · Active Customers**
 
@@ -221,40 +260,6 @@ Same metric, same subject, same resolved period, and no stated difference in bas
 | verdict on that | **outside** rounding tolerance |
 | rounding tolerance | `0.0500%` (from how precisely each figure is written) |
 | ratio A/B | `0.998556` |
-
-</details>
-
-### 3. CONTRADICTS  ·  confidence 0.40  ·  same document  ·  decided by `deterministic`
-
-**Fact A — Mr. Anindya Ghose · board role**
-
-- Value as printed: `Non-Executive Independent Director`
-- Period: `2023` → `2023`
-- Qualifiers: `effective_date=August 04, 2023`, `term=five years`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 24
-
-> Appointment of Mr. Anindya Ghose as a Non-Executive Independent Director (DIN: 10243913) for a term of five years with effect from August 04, 2023
-
-**Fact B — Mr. Anindya Ghose · board role**
-
-- Value as printed: `member of the Committee`
-- Period: `2023` → `2023`
-- Qualifiers: `committee=Risk Management Committee`, `effective_date=November 04, 2023`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 44
-
-> Mr. Anindya Ghose has been appointed as member of the Committee with effect from November 04, 2023.
-
-**System reasoning.** The two sources state different values for the same claim.
-
-<details><summary>Mechanical observations the decision rests on</summary>
-
-| observation | value |
-|---|---|
-| period relation | `EQUAL` — both cover 2023 |
-| units | `` vs `` — **not directly comparable** |
-| qualifier `effective_date` | A=`August 04, 2023` · B=`November 04, 2023` |
-| qualifier `term` | A=`five years` · B=`(unstated)` |
-| qualifier `committee` | A=`(unstated)` · B=`Risk Management Committee` |
 
 </details>
 
@@ -304,75 +309,81 @@ The numbers disagree, but a stated difference in period, basis, scope, unit or c
 
 ### 2. RECONCILED  ·  confidence 0.70  ·  cross-document  ·  decided by `deterministic`  ·  explained by **period**
 
-**Fact A — Delhivery Limited · revenue from services**
+**Fact A — Food inflation · inflation rate**
 
-- Value as printed: `₹2,076 Cr`
-- Normalized: `INR 2,076.00 crore`
-- Period: `Q4 FY24` → `Q4 FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+- Value as printed: `8.4 per cent`
+- Normalized: `8.40 %`
+- Period: `FY25` → `FY2025`
+- Qualifiers: `measure=CFPI`
+- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 28
 
-> ₹2,076 Cr Q4 FY24 revenue from services
+> Food inflation, measured by the Consumer Food Price Index (CFPI), has increased from 7.5 per cent in FY24 to 8.4 per cent in FY25 (April-December)
 
-**Fact B — Delhivery Limited · revenue from services**
+**Fact B — Food inflation · inflation rate**
 
-- Value as printed: `₹81,415Mn`
-- Normalized: `INR 8,141.50 crore`
-- Period: `FY24` → `FY2024`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
+- Value as printed: `2.9 per cent`
+- Normalized: `2.90 %`
+- Period: `March 2025` → `Mar 2025`
+- Source: `02-rbi-annual-report-2024-25-excerpt.pdf`, page 10
 
-> ₹81,415Mn Revenue from services
+> declining dramatically to 2.9 per cent by March 2025.
 
-**System reasoning.** These are the same metric over nested periods: Q4 FY2024 falls inside FY2024. The difference is one of reporting window, not a disagreement.
+**System reasoning.** These are the same metric over nested periods: FY2025 contains Mar 2025. The difference is one of reporting window, not a disagreement.
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `CONTAINED_BY` — Q4 FY2024 falls inside FY2024 |
-| units | `INR` ↔ `INR` (comparable) |
-| values compared | `2.076e+10` vs `8.1415e+10` |
-| relative difference | `74.5010%` |
+| period relation | `CONTAINS` — FY2025 contains Mar 2025 |
+| units | `%` ↔ `%` (comparable) |
+| values compared | `8.4` vs `2.9` |
+| relative difference | `65.4762%` |
 | verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `0.25499` |
-| hypothesis 1 | periods nest: Q4 FY2024 falls inside FY2024 |
+| rounding tolerance | `1.7241%` (from how precisely each figure is written) |
+| ratio A/B | `2.89655` |
+| qualifier `measure` | A=`CFPI` · B=`(unstated)` |
+| hypothesis 1 | periods nest: FY2025 contains Mar 2025 |
+| hypothesis 2 | stated measure differs (CFPI vs unstated), a definition difference |
 
 </details>
 
 ### 3. RECONCILED  ·  confidence 0.70  ·  cross-document  ·  decided by `deterministic`  ·  explained by **period**
 
-**Fact A — Delhivery Limited · revenue for services**
+**Fact A — India · current account deficit**
 
-- Value as printed: `2,194`
-- Normalized: `2,194`
-- Period: `Q3 FY24` → `Q3 FY2024`
-- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 17
+- Value as printed: `0.6 percent`
+- Normalized: `0.60 %`
+- Period: `FY2024/25` → `FY2025`
+- Source: `03-imf-india-2025-article-iv-excerpt.pdf`, page 52
 
-> Revenue for services (A) 1,860 2,194 2,076 (5.4%) 11.6% 7,
+> The CA deficit declined to 0.6 percent of GDP in FY2024/25
 
-**Fact B — Delhivery Limited · revenue from services**
+**Fact B — India · current account deficit**
 
-- Value as printed: `₹81,415Mn`
-- Normalized: `INR 8,141.50 crore`
-- Period: `FY24` → `FY2024`
-- Source: `02-delhivery-annual-report-fy24-excerpt.pdf`, page 4
+- Value as printed: `1.2 per cent`
+- Normalized: `1.20 %`
+- Period: `Q2 FY25` → `Q2 FY2025`
+- Qualifiers: `measure=of GDP`
+- Source: `01-india-economic-survey-2024-25-excerpt.pdf`, page 30
 
-> ₹81,415Mn Revenue from services
+> India’s current account deficit (CAD) remains relatively contained at 1.2 per cent of GDP in Q2 FY25.
 
-**System reasoning.** These are the same metric over nested periods: Q3 FY2024 falls inside FY2024. The difference is one of reporting window, not a disagreement.
+**System reasoning.** These are the same metric over nested periods: FY2025 contains Q2 FY2025. The difference is one of reporting window, not a disagreement.
 
 <details><summary>Mechanical observations the decision rests on</summary>
 
 | observation | value |
 |---|---|
-| period relation | `CONTAINED_BY` — Q3 FY2024 falls inside FY2024 |
-| units | `count` ↔ `INR` (comparable) |
-| values compared | `2,194` vs `8.1415e+10` |
-| relative difference | `100.0000%` |
+| period relation | `CONTAINS` — FY2025 contains Q2 FY2025 |
+| units | `%` ↔ `%` (comparable) |
+| values compared | `0.6` vs `1.2` |
+| relative difference | `50.0000%` |
 | verdict on that | **outside** rounding tolerance |
-| rounding tolerance | `0.0500%` (from how precisely each figure is written) |
-| ratio A/B | `2.69484e-08` |
-| hypothesis 1 | periods nest: Q3 FY2024 falls inside FY2024 |
+| rounding tolerance | `8.3333%` (from how precisely each figure is written) |
+| ratio A/B | `0.5` |
+| qualifier `measure` | A=`(unstated)` · B=`of GDP` |
+| hypothesis 1 | periods nest: FY2025 contains Q2 FY2025 |
+| hypothesis 2 | stated measure differs (unstated vs of GDP), a definition difference |
 
 </details>
 
@@ -387,17 +398,61 @@ storage; failures are written to a quarantine table with a reason instead of bei
 | measure | value |
 |---|---:|
 | facts stored | 3112 |
-| quarantined | 155 |
+| quarantined | 180 |
 | ungrounded stored | 279 |
 | fuzzy grounded | 510 |
 | unresolved period | 647 |
 | unresolved period pct | 20.8 |
-| rule verdicts overturned | 0 |
+| rule verdicts overturned | 1 |
 
 ### Why facts were rejected
 
 | reason | count |
 |---|---:|
-| `table_association_unverifiable` | 130 |
+| `table_association_unverifiable` | 155 |
 | `evidence_too_short` | 24 |
 | `value_present_but_quote_unverifiable` | 1 |
+
+### Where the adjudicator overturned the deterministic verdict
+
+The most useful place to look for reasoning errors on either side.
+
+### 1. CONTRADICTS  ·  confidence 0.90  ·  same document  ·  decided by `llm`  ·  explained by **period**
+
+**Fact A — Delhivery Limited · PTL freight tonnage**
+
+- Value as printed: `1,517`
+- Normalized: `1,517 tonnes`
+- Period: `FY24` → `FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 9
+
+> 1,705 1,157 1,517 FY22 FY23 FY24 PTL freight tonnage(2)
+
+**Fact B — Delhivery Limited · PTL freight tonnage**
+
+- Value as printed: `384K Tons`
+- Normalized: `384,000 tonnes`
+- Period: `Q4 FY24` → `Q4 FY2024`
+- Source: `03-delhivery-q4-fy24-earnings-presentation.pdf`, page 7
+
+> 384K Tons PTL freight tonnage in Q4 FY24
+
+**System reasoning.** While the periods are nested (FY24 contains Q4 FY24), the reported tonnage for the single quarter (384,000 tonnes) is mathematically impossible to reconcile with the total reported for the full fiscal year (1,517 tonnes). Freight tonnage cannot be negative, so the Q4 figure cannot exceed the annual total.
+
+<details><summary>Mechanical observations the decision rests on</summary>
+
+| observation | value |
+|---|---|
+| period relation | `CONTAINS` — FY2024 contains Q4 FY2024 |
+| units | `tonnes` ↔ `tonnes` (comparable) |
+| values compared | `1,517` vs `384,000` |
+| relative difference | `99.6049%` |
+| verdict on that | **outside** rounding tolerance |
+| rounding tolerance | `0.1302%` (from how precisely each figure is written) |
+| ratio A/B | `0.00395052` |
+| hypothesis 1 | the shorter period reports 384,000 tonnes, which exceeds the 1,517 tonnes reported for the longer period containing it -- consistent only if other sub-periods were negative |
+| hypothesis 2 | periods nest: FY2024 contains Q4 FY2024 |
+| rule-based verdict | `RECONCILED` — **overturned** by the adjudicator |
+
+</details>
+
