@@ -139,12 +139,12 @@ database and exits non-zero if any of it stops being true.
 
 ## Video demo
 
-**<< paste your upload link here >>**
+**[Watch the demo (2:16)](https://github.com/bhavit04/superjoin-fact-layer/blob/main/build/fact-knowledge-layer-demo.mp4)** — plays
+inline on GitHub; [direct download](https://github.com/bhavit04/superjoin-fact-layer/raw/main/build/fact-knowledge-layer-demo.mp4).
 
-A screencast is committed at
-[`build/fact-knowledge-layer-demo.mp4`](build/fact-knowledge-layer-demo.mp4) — a PDF
-being ingested, then all four required cases with their real evidence and reasoning.
-Upload it (YouTube unlisted, Drive, Loom) and put the link above.
+A screencast of the running system: a PDF being ingested, then all four required
+cases with their real evidence and reasoning. Nothing in it is staged — every number
+on screen comes from the API responses shown.
 
 It is a real recording of the running app, annotated in place, and it is generated
 rather than edited by hand:
