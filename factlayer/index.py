@@ -62,7 +62,7 @@ class FactIndex:
             token: math.log(1.0 + total / len(ids)) for token, ids in self.postings.items()
         }
 
-    def neighbours(self, fact: dict, top_k: int, min_similarity: float) -> list[Candidate]:
+    def neighbours(self, fact: dict, top_k: int) -> list[Candidate]:
         """The strongest ``top_k`` comparable facts for ``fact``."""
         fact_id = fact["id"]
         my_tokens = self.tokens.get(fact_id) or set(metrics.metric_tokens(fact.get("metric_raw")))
@@ -110,29 +110,25 @@ class FactIndex:
             )
             if not comparable:
                 continue
+            # Similarity ranks candidates; it does not gate them. Token-equal
+            # labels always score well above any useful cutoff, so a threshold
+            # here would never bind — the sensitivity sweep confirms 0% effect.
             similarity = 1.0 if same_cluster else metrics.metric_similarity(
                 fact.get("metric_raw"), other.get("metric_raw")
             )
-            if similarity < min_similarity:
-                continue
             out.append(Candidate(fact, other, similarity, same_cluster))
 
         out.sort(key=lambda c: -c.similarity)
         return out[:top_k]
 
 
-def generate_pairs(
-    index: FactIndex,
-    probe_facts: Sequence[dict],
-    top_k: int,
-    min_similarity: float,
-) -> list[Candidate]:
+def generate_pairs(index: FactIndex, probe_facts: Sequence[dict], top_k: int) -> list[Candidate]:
     """Unique candidate pairs seeded from `probe_facts`. Probing only new facts
     is what makes ingestion incremental."""
     seen: set[tuple[str, str]] = set()
     pairs: list[Candidate] = []
     for fact in probe_facts:
-        for candidate in index.neighbours(fact, top_k, min_similarity):
+        for candidate in index.neighbours(fact, top_k):
             a, b = candidate.fact_a["id"], candidate.fact_b["id"]
             key = (a, b) if a < b else (b, a)
             if key in seen:

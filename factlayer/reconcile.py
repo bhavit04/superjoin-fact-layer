@@ -19,6 +19,7 @@ from difflib import SequenceMatcher
 from dataclasses import dataclass, field, asdict
 from typing import Any
 
+from . import config
 from .llm import LLMClient
 from .pdf import normalize_ws
 from .normalize import metrics, periods, units
@@ -211,7 +212,7 @@ def _scale_hypothesis(ratio: float) -> str | None:
     magnitude = abs(ratio)
     if magnitude > 0:
         exponent = round(math.log10(magnitude))
-        if exponent != 0 and abs(magnitude / (10.0 ** exponent) - 1.0) < 0.18:
+        if exponent != 0 and abs(magnitude / (10.0 ** exponent) - 1.0) < config.THRESHOLDS.scale_window:
             return f"approximately a factor of 10^{exponent}, suggesting a scale or unit mismatch"
     return None
 
@@ -248,13 +249,14 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
         obs.shared_evidence = (
             ev_a == ev_b
             or (len(ev_a) > 40 and len(ev_b) > 40 and (ev_a in ev_b or ev_b in ev_a))
-            or SequenceMatcher(None, ev_a[:220], ev_b[:220], autojunk=False).ratio() >= 0.90
+            or SequenceMatcher(None, ev_a[:220], ev_b[:220], autojunk=False).ratio()
+            >= config.THRESHOLDS.shared_evidence
         )
     # Evidence that never says what it measures cannot support a conflict.
     obs.weak_attribution = min(
         float(fact_a.get("metric_support") if fact_a.get("metric_support") is not None else 1.0),
         float(fact_b.get("metric_support") if fact_b.get("metric_support") is not None else 1.0),
-    ) < 0.34
+    ) < config.THRESHOLDS.attribution_floor
 
     common = units.to_common_unit(value_a, value_b)
     if common:
@@ -308,7 +310,7 @@ def observe(fact_a: dict, fact_b: dict, similarity: float, same_cluster: bool) -
                 obs.text_a == obs.text_b
                 or obs.text_a in obs.text_b
                 or obs.text_b in obs.text_a
-                or ratio >= 0.82
+                or ratio >= config.THRESHOLDS.text_equality
             )
 
     # Which stated conditions differ?
@@ -561,6 +563,7 @@ def classify(fact_a: dict, fact_b: dict, obs: Observation) -> Verdict:
 
 # --- enumerations are not disagreements --------------------------------------
 
+# Kept as a name for readability; the live value comes from config.THRESHOLDS.
 ENUMERATION_MIN_VALUES = 3
 
 
@@ -582,7 +585,8 @@ def find_enumerations(facts: list[dict]) -> set[tuple]:
             fact.get("metric_cluster"), fact.get("period_canonical") or "",
         )
         groups.setdefault(key, set()).add(round(float(fact["value_num"]), 6))
-    return {key for key, values in groups.items() if len(values) >= ENUMERATION_MIN_VALUES}
+    floor = config.THRESHOLDS.enumeration_min
+    return {key for key, values in groups.items() if len(values) >= floor}
 
 
 def enumeration_key(fact: dict) -> tuple:

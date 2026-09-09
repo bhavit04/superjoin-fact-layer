@@ -440,7 +440,7 @@ async def _link(
     by_id = {f["id"]: f for f in all_facts}
     probes = [by_id.get(r["id"], r) for r in new_rows if r["id"] in by_id or r]
 
-    candidates = generate_pairs(index, probes, settings.candidate_top_k, settings.metric_sim_threshold)
+    candidates = generate_pairs(index, probes, settings.candidate_top_k)
     result.pairs_considered = len(candidates)
     enumerations = find_enumerations(all_facts)
     emit("candidates", f"{len(candidates)} candidate pairs from {len(all_facts)} facts")

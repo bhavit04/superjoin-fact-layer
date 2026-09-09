@@ -16,19 +16,25 @@ from typing import Any
 
 from .db import Store
 from .normalize import units
+from .reconcile import implied_tolerance
 
 MIN_SOURCES = 2
-AGREEMENT_TOLERANCE = 0.02
 
 
-def _spread(values: list[float]) -> tuple[str, float]:
+def _spread(values: list[float], written: list[str] | None = None) -> tuple[str, float]:
+    """Spread across a claim's sources, judged against the precision each was
+    written to rather than a flat band — the same rule the reconciler uses."""
     usable = [v for v in values if v is not None]
     if len(usable) < 2:
         return "single", 0.0
     low, high = min(usable), max(usable)
     scale = max(abs(low), abs(high))
     gap = 0.0 if scale == 0 else abs(high - low) / scale
-    return ("agree" if gap <= AGREEMENT_TOLERANCE else "disagree"), gap
+    tolerance = 0.0
+    for value, raw in zip(values, written or []):
+        if value is not None:
+            tolerance = max(tolerance, implied_tolerance(raw, value))
+    return ("agree" if gap <= (tolerance or 0.002) else "disagree"), gap
 
 
 def build_claims(
@@ -62,7 +68,8 @@ def build_claims(
         numeric = [f for f in facts if f.get("value_num") is not None]
         unit = numeric[0].get("value_unit") if numeric else ""
         comparable = [f for f in numeric if (f.get("value_unit") or "") == (unit or "")]
-        status, spread = _spread([f["value_num"] for f in comparable])
+        status, spread = _spread([f["value_num"] for f in comparable],
+                                 [f.get("value_raw") or "" for f in comparable])
 
         dimensions, kinds = set(), set()
         for i, a in enumerate(facts):

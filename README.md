@@ -426,11 +426,16 @@ Written honestly; several of these are visible in the "Failures" tab of the UI.
   ingesting the result, is the right order of operations.
 - **English only.** The prompts, stopword lists and period vocabulary are English.
 
-- **Tables are read as prose.** Text is extracted linearly, so a wide financial table
-  can lose the association between a row label, a column header and a cell. The
-  extractor is told to carry row and column context into the metric and qualifiers,
-  and mostly does, but this is the single largest source of wrong facts. Real table
-  structure detection would fix it.
+- **Tables are read as prose, and the obvious fix does not work here.** Text is
+  extracted linearly, so a wide table loses the association between a row label, a
+  column header and a cell. This is the largest source of rejected facts (155,
+  recorded as `table_association_unverifiable`) and the reason the chart-heavy
+  earnings deck grounds at 79% against 93–100% for prose documents. PyMuPDF's built-in
+  `find_tables` was measured against exactly those rejected facts and recovered
+  **0 of 35**: these are financial tables without ruling lines, laid out by whitespace,
+  and it either misses them or returns numeric blocks stripped of their row labels.
+  Doing this properly needs coordinate-level layout analysis, which is the single
+  highest-value thing left to build.
 - **Periods that need document context.** "the prior year" or "the previous quarter"
   resolve to nothing, because resolving them requires knowing the document's own
   reporting date. Those facts are stored with an unresolved period and are then only
@@ -454,17 +459,27 @@ Written honestly; several of these are visible in the "Failures" tab of the UI.
   set. Nothing here proves real contradictions were not suppressed along the way. The
   right next step is to hand-label a few hundred pairs and report precision and recall
   properly.
-- **The thresholds are fitted to this corpus.** No fact, filename or metric is
-  hard-coded — logic never branches on document content — but around eight numeric
-  cutoffs (metric similarity 0.42, fuzzy-match floors, the 0.82 textual-equality bar,
-  three values for an enumeration) were chosen by looking at these six documents, with
-  no held-out set. They are all biased toward refusing a comparison rather than
-  making a false one, so the failure mode on unfamiliar documents should be
-  under-linking rather than invented conflicts — but that is a design intention, not a
-  measurement. The parts that generalise by construction are the ones derived rather
-  than tuned: the rounding tolerance comes from how precisely a figure is written, the
-  period algebra is calendar arithmetic, and the fiscal-year convention is read off
-  each document.
+- **The thresholds were chosen on this corpus, but they are not load-bearing.** No
+  fact, filename or metric is hard-coded — logic never branches on document content —
+  but the judgement cutoffs were picked by inspecting these six documents. Rather than
+  argue they generalise, `scripts/sensitivity.py` measures it: each is swept across a
+  plausible range and every relation re-derived. **No threshold moves more than 3.6% of
+  verdicts**, and most move under 1%.
+
+  ```
+  shared_evidence   0.80 → 0.99     verdicts move 0.0% – 3.5%
+  enumeration_min   2 → 6           verdicts move 0.0% – 3.6%
+  text_equality     0.70 → 0.94     verdicts move 0.0% – 0.3%
+  attribution_floor 0.10 → 0.70     verdicts move 0.0% – 0.1%
+  scale_window      0.05 → 0.30     verdicts move 0.0% – 0.1%
+  ```
+
+  The sweep also found a threshold that did nothing: a metric-similarity cutoff that
+  could never bind, because token-set equality already gates every comparison. It has
+  been removed. The parts that carry the weight are derived rather than tuned — the
+  rounding tolerance comes from how precisely each figure is written, the period
+  algebra is calendar arithmetic, and the fiscal-year convention is read off each
+  document.
 - **Recall depends on the clustering pass.** Because comparison requires metric-name
   equality or an explicit cluster, a metric the clustering pass fails to merge simply
   never gets compared. That failure is silent — there is no signal distinguishing

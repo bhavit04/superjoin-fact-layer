@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, fields
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -66,7 +66,6 @@ class Settings:
 
     # Linking tuning.
     candidate_top_k: int = field(default_factory=lambda: int(os.getenv("FACTLAYER_TOP_K", "12")))
-    metric_sim_threshold: float = field(default_factory=lambda: float(os.getenv("FACTLAYER_METRIC_SIM", "0.42")))
     numeric_tolerance: float = field(default_factory=lambda: float(os.getenv("FACTLAYER_NUM_TOL", "0.01")))
 
     # When true, never call a live API; only replay from the on-disk cache.
@@ -106,3 +105,45 @@ def get_settings(refresh: bool = False) -> Settings:
     if _settings is None or refresh:
         _settings = Settings()
     return _settings
+
+@dataclass
+class Thresholds:
+    """The judgement calls, in one place.
+
+    These were chosen by inspecting one corpus, so they are declared rather than
+    scattered as literals and every one is sweepable — `scripts/sensitivity.py`
+    reports how far verdicts move when each is varied.
+    """
+
+    # Two textual values this similar describe the same thing
+    # ("Managing Director and CEO" / "Managing Director & CEO").
+    text_equality: float = 0.82
+    # Two facts quoting evidence this similar are one statement read twice.
+    shared_evidence: float = 0.90
+    # Below this fraction of a metric's words appearing in its own evidence, the
+    # attribution came from context and cannot anchor a contradiction.
+    attribution_floor: float = 0.34
+    # Distinct values for one subject/metric/period that make it a series.
+    enumeration_min: int = 3
+    # How near a power of ten a ratio must be to read as a scale mismatch.
+    scale_window: float = 0.18
+
+    @classmethod
+    def from_env(cls) -> "Thresholds":
+        out = cls()
+        for f in fields(cls):
+            raw = os.getenv(f"FACTLAYER_T_{f.name.upper()}")
+            if raw:
+                setattr(out, f.name, type(getattr(out, f.name))(float(raw)))
+        return out
+
+
+THRESHOLDS = Thresholds.from_env()
+
+
+def refresh_thresholds() -> Thresholds:
+    """Re-read from the environment; used by the sensitivity sweep."""
+    global THRESHOLDS
+    THRESHOLDS = Thresholds.from_env()
+    return THRESHOLDS
+
