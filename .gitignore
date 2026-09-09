@@ -6,7 +6,6 @@ data/*.db
 data/*.db-wal
 data/*.db-shm
 data/uploads/
-data_raw/
 assignment.pdf
 .pytest_cache/
 .DS_Store

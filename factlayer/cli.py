@@ -28,8 +28,8 @@ async def _ingest_all(paths: list[Path], budget: int) -> int:
         for p in paths:
             print(f"    {p}", file=sys.stderr)
         if any("starter-datasets" in str(p) for p in paths):
-            print("\nThe starter PDFs are not committed to this repository. Unzip the dataset\n"
-                  "at data_raw/starter-datasets/ and run this again.", file=sys.stderr)
+            print("\nThe starter corpus ships in this repository at data_raw/starter-datasets/.\n"
+                  "Run this from the repository root.", file=sys.stderr)
         return 2
 
     store = Store(settings.db_path)

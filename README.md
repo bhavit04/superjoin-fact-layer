@@ -33,17 +33,15 @@ This repository ships the model's cached responses for the six starter documents
 the whole knowledge layer can be rebuilt offline and the API browsed without a
 credential:
 
-The PDFs themselves are not redistributed here. Put the starter dataset at
-`data_raw/starter-datasets/` (the folder as it was handed out — unzipping it there is
-enough), then:
+The six starter PDFs are committed too, so this needs no setup beyond the install:
 
 ```bash
 FACTLAYER_PROVIDER=replay factlayer ingest data_raw/starter-datasets/*/*.pdf
 factlayer serve                      # http://127.0.0.1:8000
 ```
 
-The cache is keyed by the text of each chunk, so the same PDFs hit it and the rebuild
-runs without a network call. Different PDFs simply miss, and need a key.
+The cache is keyed by the text of each chunk, so those six documents hit it and the
+rebuild runs without a network call. Any other PDF simply misses, and needs a key.
 
 Pre-generated output is also committed, if you would rather just read it:
 
