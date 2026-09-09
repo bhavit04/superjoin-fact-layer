@@ -19,6 +19,19 @@ def _progress(stage: str, message: str, detail: dict) -> None:
 
 async def _ingest_all(paths: list[Path], budget: int) -> int:
     settings = get_settings()
+
+    # An unmatched shell glob arrives as a literal path, so "no such dataset" would
+    # otherwise surface as an ingest of zero files reporting an empty corpus. Say
+    # what is missing instead.
+    if not any(p.exists() for p in paths):
+        print("Nothing to ingest -- none of these paths exist:", file=sys.stderr)
+        for p in paths:
+            print(f"    {p}", file=sys.stderr)
+        if any("starter-datasets" in str(p) for p in paths):
+            print("\nThe starter PDFs are not committed to this repository. Unzip the dataset\n"
+                  "at data_raw/starter-datasets/ and run this again.", file=sys.stderr)
+        return 2
+
     store = Store(settings.db_path)
     print(f"provider={settings.provider} model={settings.model} db={settings.db_path}")
     failures = 0
